@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node config/start.js",
-    "build:dev": "cross-env NODE_ENV=production webpack --config ./config/build.js --env dev",
-    "build:sit": "cross-env NODE_ENV=production webpack --config ./config/build.js --env sit",
-    "build:uat": "cross-env NODE_ENV=production webpack --config ./config/build.js --env uat",
-    "build:prod": "cross-env NODE_ENV=production webpack --config ./config/build.js --env prod",
+    "start": "node scripts/start.js",
+    "build:dev": "webpack --config ./scripts/build.js --env dev",
+    "build:sit": "webpack --config ./scripts/build.js --env sit",
+    "build:uat": "webpack --config ./scripts/build.js --env uat",
+    "build:prod": "webpack --config ./scripts/build.js --env prod",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
-    "analyze": "cross-env ANALYZE=1 npm run build"
+    "analyze": "cross-env ANALYZE=1 npm run build:prod"
   },
   "husky": {
     "hooks": {
@@ -32,9 +32,12 @@
     "@babel/polyfill": "^7.12.1",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",
+    "i18next": "^23.7.8",
+    "i18next-browser-languagedetector": "^7.2.0",
     "qs": "^6.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^13.5.0",
     "react-router-dom": "^6.20.1"
   },
   "devDependencies": {

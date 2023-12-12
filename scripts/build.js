@@ -1,5 +1,7 @@
 "use strict";
 
+process.env.NODE_ENV = "production";
+
 const { merge } = require("webpack-merge");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin");
