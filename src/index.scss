@@ -1,0 +1,40 @@
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  font-family: "Open Sans", "Microsoft YaHei", "PingFang SC", arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  touch-action: pan-y;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow: -moz-hidden-scrollable;
+
+  &::-webkit-scrollbar {
+    opacity: 0;
+    width: 0;
+    display: none;
+    background-color: transparent;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+}
+
+.test-word {
+  font-size: 20px;
+}
