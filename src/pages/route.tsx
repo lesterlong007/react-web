@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, createElement } from 'react';
+import React, { lazy, createElement } from 'react';
 import { RouteProps } from 'react-router-dom';
 
 const lazyLoad = (cm: () => Promise<any>) => createElement(lazy(cm));
@@ -6,7 +6,7 @@ const lazyLoad = (cm: () => Promise<any>) => createElement(lazy(cm));
 export const routes: RouteProps[] = [
   {
     path: '*',
-    element: lazyLoad(() => import('src/pages/Index/Index')),
+    element: lazyLoad(() => import('src/pages/NotFound/NotFound')),
   },
   {
     path: '/index',
@@ -16,6 +16,6 @@ export const routes: RouteProps[] = [
     path: '/mine',
     element: lazyLoad(() => import('src/pages/Mine/Mine')),
   },
-];
+]
 
 export const cacheRoutes: RouteProps[] = [];

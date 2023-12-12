@@ -16,8 +16,6 @@
     "paths": {
       "src": ["src"],
       "@": ["src"],
-      "@local-lib": ["local-lib"],
-      "@lib": ["src/neo-common-mini-lib"]
     }
   },
   "include": ["src", "types"],

@@ -36,7 +36,7 @@ const buildConfig = {
         baseChunks: {
           name: "base.chunks",
           test: (module) =>
-            /react|react-dom|react-router-dom|axios/.test(module.context),
+            /react|react-dom|react-router-dom/.test(module.context),
           priority: 20,
         },
         default: {

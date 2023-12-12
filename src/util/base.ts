@@ -1,1 +1,1 @@
-export const pxTransformToRem = (px: number) => `${ px / 100}rem`;
+export const pxTransformToRem = (px: number) => `${px / 100}rem`;

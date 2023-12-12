@@ -25,7 +25,7 @@ const compiler = webpack(merge(webpackConfig, startConfig));
 const devServerOptions = {
   host: HOST,
   port: PORT,
-  open: process.env.BASENAME,
+  open: `${process.env.BASENAME}/index`,
   hot: true,
   https: process.env.HTTPS === "true",
   historyApiFallback: true,
