@@ -6,14 +6,17 @@ process.on("unhandledRejection", (err) => {
   throw err;
 });
 
+const ip = require('ip').address();
 const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
 const { merge } = require("webpack-merge");
 const webpackConfig = require("./webpack.config");
+const { MOCK_PORT } = require('../mock/config');
 
 const PORT = parseInt(process.env.PORT, 10) || 8000;
-const HOST = process.env.HOST || "localhost";
+const HOST = process.env.HOST || ip;
 const protocol = process.env.HTTPS === "true" ? "https" : "http";
+
 
 const startConfig = {
   devtool: "inline-source-map",
@@ -39,7 +42,7 @@ const devServerOptions = {
   proxy: [
     {
       context: ["/api", "/insurance-policy"],
-      target: "https://api-uat.pulse.wedopulse.com/dev/v1",
+      target: `http://${ip}:${MOCK_PORT}`,
       secure: false,
       changeOrigin: true,
     },
