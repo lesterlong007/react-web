@@ -10,6 +10,7 @@ const Index: React.FC = () => {
     <div className="test-word" style={{ margin: 10 }}>
       <div onClick={() => navigate('/mine')}>Welcome to my home page</div>
       <div>{t('title')}</div>
+      <img src="/static/google_logo.jpeg" alt="" />
     </div>
   );
 };

@@ -4,6 +4,7 @@ const DotEnvWebpack = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const { DefinePlugin } = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const BASENAME = '/react-web';
 process.env.BASENAME = BASENAME;
@@ -98,6 +99,7 @@ module.exports = {
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.ico$/],
         loader: 'url-loader',
+        exclude: /node_modules/,
         options: {
           esModule: false,
           limit: 1000,
@@ -127,6 +129,14 @@ module.exports = {
     }),
     new DefinePlugin({
       'process.env.BASENAME': JSON.stringify(`${BASENAME}`),
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(ROOT_PATH, './static'),
+          to: path.resolve(ROOT_PATH, './dist/static'),
+        },
+      ],
     }),
     new HtmlPlugin({
       template: path.resolve(ROOT_PATH, './public/index.html'),
