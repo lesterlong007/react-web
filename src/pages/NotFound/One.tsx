@@ -6,11 +6,7 @@ const One: React.FC = () => {
 
   console.log(dispatch, 'One');
 
-  return (
-    <div onClick={() => dispatch({ name: 'lester' })}>
-       One
-    </div>
-  );
+  return <div onClick={() => dispatch({ name: 'lester' })}>One</div>;
 };
 
 export default One;

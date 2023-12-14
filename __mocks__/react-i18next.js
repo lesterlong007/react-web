@@ -1,9 +1,9 @@
 export default {
-    hasResourceBundle: () => true,
+  hasResourceBundle: () => true,
 };
 
 export const useTranslation = () => ({
-  t: key => key,
+  t: (key) => key,
   i18n: { exists: () => true },
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { request } from 'src/util//network/request';
 
 const Index: React.FC = () => {
   const { t } = useTranslation();
@@ -15,11 +16,11 @@ const Index: React.FC = () => {
         alt=""
         style={{ width: '100px' }}
         onClick={() => {
-          fetch('/api/user-info', {  method: "POST",body: JSON.stringify({ a: '1' }) })
-            .then((res) => res.json())
-            .then((res) => {
+          request('/api/user-info', { a: 1 })
+            .then((res: any) => {
               console.log(res);
-            }).catch(err => {
+            })
+            .catch((err) => {
               console.log(err);
             });
         }}

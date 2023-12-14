@@ -3,7 +3,7 @@ export default {
   hasResourceBundle: () => {},
   store: {
     on: () => {},
-    off: () => {}
+    off: () => {},
   },
 };
 
@@ -11,4 +11,4 @@ export const exists = () => true;
 
 export const use = () => {};
 
-export const t = key => key;
+export const t = (key) => key;

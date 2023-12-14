@@ -1,19 +1,19 @@
-"use strict";
+'use strict';
 
-process.env.NODE_ENV = "production";
+process.env.NODE_ENV = 'production';
 
-const { merge } = require("webpack-merge");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin"); // css compress
-const TerserWebpackPlugin = require("terser-webpack-plugin"); // js compress
-const CompressionPlugin = require("compression-webpack-plugin"); // gzip compress
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer"); // bundle analysis
+const { merge } = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // css compress
+const TerserWebpackPlugin = require('terser-webpack-plugin'); // js compress
+const CompressionPlugin = require('compression-webpack-plugin'); // gzip compress
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer'); // bundle analysis
 
-const webpackConfig = require("./webpack.config");
+const webpackConfig = require('./webpack.config');
 
 const buildConfig = {
-  devtool: "eval",
+  devtool: 'eval',
   plugins: [
     new CleanWebpackPlugin(),
     new SimpleProgressWebpackPlugin(),
@@ -25,22 +25,21 @@ const buildConfig = {
   },
   optimization: {
     splitChunks: {
-      chunks: "all", // initial | async | all
+      chunks: 'all', // initial | async | all
       minSize: 30000,
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 5,
-      name: "name",
-      automaticNameDelimiter: "-",
+      name: 'name',
+      automaticNameDelimiter: '-',
       cacheGroups: {
         baseChunks: {
-          name: "base.chunks",
-          test: (module) =>
-            /react|react-dom|react-router-dom/.test(module.context),
+          name: 'base.chunks',
+          test: (module) => /react|react-dom|react-router-dom/.test(module.context),
           priority: 20,
         },
         default: {
-          name: "common.chunks",
+          name: 'common.chunks',
           minChunks: 2,
           priority: 5,
           reuseExistingChunk: true,

@@ -14,7 +14,7 @@ if (MOCK_FLAG) {
     console.log('------------------------------->');
     console.log(`${req.method} apiPath`);
     console.log();
-  
+
     try {
       const result = require(`./data${apiPath}.json`);
       setTimeout(() => {
@@ -26,7 +26,7 @@ if (MOCK_FLAG) {
     }
   });
 } else {
-    // real env api
+  // real env api
 }
 
 app.listen(MOCK_PORT, () => {

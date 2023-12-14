@@ -9,7 +9,8 @@ const Two: React.FC = () => {
 
   return (
     <div>
-      two<Four />
+      two
+      <Four />
     </div>
   );
 };

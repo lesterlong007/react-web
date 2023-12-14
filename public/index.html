@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -20,29 +20,23 @@
       (function (doc, win) {
         const docEl = doc.documentElement;
         const docBody = doc.body;
-        const resizeEvent =
-          "orientationchange" in window ? "orientationchange" : "resize";
+        const resizeEvent = 'orientationchange' in window ? 'orientationchange' : 'resize';
         const reCalc = () => {
-          const clientWidth =
-            docBody.clientWidth || docEl.clientWidth || win.innerWidth || 375;
+          const clientWidth = docBody.clientWidth || docEl.clientWidth || win.innerWidth || 375;
           const calcFontSize = 100 * (clientWidth / 375);
-          docEl.style.fontSize = calcFontSize + "px";
+          docEl.style.fontSize = calcFontSize + 'px';
         };
         reCalc();
         if (!document.addEventListener) return;
         win.addEventListener(resizeEvent, reCalc, false);
-        doc.addEventListener("DOMContentLoaded", reCalc, false);
+        doc.addEventListener('DOMContentLoaded', reCalc, false);
       })(document, window);
 
       (function (doc, win) {
-        doc.body.addEventListener("click", (event) => {
+        doc.body.addEventListener('click', (event) => {
           const ele = event.target;
           const { tagName } = ele;
-          if (
-            tagName === "INPUT" ||
-            tagName === "TEXTAREA" ||
-            ele.getAttribute("contenteditable") === "true"
-          ) {
+          if (tagName === 'INPUT' || tagName === 'TEXTAREA' || ele.getAttribute('contenteditable') === 'true') {
             ele.focus();
           }
         });
