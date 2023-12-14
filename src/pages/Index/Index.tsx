@@ -7,6 +7,11 @@ const Index: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const getData = async () => {
+    const res = await request('/api/user-info', { a: 1 }, 'POST');
+    console.log(res);
+  };
+
   return (
     <div className="test-word" style={{ margin: 10 }}>
       <div onClick={() => navigate('/mine')}>Welcome to my home page</div>
@@ -16,13 +21,7 @@ const Index: React.FC = () => {
         alt=""
         style={{ width: '100px' }}
         onClick={() => {
-          request('/api/user-info', { a: 1 })
-            .then((res: any) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          getData();
         }}
       />
     </div>

@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { isEmpty } from '../base';
+import { isEmpty, getDataType } from '../base';
 
 enum RequestMethod {
   GET = 'GET',
@@ -8,33 +8,76 @@ enum RequestMethod {
   PUT = 'PUT',
 }
 
-interface RequestOption extends RequestInit {
+type MethodType = `${RequestMethod}`;
+
+interface CommonConfig {
   timeout?: number;
+  showError?: boolean;
 }
 
+type RequestOption = CommonConfig & RequestInit;
+
+type CommonFC = (...args: any[]) => any;
+
 class HttpRequest {
-  constructor() {}
+  private interceptors: CommonFC[] = [];
+  private errorInterceptors: CommonFC[] = [];
+  private commonConfig: CommonConfig = {
+    timeout: 60000,
+    showError: true,
+  };
 
-  request(url: string, data?: any, method?: RequestMethod, option?: RequestOption) {
+  constructor(config: CommonConfig) {
+    this.commonConfig = {
+      ...this.commonConfig,
+      ...config,
+    };
+  }
+
+  addInterceptor(fn: CommonFC) {
+    if (typeof fn === 'function') {
+      this.interceptors.push(fn);
+    }
+  }
+
+  addErrorInterceptor(fn: CommonFC) {
+    if (typeof fn === 'function') {
+      this.errorInterceptors.push(fn);
+    }
+  }
+
+  request(url: string, data?: any, method?: MethodType, option?: RequestOption) {
     const controller = new AbortController();
-
-    const { headers, timeout = 2000, ...restOption } = option || {};
+    const {
+      headers,
+      timeout = this.commonConfig.timeout,
+      showError = this.commonConfig.showError,
+      ...restOption
+    } = option || {};
     const methodName = method || RequestMethod.GET;
     const defaultOption: RequestInit = {
       method: methodName,
       mode: 'cors',
-      headers: {
-        'content-type': 'application/json',
-        ...headers,
-      },
       credentials: 'include',
     };
-    if ([RequestMethod.GET, RequestMethod.HEAD].includes(methodName)) {
+    const reqHeaders = new Headers({
+      'content-type': 'application/json; charset=utf-8',
+      ...headers,
+    });
+    defaultOption.headers = reqHeaders;
+    if (([RequestMethod.GET, RequestMethod.HEAD] as MethodType[]).includes(methodName)) {
       if (!isEmpty(data)) {
         url += `${url.includes('?') ? '&' : '?'}${qs.stringify(data)}`;
       }
     } else {
-      defaultOption.body = data || {};
+      if (void 0 !== data) {
+        const type = getDataType(data);
+        if (type === 'object') {
+          defaultOption.body = JSON.stringify(data);
+        } else {
+          defaultOption.body = data;
+        }
+      }
     }
 
     if (restOption.signal) {
@@ -43,7 +86,6 @@ class HttpRequest {
         controller.abort();
       });
     }
-
     restOption.signal = controller.signal;
 
     return new Promise((resolve) => {
@@ -51,19 +93,27 @@ class HttpRequest {
       const clearTimer = () => {
         if (timer) clearTimeout(timer);
       };
+
       fetch(url, { ...defaultOption, ...restOption })
-        .then(
-          (res) => res.json(),
-          (err) => {
-            resolve({
-              error: err,
-            });
-            clearTimer();
-          },
-        )
+        .then((res) => {
+          this.interceptors.forEach((fn) => {
+            res = fn(res);
+          });
+          return res;
+        })
+        .then((res) => res.json())
         .then((res) => {
           resolve({
             data: res,
+          });
+          clearTimer();
+        })
+        .catch((err) => {
+          this.errorInterceptors.forEach((fn) => {
+            err = fn(err);
+          });
+          resolve({
+            error: err,
           });
           clearTimer();
         });
