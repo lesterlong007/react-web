@@ -8,8 +8,8 @@ const Index: React.FC = () => {
   const navigate = useNavigate();
 
   const getData = async () => {
-    const res = await request('/api/user-info', { a: 1 }, 'POST');
-    console.log(res);
+    const { data, error } = await request('/api/user-info', { a: 1 }, 'POST');
+    console.log(data, error);
   };
 
   return (
