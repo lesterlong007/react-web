@@ -27,6 +27,17 @@ if (MOCK_FLAG) {
   });
 } else {
   // real env api
+  app.use(
+    proxy('https://api-uat.pulse.wedopulse.com', {
+      proxyReqPathResolver(req) {
+        if (req.url.includes(`${PROXY_ENV}/v`)) {
+          return req.url;
+        } else {
+          return `/${PROXY_ENV}/v1${req.url}`;
+        }
+      },
+    }),
+  );
 }
 
 app.listen(MOCK_PORT, () => {
