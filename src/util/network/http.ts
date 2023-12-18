@@ -5,7 +5,7 @@ enum RequestMethod {
   GET = 'GET',
   HEAD = 'HEAD',
   POST = 'POST',
-  PUT = 'PUT',
+  PUT = 'PUT'
 }
 
 type MethodType = `${RequestMethod}`;
@@ -20,6 +20,12 @@ interface Response {
   error?: any;
 }
 
+interface ErrorObj {
+  status?: number;
+  statusText?: string;
+  message?: string;
+}
+
 type CommonFC = (...args: any[]) => any;
 
 class HttpRequest {
@@ -30,7 +36,9 @@ class HttpRequest {
 
   private reqInterceptors: CommonFC[] = [];
   private resInterceptors: CommonFC[] = [];
+  private preResInterceptors: CommonFC[] = [];
   private errorResInterceptors: CommonFC[] = [];
+  public isRefreshingToken: boolean = false;
 
   constructor (config?: RequestOption) {
     this.commonConfig = {
@@ -42,6 +50,12 @@ class HttpRequest {
   public addReqInterceptor (fn: CommonFC) {
     if (typeof fn === 'function') {
       this.reqInterceptors.push(fn);
+    }
+  }
+
+  public addPreResInterceptor (fn: CommonFC) {
+    if (typeof fn === 'function') {
+      this.preResInterceptors.push(fn);
     }
   }
 
@@ -73,8 +87,12 @@ class HttpRequest {
       ...(option || {})
     };
     this.reqInterceptors.forEach((fn) => {
-      newOption = fn(newOption);
+      newOption = fn(newOption, url, data, method, option);
     });
+
+    if (newOption instanceof Promise) {
+      return newOption;
+    }
 
     const { timeout, showError, ...restOption } = newOption;
 
@@ -112,21 +130,33 @@ class HttpRequest {
     }
     restOption.signal = controller.signal;
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       let timer: NodeJS.Timeout | null = null;
       const clearTimer = () => {
         if (timer) clearTimeout(timer);
       };
 
       const handleErr = (err: any) => {
-        resolve({
-          error: err
-        });
+        reject(err);
         if (showError) console.log(err);
       };
 
+      let error: ErrorObj = {};
+
       fetch(url, { ...defaultOption, ...restOption })
-        .then((res) => res.json())
+        .then((res) => {
+          this.preResInterceptors.forEach((fn) => {
+            res = fn(res, url, data, method, option);
+          });
+          return res;
+        })
+        .then((res) => {
+          const { status, statusText } = res;
+          if (status < 200 || status >= 400) {
+            error = { status, statusText };
+          }
+          return typeof res.json === 'function' ? res.json() : res;
+        })
         .then((res) => {
           this.resInterceptors.forEach((fn) => {
             res = fn(res);
@@ -134,14 +164,16 @@ class HttpRequest {
           return res;
         })
         .then((res) => {
-          resolve({
-            data: res
-          });
+          resolve(res);
           clearTimer();
         })
         .catch((err) => {
+          const newErr: ErrorObj = {
+            ...error,
+            message: err?.message
+          };
           this.errorResInterceptors.forEach((fn) => {
-            err = fn(err);
+            err = fn(newErr);
           });
           handleErr(err);
           clearTimer();

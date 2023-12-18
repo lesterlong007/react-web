@@ -1,14 +1,29 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { request } from 'src/util//network/request';
+import { post } from 'src/util//network/request';
 
 const Index: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const getData = async () => {
-    const { data, error } = await request('/api/user-info', { a: 1 }, 'POST');
+    const { data, error } = await post('/api/user-info', { a: 1 });
+    console.log(data, error);
+  };
+
+  const getDataTwo = async () => {
+    const { data, error } = await post('/api/list', { b: 2 });
+    console.log(data, error);
+  };
+
+  const getDataThree = async () => {
+    const { data, error } = await post('/api/detail', { c: 3 });
+    console.log(data, error);
+  };
+
+  const getDataFour = async () => {
+    const { data, error } = await post('/api/more-info', { d: 4 });
     console.log(data, error);
   };
 
@@ -22,6 +37,16 @@ const Index: React.FC = () => {
         style={{ width: '100px' }}
         onClick={() => {
           getData();
+          setTimeout(() => {
+            getDataTwo();
+          }, 100);
+          setTimeout(() => {
+            getDataThree();
+          }, 200);
+
+          setTimeout(() => {
+            getDataFour();
+          }, 700);
         }}
       />
     </div>
