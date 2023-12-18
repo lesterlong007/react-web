@@ -14,14 +14,9 @@ const webpackConfig = require('./webpack.config');
 
 const buildConfig = {
   devtool: 'eval',
-  plugins: [
-    new CleanWebpackPlugin(),
-    new SimpleProgressWebpackPlugin(),
-    new CompressionPlugin(),
-    process.env.ANALYZE && new BundleAnalyzerPlugin(),
-  ].filter(Boolean),
+  plugins: [new CleanWebpackPlugin(), new SimpleProgressWebpackPlugin(), new CompressionPlugin(), process.env.ANALYZE && new BundleAnalyzerPlugin()].filter(Boolean),
   performance: {
-    hints: false,
+    hints: false
   },
   optimization: {
     splitChunks: {
@@ -36,15 +31,15 @@ const buildConfig = {
         baseChunks: {
           name: 'base.chunks',
           test: (module) => /react|react-dom|react-router-dom/.test(module.context),
-          priority: 20,
+          priority: 20
         },
         default: {
           name: 'common.chunks',
           minChunks: 2,
           priority: 5,
-          reuseExistingChunk: true,
-        },
-      },
+          reuseExistingChunk: true
+        }
+      }
     },
     minimizer: [
       new TerserWebpackPlugin({
@@ -52,19 +47,19 @@ const buildConfig = {
         terserOptions: {
           output: {
             comments: false,
-            ascii_only: true,
+            ascii_only: true
           },
           compress: {
             drop_console: true,
             drop_debugger: true,
-            comparisons: false,
+            comparisons: false
           },
-          safari10: true,
-        },
+          safari10: true
+        }
       }),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
-  },
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  }
 };
 
 module.exports = merge(webpackConfig, buildConfig);

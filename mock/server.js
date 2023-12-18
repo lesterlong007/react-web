@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const proxy = require('express-http-proxy');
 
 const { MOCK_FLAG, MOCK_PORT, PROXY_ENV } = require('./config');
 
@@ -29,14 +30,14 @@ if (MOCK_FLAG) {
   // real env api
   app.use(
     proxy('https://api-uat.pulse.wedopulse.com', {
-      proxyReqPathResolver(req) {
+      proxyReqPathResolver (req) {
         if (req.url.includes(`${PROXY_ENV}/v`)) {
           return req.url;
         } else {
           return `/${PROXY_ENV}/v1${req.url}`;
         }
-      },
-    }),
+      }
+    })
   );
 }
 

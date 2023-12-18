@@ -6,11 +6,11 @@ import zh from 'src/i18n/zh.json';
 
 const resources = {
   en: {
-    translation: en,
+    translation: en
   },
   zh: {
-    translation: zh,
-  },
+    translation: zh
+  }
 };
 
 i18n
@@ -21,8 +21,8 @@ i18n
     debug: true,
     fallbackLng: 'en',
     interpolation: {
-      escapeValue: false,
-    },
+      escapeValue: false
+    }
   });
 
 export default i18n;

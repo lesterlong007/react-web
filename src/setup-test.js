@@ -13,11 +13,11 @@ global.storage = {};
 
 global.sessionStorage = {
   getItem: () => 'val',
-  setItem: () => {},
+  setItem: () => {}
 };
 
 class ResizeObserver {
-  observe() {}
+  observe () {}
 }
 
 global.ResizeObserver = ResizeObserver;

@@ -4,7 +4,7 @@ import React, {
   Context as ContextProps,
   PropsWithChildren,
   Dispatch,
-  SetStateAction,
+  SetStateAction
 } from 'react';
 
 interface UserInfo {

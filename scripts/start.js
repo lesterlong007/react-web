@@ -19,7 +19,7 @@ const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 
 const startConfig = {
   devtool: 'inline-source-map',
-  target: 'web',
+  target: 'web'
 };
 
 const compiler = webpack(merge(webpackConfig, startConfig));
@@ -34,18 +34,18 @@ const devServerOptions = {
   client: {
     overlay: {
       errors: true,
-      warnings: true,
+      warnings: true
     },
-    progress: true,
+    progress: true
   },
   proxy: [
     {
       context: ['/api', '/insurance-policy'],
       target: `http://${ip}:${MOCK_PORT}`,
       secure: false,
-      changeOrigin: true,
-    },
-  ],
+      changeOrigin: true
+    }
+  ]
 };
 
 const server = new WebpackDevServer(compiler, devServerOptions);

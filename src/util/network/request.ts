@@ -1,13 +1,13 @@
 import HttpRequest from './http';
 
 const httpInstance = new HttpRequest({
-  showError: false,
+  showError: false
 });
 
 httpInstance.addReqInterceptor((option) => {
   option.headers = {
     ...(option.headers || {}),
-    'customer-header': 'test-header',
+    'customer-header': 'test-header'
   };
   return option;
 });

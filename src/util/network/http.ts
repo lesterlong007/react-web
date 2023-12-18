@@ -25,36 +25,38 @@ type CommonFC = (...args: any[]) => any;
 class HttpRequest {
   private commonConfig: RequestOption = {
     timeout: 60000,
-    showError: true,
+    showError: true
   };
+
   private reqInterceptors: CommonFC[] = [];
   private resInterceptors: CommonFC[] = [];
   private errorResInterceptors: CommonFC[] = [];
 
-  constructor(config?: RequestOption) {
+  constructor (config?: RequestOption) {
     this.commonConfig = {
       ...this.commonConfig,
-      ...(config || {}),
+      ...(config || {})
     };
   }
 
-  public addReqInterceptor(fn: CommonFC) {
+  public addReqInterceptor (fn: CommonFC) {
     if (typeof fn === 'function') {
       this.reqInterceptors.push(fn);
     }
   }
 
-  public addResInterceptor(fn: CommonFC) {
+  public addResInterceptor (fn: CommonFC) {
     if (typeof fn === 'function') {
       this.resInterceptors.push(fn);
     }
   }
 
-  public addResErrorInterceptor(fn: CommonFC) {
+  public addResErrorInterceptor (fn: CommonFC) {
     if (typeof fn === 'function') {
       this.errorResInterceptors.push(fn);
     }
   }
+
   /**
    * encapsulate request method base on fetch
    * @param url
@@ -63,12 +65,12 @@ class HttpRequest {
    * @param option
    * @returns
    */
-  public request(url: string, data?: any, method?: MethodType, option?: RequestOption): Promise<Response> {
+  public request (url: string, data?: any, method?: MethodType, option?: RequestOption): Promise<Response> {
     const controller = new AbortController();
 
     let newOption = {
       ...this.commonConfig,
-      ...(option || {}),
+      ...(option || {})
     };
     this.reqInterceptors.forEach((fn) => {
       newOption = fn(newOption);
@@ -80,11 +82,11 @@ class HttpRequest {
     const defaultOption: RequestInit = {
       method: methodName,
       mode: 'cors',
-      credentials: 'include',
+      credentials: 'include'
     };
     restOption.headers = new Headers({
       'content-type': 'application/json; charset=utf-8',
-      ...(restOption.headers || {}),
+      ...(restOption.headers || {})
     });
 
     if (([RequestMethod.GET, RequestMethod.HEAD] as MethodType[]).includes(methodName)) {
@@ -92,7 +94,7 @@ class HttpRequest {
         url += `${url.includes('?') ? '&' : '?'}${qs.stringify(data)}`;
       }
     } else {
-      if (void 0 !== data) {
+      if (data !== undefined) {
         const type = getDataType(data);
         if (type === 'object') {
           defaultOption.body = JSON.stringify(data);
@@ -111,14 +113,14 @@ class HttpRequest {
     restOption.signal = controller.signal;
 
     return new Promise((resolve) => {
-      let timer: NodeJS.Timeout;
+      let timer: NodeJS.Timeout | null = null;
       const clearTimer = () => {
         if (timer) clearTimeout(timer);
       };
 
       const handleErr = (err: any) => {
         resolve({
-          error: err,
+          error: err
         });
         if (showError) console.log(err);
       };
@@ -133,7 +135,7 @@ class HttpRequest {
         })
         .then((res) => {
           resolve({
-            data: res,
+            data: res
           });
           clearTimer();
         })
@@ -152,15 +154,15 @@ class HttpRequest {
     });
   }
 
-  public get(url: string, data?: any, option?: RequestOption) {
+  public get (url: string, data?: any, option?: RequestOption) {
     return this.request(url, data, RequestMethod.GET, option);
   }
 
-  public post(url: string, data?: any, option?: RequestOption) {
+  public post (url: string, data?: any, option?: RequestOption) {
     return this.request(url, data, RequestMethod.POST, option);
   }
 
-  public put(url: string, data?: any, option?: RequestOption) {
+  public put (url: string, data?: any, option?: RequestOption) {
     return this.request(url, data, RequestMethod.PUT, option);
   }
 }
