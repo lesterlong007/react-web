@@ -124,7 +124,8 @@ module.exports = {
       path: envConfig[argv.env || 'local']
     }),
     new DefinePlugin({
-      'process.env.BASENAME': JSON.stringify(`${BASENAME}`)
+      'process.env.BASENAME': JSON.stringify(`${BASENAME}`),
+      'process.env.LOCATION': JSON.stringify(`${argv.location || 'MY'}`)
     }),
     new CopyPlugin({
       patterns: [

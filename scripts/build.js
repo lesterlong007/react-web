@@ -30,11 +30,10 @@ const buildConfig = {
       cacheGroups: {
         baseChunks: {
           name: 'base.chunks',
-          test: (module) => /react|react-dom|react-router-dom/.test(module.context),
+          test: /[\\/]node_modules[\\/]/,
           priority: 20
         },
         default: {
-          name: 'common.chunks',
           minChunks: 2,
           priority: 5,
           reuseExistingChunk: true

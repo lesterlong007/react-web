@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import One from './One';
-import Two from './Two';
-import Three from './Three';
+import One from './one';
+import Two from './two';
+import Three from './three';
 import style from './style.module.scss';
 
 const NotFound: React.FC = () => {

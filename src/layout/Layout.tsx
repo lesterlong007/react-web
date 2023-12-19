@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Routes, Route, RouteProps } from 'react-router-dom';
-import { routes } from 'src/pages/route';
+import { routes } from 'src/views/route';
 
 const Layout: React.FC = () => {
   return (

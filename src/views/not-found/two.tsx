@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ContextRead } from 'src/store';
-import Four from './Four';
+import Four from './four';
 
 const Two: React.FC = () => {
   const useInfo = useContext(ContextRead);
