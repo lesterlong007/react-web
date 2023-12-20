@@ -10,7 +10,6 @@ let tokenPromise: Promise<any> = Promise.resolve();
 
 httpInstance.addReqInterceptor((option, ...rest: [any]) => {
   if (httpInstance.isRefreshingToken && !rest[0]?.includes('/api/token')) {
-    console.log(1111, rest);
     return tokenPromise.then(() => {
       return httpInstance.request(...rest);
     });

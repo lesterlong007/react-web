@@ -132,6 +132,8 @@ class HttpRequest {
 
     return new Promise((resolve, reject) => {
       let timer: NodeJS.Timeout | null = null;
+      let error: ErrorObj = {};
+
       const clearTimer = () => {
         if (timer) clearTimeout(timer);
       };
@@ -140,8 +142,6 @@ class HttpRequest {
         reject(err);
         if (showError) console.log(err);
       };
-
-      let error: ErrorObj = {};
 
       fetch(url, { ...defaultOption, ...restOption })
         .then((res) => {
