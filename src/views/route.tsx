@@ -4,22 +4,28 @@ import { isEmpty } from 'src/util/base';
 
 const lazyLoad = (cm: () => Promise<any>) => createElement(lazy(cm));
 
-const configFn = require.context('../views/', true, /page.js/);
+const configModule = require.context('../views/', true, /page.js/);
 
-const pageFn = require.context('../views/', true, /index.tsx$/, 'lazy');
+const pageModule = require.context('../views/', true, /index.tsx$/, 'lazy');
 
+/**
+ * appointment over than configuration
+ * one entire page must contain index.tsx and page.js files
+ * @returns routes
+ */
 const importAll = () => {
   const routes: RouteProps[] = [{
     path: '*',
     element: lazyLoad(() => import('src/views/not-found'))
   }];
-  pageFn.keys().forEach(filePath => {
+  pageModule.keys().forEach(filePath => {
     const configPath = filePath.replace('index.tsx', 'page.js');
-    const lbu = configFn(configPath).default.lbu;
-    if (isEmpty(lbu) || lbu.includes(process.env.LOCATION)) {
+    const configObj = configModule(configPath).default;
+
+    if (isEmpty(configObj.lbu) || configObj.lbu.includes(process.env.LOCATION)) {
       routes.push({
-        path: filePath.replace(/\.|(\/index.tsx)/g, ''),
-        element: lazyLoad(() => pageFn(filePath))
+        path: configObj.path || filePath.replace(/\.|(\/index.tsx)/g, ''),
+        element: lazyLoad(() => pageModule(filePath))
       });
     }
   });
