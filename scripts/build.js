@@ -4,8 +4,7 @@ process.env.NODE_ENV = 'production';
 
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // css compress
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // css compress
 const TerserWebpackPlugin = require('terser-webpack-plugin'); // js compress
 const CompressionPlugin = require('compression-webpack-plugin'); // gzip compress
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer'); // bundle analysis
@@ -14,7 +13,7 @@ const webpackConfig = require('./webpack.config');
 
 const buildConfig = {
   devtool: 'eval',
-  plugins: [new CleanWebpackPlugin(), new SimpleProgressWebpackPlugin(), new CompressionPlugin(), process.env.ANALYZE && new BundleAnalyzerPlugin()].filter(Boolean),
+  plugins: [new CleanWebpackPlugin(), new CompressionPlugin(), process.env.ANALYZE && new BundleAnalyzerPlugin()].filter(Boolean),
   performance: {
     hints: false
   },
@@ -56,7 +55,7 @@ const buildConfig = {
           safari10: true
         }
       }),
-      new OptimizeCSSAssetsPlugin({})
+      new CssMinimizerPlugin()
     ]
   }
 };

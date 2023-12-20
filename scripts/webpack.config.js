@@ -1,10 +1,13 @@
 const path = require('path');
+const chalk = require('chalk');
 const HtmlPlugin = require('html-webpack-plugin');
 const DotEnvWebpack = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const MyCustomPlugin = require('./custom.plugin');
 
 const BASENAME = '/react-web';
 process.env.BASENAME = BASENAME;
@@ -76,6 +79,13 @@ module.exports = {
         use: getStyleLoader(true, true)
       },
       {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
@@ -83,13 +93,6 @@ module.exports = {
           options: {
             presets: ['@babel/preset-typescript']
           }
-        }
-      },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
         }
       },
       {
@@ -120,6 +123,9 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.scss', '.css']
   },
   plugins: [
+    new ProgressBarPlugin(),
+    new MyCustomPlugin(),
+    new ESLintPlugin(),
     new DotEnvWebpack({
       path: envConfig[argv.env || 'local']
     }),
@@ -148,7 +154,6 @@ module.exports = {
       filename: isDev ? 'css/[name][hash:8].css' : 'css/[name].[chunkhash:8].css',
       chunkFilename: isDev ? 'css/[id][hash:8].css' : 'css/[id].[chunkhash:8].css',
       ignoreOrder: true
-    }),
-    new ESLintPlugin()
+    })
   ]
 };
