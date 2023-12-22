@@ -7,7 +7,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const MyCustomPlugin = require('./custom.plugin');
+const MyCustomPlugin = require('./plugins/custom.plugin');
 
 const BASENAME = '/react-web';
 process.env.BASENAME = BASENAME;

@@ -13,7 +13,11 @@ const webpackConfig = require('./webpack.config');
 
 const buildConfig = {
   devtool: 'eval',
-  plugins: [new CleanWebpackPlugin(), new CompressionPlugin(), process.env.ANALYZE && new BundleAnalyzerPlugin()].filter(Boolean),
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CompressionPlugin(),
+    process.env.ANALYZE && new BundleAnalyzerPlugin()
+  ].filter(Boolean),
   performance: {
     hints: false
   },
