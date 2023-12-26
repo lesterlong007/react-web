@@ -6,6 +6,8 @@ const lazyLoad = (cm: () => Promise<any>) => createElement(lazy(cm));
 
 const configModule = require.context('../views/', true, /page.js/);
 
+// const featureModule = require.context('../views/', true, /feature.js/);
+
 const pageModule = require.context('../views/', true, /index.tsx$/, 'lazy');
 
 /**
@@ -14,11 +16,13 @@ const pageModule = require.context('../views/', true, /index.tsx$/, 'lazy');
  * @returns routes
  */
 const importAll = () => {
-  const routes: RouteProps[] = [{
-    path: '*',
-    element: lazyLoad(() => import('src/views/not-found'))
-  }];
-  pageModule.keys().forEach(filePath => {
+  const routes: RouteProps[] = [
+    {
+      path: '*',
+      element: lazyLoad(() => import('src/views/not-found'))
+    }
+  ];
+  pageModule.keys().forEach((filePath) => {
     const configPath = filePath.replace('index.tsx', 'page.js');
     const configObj = configModule(configPath).default;
 
@@ -50,3 +54,7 @@ export const routes: RouteProps[] = importAll();
 //     element: lazyLoad(() => import('src/views/mine'))
 //   }
 // ];
+
+// feature
+// version name rule replace parallel
+// alpha beta

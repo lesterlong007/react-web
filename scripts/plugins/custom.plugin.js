@@ -86,6 +86,15 @@ class MyCustomPlugin {
     //   console.log('\n my custom plugin is emit');
     //   next();
     // });
+
+    compiler.hooks.done.tapAsync(pluginName, (stats, next) => {
+      const bundles = stats.toJson();
+      bundles.chunks.forEach(ck => {
+        const files = ck.modules.filter(m => m.nameForCondition && m.name && !m.name.includes('node_modules')).map(m => m.nameForCondition);
+        // console.log(files);
+      });
+      next();
+    });
   }
 }
 
