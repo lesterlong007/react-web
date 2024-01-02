@@ -33,13 +33,12 @@ class CheckModule {
         const t = dir.replace(`-${v}`, '');
         const from = path.join(finalPath, dir);
         const to = path.join(finalPath, t);
-        const backup = path.join(rootPath, `./backup/${to}`);
+        const backup = path.join(rootPath, `./backup/${t}`);
         // node version needs to be larger than v16.7.0 for cpSync
         // fs.cpSync(from, to, { recursive: true });
         fs.copySync(to, backup, { overwrite: true });
-        this.backupMap.set(to, backup);
         fs.copySync(from, to, { overwrite: true });
-        fs.removeSync(from);
+        fs.emptyDirSync(from);
         this.backupList.push({
           to,
           from,
@@ -60,19 +59,21 @@ class CheckModule {
   apply (compiler) {
     const pluginName = CheckModule.name;
 
-    compiler.hooks.initialize.tap(pluginName, () => {
-      console.log('Checking...', path.resolve(__dirname));
-      this.readDirRecursive('', '');
+    compiler.hooks.beforeCompile.tap(pluginName, (params) => {
+      // this.backupList = [];
+      console.log('\n checking...');
+      console.log(params);
+      // this.readDirRecursive('', '');
       // throw new Error('Checking failed');
     });
 
     compiler.hooks.done.tap(pluginName, () => {
-      console.log('done...');
-      this.backupList.forEach((item) => {
-        fs.moveSync(item.to, item.from, { overwrite: true });
-        fs.moveSync(item.backup, item.to, { overwrite: true });
-      });
-      this.backupList = [];
+      console.log('\n done...');
+      // this.backupList.forEach((item) => {
+      //   fs.moveSync(item.to, item.from, { overwrite: true });
+      //   fs.moveSync(item.backup, item.to, { overwrite: true });
+      // });
+      // this.backupList = [];
     });
   }
 }

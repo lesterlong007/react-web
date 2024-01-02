@@ -1,3 +1,3 @@
 export default {
-  lbu: ['SG', 'MY']
+  lbu: ['SG']
 };

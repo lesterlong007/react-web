@@ -48,7 +48,7 @@ const devServerOptions = {
   ]
 };
 
-const server = new WebpackDevServer(compiler, devServerOptions);
+const server = new WebpackDevServer(devServerOptions, compiler);
 
 const runServer = async () => {
   console.log(`Starting sever on ${protocol}://${HOST}:${PORT}`);
