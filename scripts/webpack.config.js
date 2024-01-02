@@ -8,6 +8,7 @@ const { DefinePlugin } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const MyCustomPlugin = require('./plugins/custom.plugin');
+const CheckModulePlugin = require('./plugins/check.module.js');
 
 const BASENAME = '/react-web';
 process.env.BASENAME = BASENAME;
@@ -123,8 +124,9 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.scss', '.css']
   },
   plugins: [
-    new ProgressBarPlugin(),
+    new CheckModulePlugin(),
     new MyCustomPlugin(),
+    new ProgressBarPlugin(),
     new ESLintPlugin(),
     new DotEnvWebpack({
       path: envConfig[argv.env || 'local']

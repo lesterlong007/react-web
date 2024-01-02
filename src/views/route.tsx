@@ -56,5 +56,5 @@ export const routes: RouteProps[] = importAll();
 // ];
 
 // feature
-// version name rule replace parallel
+// version name rule replace or parallel
 // alpha beta
