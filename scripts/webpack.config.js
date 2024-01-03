@@ -57,6 +57,9 @@ module.exports = {
     publicPath: isDev ? '/' : `${BASENAME}/`
   },
   mode: NODE_ENV || 'production',
+  resolveLoader: {
+    modules: ['node_modules', 'scripts/loaders']
+  },
   module: {
     rules: [
       {
@@ -89,12 +92,17 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: {
+        use: [{
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-typescript']
           }
-        }
+        }, {
+          loader: 'custom-loader',
+          options: {
+            name: 'test'
+          }
+        }]
       },
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.ico$/],

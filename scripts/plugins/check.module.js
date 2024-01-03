@@ -18,7 +18,7 @@ class CheckModule {
     return /\.[\w]+$/.test(path);
   }
 
-  readDirRecursive(name, parentPath) {
+  readDirRecursive (name, parentPath) {
     const finalPath = path.join(rootPath, this.options.dirPath, parentPath, name);
     console.log('finalPath ', finalPath);
     const dirList = fs.readdirSync(finalPath);
@@ -62,7 +62,7 @@ class CheckModule {
     compiler.hooks.beforeCompile.tap(pluginName, (params) => {
       // this.backupList = [];
       console.log('\n checking...');
-      console.log(params);
+      // console.log(params);
       // this.readDirRecursive('', '');
       // throw new Error('Checking failed');
     });

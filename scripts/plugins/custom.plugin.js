@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const filterPath = (path) => {
-  return path && !path.includes('modules');
+  return path && !path.includes('node_modules');
 };
 
 class MyCustomPlugin {
@@ -10,11 +10,11 @@ class MyCustomPlugin {
     outputFile: 'assets.md'
   };
 
-  constructor(options = {}) {
+  constructor (options = {}) {
     this.options = { ...this.options, ...options };
   }
 
-  apply(compiler) {
+  apply (compiler) {
     const pluginName = MyCustomPlugin.name;
     const {
       webpack: { Compilation, sources }
@@ -38,41 +38,23 @@ class MyCustomPlugin {
     //   );
     // });
 
-    compiler.hooks.normalModuleFactory.tap(pluginName, (nmf) => {
-      nmf.hooks.beforeResolve.tapAsync(pluginName, (result, next) => {
-        const { context, contextInfo, request } = result;
-        const { issuer } = contextInfo;
-        if (!context.includes('node_modules')) {
-          // console.log(context);
-        }
-        if (filterPath(issuer)) {
-          // console.log(contextInfo);
-        }
-        next();
-      });
-
-      nmf.hooks.afterResolve.tapAsync(pluginName, (result, next) => {
-        if (filterPath(result.contextInfo?.issuer)) {
-          // console.log(result.contextInfo?.issuer);
-        }
-        if (filterPath(result.createData?.resourceResolveData?.relativePath)) {
-          // console.log(result.createData?.resourceResolveData?.relativePath);
-        }
-
-        // const { resourceResolveData } = result;
-        // const {
-        //   context: { issuer },
-        //   path
-        // } = resourceResolveData;
-        // tree.addDependency(issuer, path);
-        next();
-      });
-    });
-
     compiler.hooks.compilation.tap(pluginName, (compilation) => {
-      compilation.hooks.finishModules.tapAsync(pluginName, (modules, next) => {
+      compilation.hooks.afterOptimizeModules.tap(pluginName, (modules) => {
         // console.log(modules);
-        next();
+        const sourceModules = [];
+        modules.forEach((module) => {
+          if (filterPath(module.resource)) {
+            sourceModules.push(module);
+          }
+        });
+        sourceModules.forEach((module, index) => {
+          console.log(module.resource);
+          if (index === 0) {
+            const originalSource = module.originalSource().source();
+            // module._source._value
+            console.log(originalSource);
+          }
+        });
       });
     });
 
@@ -89,8 +71,8 @@ class MyCustomPlugin {
 
     compiler.hooks.done.tapAsync(pluginName, (stats, next) => {
       const bundles = stats.toJson();
-      bundles.chunks.forEach(ck => {
-        const files = ck.modules.filter(m => m.nameForCondition && m.name && !m.name.includes('node_modules')).map(m => m.nameForCondition);
+      bundles.chunks.forEach((ck) => {
+        const files = ck.modules.filter((m) => m.nameForCondition && m.name && !m.name.includes('node_modules')).map((m) => m.nameForCondition);
         // console.log(files);
       });
       next();
