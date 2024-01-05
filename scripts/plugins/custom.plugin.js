@@ -1,16 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const filterPath = (path) => {
-  return path && !path.includes('node_modules');
-};
-
 class MyCustomPlugin {
   options = {
     outputFile: 'assets.md'
   };
 
-  constructor (options = {}) {
+  constructor(options = {}) {
     this.options = { ...this.options, ...options };
   }
 
@@ -60,6 +56,27 @@ class MyCustomPlugin {
         //   }
         // });
       });
+
+      compilation.hooks.optimizeAssets.tap(pluginName, (assets) => {
+        const sourceMap = compilation.sourceMaps;
+        const modules = compilation.modules;
+        // console.log(compilation.assets);
+        modules.forEach((module) => {
+          if (module.resource && !module.resource.includes('node_modules')) {
+            const sourcePath = module.resource;
+            // console.log(`> ${sourcePath}`);
+          }
+        });
+
+        Object.keys(assets).forEach((asset) => {
+          // console.log(`- ${asset}`);
+        });
+      });
+    });
+
+    compiler.hooks.emit.tap(pluginName, (compilation) => {
+      // console.log(Object.keys(compilation));
+      // delete compilation.assets['favicon.ico'];
     });
   }
 }

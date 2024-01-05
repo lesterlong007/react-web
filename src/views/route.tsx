@@ -75,7 +75,3 @@ export const routes: RouteProps[] = importAll();
 //     element: lazyLoad(() => import('src/views/mine'))
 //   }
 // ];
-
-// feature
-// version name rule replace or parallel
-// alpha beta

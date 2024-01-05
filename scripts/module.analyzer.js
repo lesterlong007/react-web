@@ -1,11 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 
 const { argv } = require('yargs');
 const sourceRootPath = path.resolve(__dirname, '../');
 const ellipsisFolders = ['/components', '/store'];
 const extensions = ['js', 'jsx', 'ts', 'tsx'];
 const featureFileName = 'feature.js';
+const pageFileName = 'page.js';
 const viewsPath = 'src/views';
 const LBU = argv.location || 'MY';
 
@@ -100,14 +102,30 @@ const getFileContent = (finalPath) => {
 /**
  * judge current lbu whether has feature permission
  * @param {*} dirPath
+ *  @param {*} fileName
  * @returns boolean
  */
-const hasFeaturePermission = (dirPath) => {
-  const content = getFileContent(path.join(dirPath, featureFileName));
+const hasFeaturePagePermission = (dirPath, fileName) => {
+  const content = getFileContent(path.join(dirPath, fileName));
   // console.log(content);
   const res = content.match(/lbu:\s*(\[.*\])/);
   // console.log(res);
   return !res || res[1].includes(LBU);
+};
+
+/**
+ * get version number by directory name
+ * @param {*} dir
+ * @returns number
+ */
+const getVersionNo = (dir) => {
+  const res = dir.match(/beta-\d+$/);
+  if (res) {
+    const v = res[0];
+    return +v.replace('beta-', '');
+  } else {
+    return 0;
+  }
 };
 
 /**
@@ -134,14 +152,14 @@ function readFileRecursive (name, parentDir, res, level, paths) {
 
     const isFeature = !hasExtension(dir) && fs.existsSync(path.join(finalPath, dir, featureFileName));
     if (isFeature) {
-      if (hasFeaturePermission(path.join(finalPath, dir))) {
+      if (hasFeaturePagePermission(path.join(finalPath, dir), featureFileName)) {
         if (dirVMap.has(realName)) {
-          const oldVersion = dirVMap.get(realName)?.version ?? -1;
+          const oldVersion = getVersionNo(dirVMap.get(realName));
           if (oldVersion < version) {
             dirVMap.set(realName, dir);
           }
           // throw some error if need to restrict only one version
-          console.error('Could not config more than two versions for one feature, please check our configuration');
+          console.log(chalk.red('Could not config more than two versions for one feature, please check our configuration'));
           // throw new Error('Could not config more than two versions for one feature, please check our configuration');
         } else {
           dirVMap.set(realName, dir);
@@ -155,7 +173,8 @@ function readFileRecursive (name, parentDir, res, level, paths) {
     if (!hasExtension(val)) {
       readFileRecursive(val, path.join(parentDir, name), res, level, paths);
     } else {
-      if (val === 'index.tsx') {
+      if (val === 'index.tsx' && hasFeaturePagePermission(finalPath, pageFileName)) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         traverseDependencies(path.join(finalPath.match('src.*$')[0], val), '', res, level, paths);
       }
     }

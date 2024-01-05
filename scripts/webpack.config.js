@@ -1,5 +1,4 @@
 const path = require('path');
-const chalk = require('chalk');
 const HtmlPlugin = require('html-webpack-plugin');
 const DotEnvWebpack = require('dotenv-webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
