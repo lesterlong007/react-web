@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { post } from 'src/util//network/request';
+import { post } from 'src/util/network/request';
 
 const Index: React.FC = () => {
   const { t } = useTranslation();

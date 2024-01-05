@@ -4,9 +4,9 @@ import { isEmpty } from 'src/util/base';
 
 const lazyLoad = (cm: () => Promise<any>) => createElement(lazy(cm));
 
-const configModule = require.context('../views/', true, /page.js/);
+const configModule = require.context('../views/', true, /page.js$/);
 
-const featureModule = require.context('../views/', true, /feature.js/);
+const featureModule = require.context('../views/', true, /feature.js$/);
 
 const pageModule = require.context('../views/', true, /index.tsx$/, 'lazy');
 

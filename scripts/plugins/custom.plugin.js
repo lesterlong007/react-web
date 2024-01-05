@@ -40,42 +40,26 @@ class MyCustomPlugin {
 
     compiler.hooks.compilation.tap(pluginName, (compilation) => {
       compilation.hooks.afterOptimizeModules.tap(pluginName, (modules) => {
-        // console.log(modules);
-        const sourceModules = [];
-        modules.forEach((module) => {
-          if (filterPath(module.resource)) {
-            sourceModules.push(module);
-          }
-        });
-        sourceModules.forEach((module, index) => {
-          console.log(module.resource);
-          if (index === 0) {
-            const originalSource = module.originalSource().source();
-            // module._source._value
-            console.log(originalSource);
-          }
-        });
+        // const sourceModules = [];
+        // modules.forEach((module) => {
+        //   if (filterPath(module.resource)) {
+        //     sourceModules.push(module);
+        //     // console.log(module.resource);
+        //     // if (module.resource.includes('/feature-one-alpha-1')) {
+        //     //   modules.delete(module);
+        //     // }
+        //   }
+        // });
+        // sourceModules.forEach((module, index) => {
+        //   // console.log(module.resource);
+        //   if (index === 0) {
+        //     const originalSource = module.originalSource().source();
+        //     // module._source._value
+        //     // console.log(originalSource);
+        //     // console.log(module);
+        //   }
+        // });
       });
-    });
-
-    // compiler.hooks.make.tapAsync(pluginName, (compilation, next) => {
-    //   console.log('\n my custom plugin is run');
-    //   console.log(Object.keys(compilation.assets));
-    //   next();
-    // });
-
-    // compiler.hooks.emit.tapAsync(pluginName, (compilation, next) => {
-    //   console.log('\n my custom plugin is emit');
-    //   next();
-    // });
-
-    compiler.hooks.done.tapAsync(pluginName, (stats, next) => {
-      const bundles = stats.toJson();
-      bundles.chunks.forEach((ck) => {
-        const files = ck.modules.filter((m) => m.nameForCondition && m.name && !m.name.includes('node_modules')).map((m) => m.nameForCondition);
-        // console.log(files);
-      });
-      next();
     });
   }
 }

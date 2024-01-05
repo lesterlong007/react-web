@@ -37,6 +37,7 @@ class CheckModule {
         // node version needs to be larger than v16.7.0 for cpSync
         // fs.cpSync(from, to, { recursive: true });
         fs.copySync(to, backup, { overwrite: true });
+        // fs.emptyDirSync(to);
         fs.copySync(from, to, { overwrite: true });
         fs.emptyDirSync(from);
         this.backupList.push({
@@ -51,7 +52,7 @@ class CheckModule {
       // const stats = fs.statSync(curPath);
       // stats.isDirectory()
       if (!this.hasExtension(dir)) {
-        this.readDirRecursive(dir, name);
+        this.readDirRecursive(dir, path.join(parentPath, name));
       }
     });
   }

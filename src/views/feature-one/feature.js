@@ -1,3 +1,1 @@
-export default {
-  lbu: ['SG', 'MY']
-};
+export default {};
