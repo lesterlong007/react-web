@@ -3,11 +3,10 @@ const path = require('path');
 const chalk = require('chalk');
 
 const {
-  sourceRootPath, viewsPath, extensions, ellipsisFolders, pageFileName, featureFileName,
+  sourceRootPath, viewsPath, extensions, ellipsisFolders, pageFileName, featureFileName, componentsPath,
   hasExtension, hasFeaturePagePermission, getVersionNo
 } = require('./common/base');
 const graphFilePath = path.resolve(__dirname, 'module-graph.wsd');
-const componentsPath = 'src/components';
 
 /**
  * only collect dependency from source codes
@@ -134,7 +133,7 @@ const readDependentComponents = (codeStr, res, level, paths) => {
     res.push(cur);
     return res;
   }
-}
+};
 
 /**
  * read folders and files recursive

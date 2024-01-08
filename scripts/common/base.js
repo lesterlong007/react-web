@@ -8,6 +8,7 @@ const extensions = ['js', 'jsx', 'ts', 'tsx'];
 const featureFileName = 'feature.js';
 const pageFileName = 'page.js';
 const viewsPath = 'src/views';
+const componentsPath = 'src/components';
 const LBU = argv.location || 'MY';
 
 /**
@@ -92,6 +93,7 @@ const getVersionNo = (dir) => {
 module.exports = {
   sourceRootPath,
   viewsPath,
+  componentsPath,
   featureFileName,
   pageFileName,
   extensions,
