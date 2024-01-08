@@ -39,7 +39,7 @@ const getUnwantedFileRecursive = (name, parentDir, res) => {
             res.features.push(dir);
           }
           // throw some error if need to restrict only one version
-          console.log(chalk.red('Could not config more than two versions for one feature, please check our configuration'));
+          // console.log(chalk.red('Could not config more than two versions for one feature, please check our configuration'));
           // throw new Error('Could not config more than two versions for one feature, please check our configuration');
         } else {
           dirVMap.set(realName, dir);
