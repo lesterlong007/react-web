@@ -58,6 +58,28 @@ const getUnwantedFileRecursive = (name, parentDir, res) => {
   return res;
 };
 
+const isUnwantedChunk = (modules, features) => {
+  for (let i = 0; i < modules.length; i++) {
+    for (let j = 0; j < features.length; j++) {
+      if (modules[i].includes(`${features[j]}/`)) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+const isUnwantedChunkByPage = (modules, pages) => {
+  for (let i = 0; i < modules.length; i++) {
+    for (let j = 0; j < pages.length; j++) {
+      if (modules[i].includes(pages[j])) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
 class CheckModule {
   options = {
     dirPath: 'src/views'
@@ -129,7 +151,8 @@ class CheckModule {
     });
 
     compiler.hooks.compilation.tap(pluginName, (compilation) => {
-      compilation.hooks.afterOptimizeChunkAssets.tap(pluginName, (chunks) => {
+      compilation.hooks.processAssets.tap(pluginName, () => {
+        const chunks = compilation.chunks;
         const chunkList = Array.from(chunks).map((chunk) => {
           const sourceModules = [];
           chunk.getModules().forEach(module => {
@@ -145,17 +168,21 @@ class CheckModule {
           };
         });
         const { features, pages } = getUnwantedFileRecursive('', '');
-        console.log(chunkList);
-        console.log(Object.keys(compilation.assets));
+        // console.log(features, pages);
+        // console.log(chunkList);
+        // console.log(Object.keys(compilation.assets));
+        const assetList = Object.keys(compilation.assets);
         chunkList.forEach(chunk => {
-          if (!chunk.name) {
-            //
+          const srcModules = chunk.sourceModules;
+          if (!chunk.name && (isUnwantedChunk(srcModules, features) || isUnwantedChunkByPage(srcModules, pages))) {
+            const reg = new RegExp(`/${chunk.id}.`);
+            const unWantedPath = assetList.find(asst => reg.test(asst));
+            if (unWantedPath) {
+              delete compilation.assets[unWantedPath];
+              // console.log('unWantedPath', unWantedPath);
+            }
           }
         });
-        Object.keys(compilation.assets).forEach(asset => {
-          //
-        });
-        // delete compilation.assets['js/src_views_feature-two_list_index_tsx.fd128e06.bundle.js'];
       });
     });
   }
