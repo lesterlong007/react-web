@@ -9,6 +9,8 @@
 ***** src/views/feature-two-beta-1/list/index.tsx
 ***** src/views/feature-two-beta-1/submission/index.tsx
 ***** src/views/index/index.tsx
+****** src/components
+******* src/components/button/button
 ****** src/util/network/request
 ******* src/util/network/http
 ******** src/util/base

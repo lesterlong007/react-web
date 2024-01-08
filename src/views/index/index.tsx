@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Button } from 'src/components';
 import { post } from 'src/util/network/request';
 
 const Index: React.FC = () => {
@@ -31,6 +32,7 @@ const Index: React.FC = () => {
     <div className="test-word" style={{ margin: 10 }}>
       <div onClick={() => navigate('/mine')}>Welcome to my home page</div>
       <div>{t('title')}</div>
+      <Button />
       <img
         src="/static/google_logo.jpeg"
         alt=""

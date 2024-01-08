@@ -7,6 +7,7 @@ const {
   hasExtension, hasFeaturePagePermission, getVersionNo
 } = require('./common/base');
 const graphFilePath = path.resolve(__dirname, 'module-graph.wsd');
+const componentsPath = 'src/components';
 
 /**
  * only collect dependency from source codes
@@ -88,6 +89,52 @@ const getFileContent = (finalPath) => {
     }
   }
 };
+
+/**
+ * get referenced component list
+ * @param {*} codeStr
+ * @param {*} res
+ * @param {*} level
+ * @param {*} paths
+ * @returns dependencies
+ */
+const readDependentComponents = (codeStr, res, level, paths) => {
+  const matchRes = codeStr.match(/\{(.*)\s*\}/);
+  const cur = {
+    level,
+    paths,
+    path: componentsPath,
+    children: [],
+    isLeaf: false
+  };
+  if (matchRes) {
+    const nextLevel = level + 1;
+    const nextPaths = [...paths, componentsPath];
+    const components = matchRes[1].split(',').map(cm => cm.trim());
+    const finalPath = getCompletedPath(componentsPath, '');
+    const content = getFileContent(finalPath);
+
+    components.forEach(cm => {
+      const cmReg = new RegExp(`${cm}.*?['"]([^'"]+)['"]`);
+      const matchRes = content.match(cmReg);
+      if (matchRes) {
+        const cmPath = path.join(componentsPath, matchRes[1]);
+        if (cur.children.every(it => it.path !== cmPath)) {
+          cur.children.push({
+            level: nextLevel,
+            paths: nextPaths,
+            path: cmPath,
+            children: [],
+            isLeaf: true
+          });
+        }
+      }
+    });
+
+    res.push(cur);
+    return res;
+  }
+}
 
 /**
  * read folders and files recursive
@@ -182,7 +229,11 @@ function traverseDependencies (filePath, parentDir, res, level, paths) {
       // avoid recursive circularly
       if (isOwnDependency(nextPath) && !curPaths.includes(nextSrcFilePath)) {
         isLeaf = false;
-        traverseDependencies(nextPath, curPath, cur.children, level + 1, curPaths);
+        if (/^(@|src)\/components$/.test(nextPath)) {
+          readDependentComponents(match[0], cur.children, level + 1, curPaths);
+        } else {
+          traverseDependencies(nextPath, curPath, cur.children, level + 1, curPaths);
+        }
       }
     }
   }
@@ -191,8 +242,18 @@ function traverseDependencies (filePath, parentDir, res, level, paths) {
   return res;
 };
 
+/**
+ * generate star string
+ * @param {*} count
+ * @returns string
+ */
 const getStars = (count = 1) => new Array(count).fill('*').join('');
 
+/**
+ * generate module graph wsd file
+ * @param {*} modules
+ * @returns wsd content
+ */
 const generateModuleGraph = (modules) => {
   let res = '';
   modules.forEach(m => {
@@ -206,7 +267,7 @@ const generateModuleGraph = (modules) => {
 
 const result = traverseDependencies('src/index.tsx', '', [], 1, []);
 const graphContent = `@startmindmap Module Graph${generateModuleGraph(result)}\n@endmindmap`;
-// console.dir(JSON.stringify(result));
+console.dir(JSON.stringify(result));
 // console.dir(graphContent);
 
 fs.writeFile(graphFilePath, graphContent, (err) => {
