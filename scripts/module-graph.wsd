@@ -1,0 +1,31 @@
+@startmindmap Module Graph
+* src/index.tsx
+** src/App
+*** src/layout/layout
+**** src/views/route
+***** src/views/feature-one/detail/index.tsx
+***** src/views/feature-one/home/index.tsx
+***** src/views/feature-one-alpha-1/home/index.tsx
+***** src/views/feature-two-beta-1/list/index.tsx
+***** src/views/feature-two-beta-1/submission/index.tsx
+***** src/views/index/index.tsx
+****** src/util/network/request
+******* src/util/network/http
+******** src/util/base
+***** src/views/mine/index.tsx
+****** src/util/base
+****** src/views/mine/style.module.scss
+***** src/views/not-found/index.tsx
+****** src/views/not-found/one
+******* src/store
+****** src/views/not-found/two
+******* src/store
+******* src/views/not-found/four
+****** src/views/not-found/three
+****** src/views/not-found/style.module.scss
+***** src/util/base
+*** src/i18n
+**** src/i18n/en.json
+**** src/i18n/zh.json
+*** src/store
+@endmindmap

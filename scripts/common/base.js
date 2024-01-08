@@ -94,7 +94,10 @@ module.exports = {
   viewsPath,
   featureFileName,
   pageFileName,
+  extensions,
+  ellipsisFolders,
   hasExtension,
   hasFeaturePagePermission,
-  getVersionNo
+  getVersionNo,
+  isOwnDependency
 };

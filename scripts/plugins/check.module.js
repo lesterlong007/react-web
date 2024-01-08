@@ -1,7 +1,10 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const { sourceRootPath, viewsPath, featureFileName, pageFileName, hasExtension, hasFeaturePagePermission, getVersionNo } = require('../common/base');
+const {
+  sourceRootPath, viewsPath, featureFileName, pageFileName,
+  hasExtension, hasFeaturePagePermission, getVersionNo
+} = require('../common/base');
 
 const getUnwantedFileRecursive = (name, parentDir, res) => {
   if (!res) {
@@ -87,7 +90,7 @@ class CheckModule {
 
   backupList = [];
 
-  constructor (options = {}) {
+  constructor(options = {}) {
     this.options = { ...this.options, ...options };
   }
 

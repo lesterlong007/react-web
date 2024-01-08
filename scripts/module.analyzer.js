@@ -2,14 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 
-const { argv } = require('yargs');
-const sourceRootPath = path.resolve(__dirname, '../');
-const ellipsisFolders = ['/components', '/store'];
-const extensions = ['js', 'jsx', 'ts', 'tsx'];
-const featureFileName = 'feature.js';
-const pageFileName = 'page.js';
-const viewsPath = 'src/views';
-const LBU = argv.location || 'MY';
+const {
+  sourceRootPath, viewsPath, extensions, ellipsisFolders, pageFileName, featureFileName,
+  hasExtension, hasFeaturePagePermission, getVersionNo
+} = require('./common/base');
+const graphFilePath = path.resolve(__dirname, 'module-graph.wsd');
 
 /**
  * only collect dependency from source codes
@@ -33,13 +30,6 @@ const isOmitFolder = (path) => {
   }
   return false;
 };
-
-/**
- * judge a path whether contains extension name
- * @param {*} path
- * @returns boolean
- */
-const hasExtension = (path) => /\.[\w]+$/.test(path);
 
 /**
  * just collect and analyze js jsx ts tsx files
@@ -96,35 +86,6 @@ const getFileContent = (finalPath) => {
     } else {
       return fs.readFileSync(finalPath + '.ts', { encoding: 'utf8' });
     }
-  }
-};
-
-/**
- * judge current lbu whether has feature permission
- * @param {*} dirPath
- *  @param {*} fileName
- * @returns boolean
- */
-const hasFeaturePagePermission = (dirPath, fileName) => {
-  const content = getFileContent(path.join(dirPath, fileName));
-  // console.log(content);
-  const res = content.match(/lbu:\s*(\[.*\])/);
-  // console.log(res);
-  return !res || res[1].includes(LBU);
-};
-
-/**
- * get version number by directory name
- * @param {*} dir
- * @returns number
- */
-const getVersionNo = (dir) => {
-  const res = dir.match(/beta-\d+$/);
-  if (res) {
-    const v = res[0];
-    return +v.replace('beta-', '');
-  } else {
-    return 0;
   }
 };
 
@@ -218,6 +179,7 @@ function traverseDependencies (filePath, parentDir, res, level, paths) {
     while ((match = importRegex.exec(content))) {
       const nextPath = match[1];
       const nextSrcFilePath = getCompletedPath(nextPath, curPath).match(/src.*$/)[0];
+      // avoid recursive circularly
       if (isOwnDependency(nextPath) && !curPaths.includes(nextSrcFilePath)) {
         isLeaf = false;
         traverseDependencies(nextPath, curPath, cur.children, level + 1, curPaths);
@@ -229,5 +191,28 @@ function traverseDependencies (filePath, parentDir, res, level, paths) {
   return res;
 };
 
+const getStars = (count = 1) => new Array(count).fill('*').join('');
+
+const generateModuleGraph = (modules) => {
+  let res = '';
+  modules.forEach(m => {
+    res += `\n${getStars(m.level)} ${m.path}`;
+    if (m.children?.length > 0) {
+      res += generateModuleGraph(m.children);
+    }
+  });
+  return res;
+};
+
 const result = traverseDependencies('src/index.tsx', '', [], 1, []);
-console.dir(JSON.stringify(result));
+const graphContent = `@startmindmap Module Graph${generateModuleGraph(result)}\n@endmindmap`;
+// console.dir(JSON.stringify(result));
+// console.dir(graphContent);
+
+fs.writeFile(graphFilePath, graphContent, (err) => {
+  if (err) {
+    console.log(chalk.red('Generate module graph error'), err);
+  } else {
+    console.log('Generate module graph successfully');
+  }
+});
