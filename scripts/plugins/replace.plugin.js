@@ -4,9 +4,7 @@ const path = require('path');
 const { LBU, sourceRootPath } = require('../common/base');
 
 class ReplacePlugin {
-  options = {
-    outputFile: 'assets.md'
-  };
+  options = {};
 
   constructor(options = {}) {
     this.options = { ...this.options, ...options };
@@ -21,30 +19,6 @@ class ReplacePlugin {
 
     compiler.hooks.compilation.tap(pluginName, (compilation) => {
       compilation.hooks.finishModules.tap(pluginName, (modules) => {
-        const moduleList = [];
-        Array.from(modules).forEach((module) => {
-          const resourcePath = module.resource || '';
-          if (/src\/.*$/.test(resourcePath)) {
-            moduleList.push(module);
-          }
-        });
-        moduleList.forEach((module) => {
-          const resourcePath = module.resource || '';
-          const res = resourcePath.match(/src\/.*$/);
-          if (res) {
-            const lbu = LBU.toLowerCase();
-            const lbuFilePath = resourcePath.replace(/([\w-]+)(.ts|.tsx|)$/, `$1.${lbu}$2`);
-            const isTsFile = /.(ts|tsx)$/.test(resourcePath);
-            if (isTsFile && fs.existsSync(lbuFilePath)) {
-              // console.log(resourcePath, lbu);
-              const targetModule = moduleList.find(m => m.resource === lbuFilePath)
-              // module._source._value = targetModule._source._value;
-              // console.log(targetModule)
-              module = targetModule;
-            }
-          }
-          });
-          //   });
           // const resourcePath = module.resource || '';
           // const res = resourcePath.match(/src\/.*$/);
           // if (res) {
