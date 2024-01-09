@@ -39,7 +39,6 @@ const devServerOptions = {
     },
     progress: true
   },
-  watchFiles: ['../src/**/**/*.tsx', 'public/**/*'],
   proxy: [
     {
       context: ['/api', '/insurance-policy'],
