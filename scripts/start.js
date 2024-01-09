@@ -6,6 +6,7 @@ process.on('unhandledRejection', (err) => {
   throw err;
 });
 
+const fs = require('fs');
 const path = require('path');
 const ip = require('ip').address();
 const webpack = require('webpack');
@@ -13,6 +14,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const { merge } = require('webpack-merge');
 const webpackConfig = require('./webpack.config');
 const { MOCK_PORT } = require('../mock/config');
+const { LBU } = require('./common/base');
 
 const PORT = parseInt(process.env.PORT, 10) || 8000;
 const HOST = process.env.HOST || ip;
@@ -61,3 +63,23 @@ const runServer = async () => {
 };
 
 runServer();
+
+const srcDir = path.resolve(__dirname, '../src');
+
+fs.watch(srcDir, { recursive: true }, (eventType, filename) => {
+  const lbu = LBU.toLowerCase();
+  console.log(eventType, filename, path.join(srcDir, filename));
+  const completedPath = path.join(srcDir, filename);
+  const lbuReg = new RegExp(`\\.(${lbu})\\.(ts|tsx)`);
+  if (lbuReg.test(completedPath)) {
+    const targetFilePath = completedPath.replace(new RegExp(`\\.(${lbu})\\.(ts|tsx)`), '.$2');
+    const now = new Date();
+    // fs.utimes(targetFilePath, now, now, (err) => {
+    //   if (err) {
+    //     console.error('File save error: ', err);
+    //   } else {
+    //     console.log('\n File save synchronous successfully', targetFilePath);
+    //   }
+    // });
+  }
+});
