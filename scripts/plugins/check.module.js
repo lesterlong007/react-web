@@ -44,6 +44,8 @@ const getUnwantedFileRecursive = (name, parentDir, res) => {
         } else {
           dirVMap.set(realName, dir);
         }
+      } else {
+        res.features.push(dir);
       }
     } else {
       dirVMap.set(realName, dir);
@@ -154,11 +156,13 @@ class CheckModule {
     });
 
     compiler.hooks.compilation.tap(pluginName, (compilation) => {
-      compilation.hooks.processAssets.tap(pluginName, () => {
+      // chunk modules assets
+      compilation.hooks.processAssets.tap(pluginName, (assets) => {
         const chunks = compilation.chunks;
         const chunkList = Array.from(chunks).map((chunk) => {
           const sourceModules = [];
-          chunk.getModules().forEach(module => {
+          const modules = compilation.chunkGraph.getChunkModulesIterable(chunk);
+          modules.forEach(module => {
             const res = (module.userRequest || module.resource || module._identifier || '').match(/src\/views.*$/);
             if (res) {
               sourceModules.push(res[0]);
@@ -170,11 +174,11 @@ class CheckModule {
             sourceModules
           };
         });
+        const assetList = Object.keys(assets);
         const { features, pages } = getUnwantedFileRecursive('', '');
         // console.log(features, pages);
         // console.log(chunkList);
         // console.log(Object.keys(compilation.assets));
-        const assetList = Object.keys(compilation.assets);
         chunkList.forEach(chunk => {
           const srcModules = chunk.sourceModules;
           if (!chunk.name && (isUnwantedChunk(srcModules, features) || isUnwantedChunkByPage(srcModules, pages))) {

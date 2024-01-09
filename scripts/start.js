@@ -6,6 +6,7 @@ process.on('unhandledRejection', (err) => {
   throw err;
 });
 
+const path = require('path');
 const ip = require('ip').address();
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -38,6 +39,7 @@ const devServerOptions = {
     },
     progress: true
   },
+  watchFiles: ['../src/**/**/*.tsx', 'public/**/*'],
   proxy: [
     {
       context: ['/api', '/insurance-policy'],

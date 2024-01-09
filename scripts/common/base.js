@@ -98,6 +98,7 @@ module.exports = {
   pageFileName,
   extensions,
   ellipsisFolders,
+  LBU,
   hasExtension,
   hasFeaturePagePermission,
   getVersionNo,

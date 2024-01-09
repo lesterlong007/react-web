@@ -1,9 +1,11 @@
 import React from 'react';
+import Content from './content';
 
 const Detail: React.FC = () => {
   return (
-    <div>
+    <div style={{ fontSize: '20px' }}>
       Detail page one
+      <Content />
     </div>
   );
 };

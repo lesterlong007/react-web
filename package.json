@@ -10,6 +10,7 @@
     "build:sit": "webpack --config ./scripts/build.js --env sit",
     "build:uat": "webpack --config ./scripts/build.js --env uat",
     "build:prod": "webpack --config ./scripts/build.js --env prod",
+    "build:server": "webpack --config ./server/webpack.server.js --env dev",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
     "analyze": "cross-env ANALYZE=1 npm run build:prod",
     "mock": "nodemon ./mock/server.js",
@@ -104,6 +105,7 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.10.0",
+    "webpack-node-externals": "^3.0.0",
     "webpack-visualizer-plugin": "^0.1.11",
     "yargs": "^17.7.2"
   },

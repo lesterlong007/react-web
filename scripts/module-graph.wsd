@@ -4,6 +4,7 @@
 *** src/layout/layout
 **** src/views/route
 ***** src/views/feature-one/detail/index.tsx
+****** src/views/feature-one/detail/content
 ***** src/views/feature-one/home/index.tsx
 ***** src/views/feature-one-alpha-1/home/index.tsx
 ***** src/views/feature-two-beta-1/list/index.tsx

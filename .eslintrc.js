@@ -28,5 +28,10 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'warn',
     'import/no-cycle': 'error',
     'no-new-func': 'warn'
+  },
+  settings: {
+    react: {
+      version: '17.0'
+    }
   }
 };
