@@ -7,7 +7,7 @@ const webpackConfig = require('../scripts/webpack.config');
 
 const config = {
   target: 'node',
-  entry: path.resolve(__dirname, './index.tsx'),
+  entry: path.resolve(__dirname, './index.js'),
   externals: [nodeExternals()],
   output: {
     path: path.resolve(__dirname, '../build')

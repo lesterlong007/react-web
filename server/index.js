@@ -1,28 +1,23 @@
-const express = require('express');
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import express from 'express';
+import App from '../src/App';
+
 const path = require('path');
 const ip = require('ip');
 
-require('@babel/register')({
-//   configFile: path.resolve(__dirname, '../babel.config.js'),
-  presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-  extensions: ['.tsx', '.ts', '.jsx', '.js', '.json']
-});
-
-const React = require('react');
-const ReactDOMServer = require('react-dom/server');
-const App = require('../src/App.tsx');
-
 const IP = ip.address();
-const PORT = 6066;
+const PORT = 8066;
 const URL = `http://${IP}:${PORT}`;
 
 const app = express();
 
-const appHtml = ReactDOMServer.renderToString(React.createElement(App));
-
 // app.use(express.static('dist'));
 
-console.log(appHtml);
+console.log(111111111111);
+
+const content = renderToString(<App />);
+console.log(content);
 
 app.get('/react-web/*', (req, res) => {
   console.log(req.url);
