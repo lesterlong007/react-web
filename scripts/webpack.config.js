@@ -8,7 +8,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const MyCustomPlugin = require('./plugins/custom.plugin');
 const CheckModulePlugin = require('./plugins/check.module.js');
-const ReplacePlugin = require('./plugins/replace.plugin.js');
 
 const BASENAME = '/react-web';
 process.env.BASENAME = BASENAME;
@@ -132,7 +131,6 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.scss', '.css']
   },
   plugins: [
-    new ReplacePlugin(),
     new CheckModulePlugin(),
     new MyCustomPlugin(),
     new ProgressBarPlugin(),

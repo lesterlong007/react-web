@@ -4,7 +4,7 @@ import { Button } from 'src/components';
 const Content: React.FC = () => {
   return (
     <div>
-      Detail Content for MY 111
+      Detail Content for MY 123
       <Button />
     </div>
   );

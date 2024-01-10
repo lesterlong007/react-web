@@ -1,4 +1,3 @@
 export default {
-  lbu: ['SG'],
-  showTitle: true
+  lbu: ['SG']
 };

@@ -99,6 +99,7 @@ module.exports = {
   extensions,
   ellipsisFolders,
   LBU,
+  lbu: LBU.toLowerCase(),
   hasExtension,
   hasFeaturePagePermission,
   getVersionNo,

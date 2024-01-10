@@ -3,8 +3,17 @@ const path = require('path');
 const chalk = require('chalk');
 
 const {
-  sourceRootPath, viewsPath, extensions, ellipsisFolders, pageFileName, featureFileName, componentsPath,
-  hasExtension, hasFeaturePagePermission, getVersionNo
+  sourceRootPath,
+  viewsPath,
+  extensions,
+  ellipsisFolders,
+  pageFileName,
+  featureFileName,
+  componentsPath,
+  lbu,
+  hasExtension,
+  hasFeaturePagePermission,
+  getVersionNo
 } = require('./common/base');
 const graphFilePath = path.resolve(__dirname, 'module-graph.wsd');
 
@@ -70,24 +79,55 @@ const getCompletedPath = (filePath, parentDir) => {
 };
 
 /**
- * read file content to analyze
- * @param {*} finalPath
+ * get same file path which has lbu extension if exist
+ * @param {*} filePath
  * @returns string
  */
-const getFileContent = (finalPath) => {
-  if (hasExtension(finalPath)) {
-    return fs.readFileSync(finalPath, { encoding: 'utf8' });
+const getLBUFilePath = (filePath) => {
+  const lbuFilePath = filePath.replace(/([\w-]+)(.ts|.tsx)$/, `$1.${lbu}$2`);
+  if (/\.(tsx|ts)$/.test(lbuFilePath) && fs.existsSync(lbuFilePath)) {
+    return lbuFilePath;
   } else {
-    if (isOmitFolder(finalPath)) {
-      finalPath += '/index';
+    return filePath;
+  }
+};
+
+/**
+ * supplement file extension for ts or tsx
+ * @param {*} filePath
+ * @returns string
+ */
+const supplementFileExtension = (filePath) => {
+  if (hasExtension(filePath)) {
+    return filePath;
+  } else {
+    if (isOmitFolder(filePath)) {
+      filePath += '/index';
     }
-    if (fs.existsSync(finalPath + '.tsx')) {
-      return fs.readFileSync(finalPath + '.tsx', { encoding: 'utf8' });
+    if (fs.existsSync(filePath + '.tsx')) {
+      return filePath + '.tsx';
     } else {
-      return fs.readFileSync(finalPath + '.ts', { encoding: 'utf8' });
+      return filePath + '.ts';
     }
   }
 };
+
+/**
+ * get actual file path if exist lbu extension file
+ * @param {*} filePath
+ * @returns string
+ */
+const getActualFilePath = (filePath) => {
+  const finalPath = supplementFileExtension(filePath);
+  return getLBUFilePath(finalPath);
+};
+
+/**
+ * get file content
+ * @param {*} filePath
+ * @returns string
+ */
+const getFileContent = (filePath) => fs.readFileSync(filePath, { encoding: 'utf8' });
 
 /**
  * get referenced component list
@@ -109,16 +149,17 @@ const readDependentComponents = (codeStr, res, level, paths) => {
   if (matchRes) {
     const nextLevel = level + 1;
     const nextPaths = [...paths, componentsPath];
-    const components = matchRes[1].split(',').map(cm => cm.trim());
+    const components = matchRes[1].split(',').map((cm) => cm.trim());
     const finalPath = getCompletedPath(componentsPath, '');
-    const content = getFileContent(finalPath);
+    const completedPath = getActualFilePath(finalPath);
+    const content = getFileContent(completedPath);
 
-    components.forEach(cm => {
+    components.forEach((cm) => {
       const cmReg = new RegExp(`${cm}.*?['"]([^'"]+)['"]`);
       const matchRes = content.match(cmReg);
       if (matchRes) {
         const cmPath = path.join(componentsPath, matchRes[1]);
-        if (cur.children.every(it => it.path !== cmPath)) {
+        if (cur.children.every((it) => it.path !== cmPath)) {
           cur.children.push({
             level: nextLevel,
             paths: nextPaths,
@@ -143,7 +184,7 @@ const readDependentComponents = (codeStr, res, level, paths) => {
  * @param {*} level
  * @param {*} paths
  */
-function readFileRecursive (name, parentDir, res, level, paths) {
+function readFileRecursive(name, parentDir, res, level, paths) {
   const finalPath = path.join(sourceRootPath, viewsPath, parentDir, name);
   const dirList = fs.readdirSync(finalPath);
   const dirVMap = new Map();
@@ -186,7 +227,7 @@ function readFileRecursive (name, parentDir, res, level, paths) {
       }
     }
   });
-};
+}
 
 /**
  * recursion traverse file dependencies
@@ -203,7 +244,8 @@ function traverseDependencies (filePath, parentDir, res, level, paths) {
     curPath = path.join(parentDir, curPath);
   }
   const finalPath = getCompletedPath(filePath, parentDir);
-  const srcFilePath = finalPath.match(/src.*$/)[0];
+  const completedPath = getActualFilePath(finalPath);
+  const srcFilePath = completedPath.match(/src.*$/)[0];
   const cur = {
     level,
     paths,
@@ -218,7 +260,7 @@ function traverseDependencies (filePath, parentDir, res, level, paths) {
       isLeaf = false;
       readFileRecursive('', '', cur.children, level + 1, curPaths);
     }
-    const content = getFileContent(finalPath);
+    const content = getFileContent(completedPath);
     const importRegex = /import\s+.*?\s+from\s+['"]([^'"]+)['"]/g;
     let match;
 
@@ -239,7 +281,7 @@ function traverseDependencies (filePath, parentDir, res, level, paths) {
   cur.isLeaf = isLeaf;
   res.push(cur);
   return res;
-};
+}
 
 /**
  * generate star string
@@ -255,7 +297,7 @@ const getStars = (count = 1) => new Array(count).fill('*').join('');
  */
 const generateModuleGraph = (modules) => {
   let res = '';
-  modules.forEach(m => {
+  modules.forEach((m) => {
     res += `\n${getStars(m.level)} ${m.path}`;
     if (m.children?.length > 0) {
       res += generateModuleGraph(m.children);
