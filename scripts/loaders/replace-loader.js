@@ -6,7 +6,7 @@ module.exports = function (source) {
   // this.resourcePath
   const lbu = LBU.toLowerCase();
   const lbuFilePath = this.resourcePath.replace(/([\w-]+)(.ts|.tsx)$/, `$1.${lbu}$2`);
-  
+  console.log(this.resourcePath);
   if (fs.existsSync(lbuFilePath)) {
     console.log(this.resourcePath, lbu);
     return fs.readFileSync(lbuFilePath, { encoding: 'utf8' });

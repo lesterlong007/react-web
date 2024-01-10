@@ -19,10 +19,16 @@ const { LBU } = require('./common/base');
 const PORT = parseInt(process.env.PORT, 10) || 8000;
 const HOST = process.env.HOST || ip;
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+const lbu = LBU.toLowerCase();
+const lbuReg = new RegExp(`\\.(${lbu})\\.(ts|tsx)`);
 
 const startConfig = {
   devtool: 'inline-source-map',
-  target: 'web'
+  target: 'web',
+  watch: true,
+  watchOptions: {
+    ignored: [`src/**/**/*${lbu}.ts`, `src/**/**/*.tsx`, 'node_modules']
+  },
 };
 
 const compiler = webpack(merge(webpackConfig, startConfig));
@@ -34,6 +40,13 @@ const devServerOptions = {
   hot: true,
   https: process.env.HTTPS === 'true',
   historyApiFallback: true,
+  watchFiles: {
+    paths: ['src/**/*.ts', 'src/**/*.tsx'],
+    options: {
+      ignored: [`src/**/**/*.${lbu}.ts`, `src/**/**/*.${lbu}.tsx`,],
+      usePolling: false,
+    },
+  },
   client: {
     overlay: {
       errors: true,
@@ -66,8 +79,8 @@ runServer();
 
 const srcDir = path.resolve(__dirname, '../src');
 
+// chokidar
 fs.watch(srcDir, { recursive: true }, (eventType, filename) => {
-  const lbu = LBU.toLowerCase();
   console.log(eventType, filename, path.join(srcDir, filename));
   const completedPath = path.join(srcDir, filename);
   const lbuReg = new RegExp(`\\.(${lbu})\\.(ts|tsx)`);
