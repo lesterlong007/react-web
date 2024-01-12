@@ -8,6 +8,7 @@ const fs = require('fs');
 const express = require('express');
 const { Writable } = require('stream');
 
+const { basename } = require('../scripts/common/base');
 const IP = ip.address();
 const PORT = 6066;
 const URL = `http://${IP}:${PORT}`;
@@ -21,12 +22,12 @@ const URL = `http://${IP}:${PORT}`;
 
 const app = express();
 
-app.get('/react-web/*', (req, res) => {
+app.get(`${basename}/*`, (req, res) => {
   console.log(req.url);
   const url = req.url;
   const htmlPath = path.resolve(__dirname, '../dist/index.html');
   if (url.includes('.')) {
-    const filePath = path.join(__dirname, '../', url.replace('/react-web', 'dist'));
+    const filePath = path.join(__dirname, '../', url.replace(basename, 'dist'));
     res.sendFile(filePath, (err) => {
       if (err) {
         console.log(err);

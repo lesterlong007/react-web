@@ -21,7 +21,7 @@ We need to support for different lbu (just consider it as a corporation) custom 
 and different lbu has different permissions for feature and page. Even down to page content and component, need to customize requirements for different lbu.And published independently for different lub, just compile on-demand pages and codes which own that lbu.
 
 ### Why do we not use third frameworks (next.js) or cli (create-react-app)
-We just depend some basic libraries or tools such as: react, jest, webpack.Due to third framework or cli is hard for us to expand and maintain, and can not satisfy our requirements(customize requirements for lbu, multiple versions, first screen loading optimization, compilation on-demand), to implement these points, we need to expand and write many scripts, loaders, plugins and some configuration files.
+We just depend some basic libraries or tools such as: react, jest, webpack. Due to third framework or cli is hard for us to expand and maintain, and can not satisfy our requirements(customize requirements for lbu, multiple versions, first screen loading optimization, compilation on-demand), to implement these points, we need to expand and write many scripts, loaders, plugins and some configuration files.
 
 ### Technical choice principle
 universality, robustness, expansibility.

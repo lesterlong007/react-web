@@ -9,8 +9,8 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const MyCustomPlugin = require('./plugins/custom.plugin');
 const CheckModulePlugin = require('./plugins/check.module.js');
 
-const BASENAME = '/react-web';
-process.env.BASENAME = BASENAME;
+const { basename } = require('./common/base.js');
+process.env.BASENAME = basename;
 
 const { argv } = require('yargs');
 const { NODE_ENV } = process.env;
@@ -53,7 +53,7 @@ module.exports = {
   output: {
     path: path.resolve(ROOT_PATH, './dist'),
     filename: 'js/[name].[chunkhash:8].bundle.js',
-    publicPath: isDev ? '/' : `${BASENAME}/`
+    publicPath: isDev ? '/' : `${basename}/`
   },
   mode: NODE_ENV || 'production',
   resolveLoader: {
@@ -134,12 +134,14 @@ module.exports = {
     new CheckModulePlugin(),
     new MyCustomPlugin(),
     new ProgressBarPlugin(),
-    new ESLintPlugin(),
+    new ESLintPlugin({
+      extensions: ['js', 'jsx', 'ts', 'tsx']
+    }),
     new DotEnvWebpack({
       path: envConfig[argv.env || 'local']
     }),
     new DefinePlugin({
-      'process.env.BASENAME': JSON.stringify(`${BASENAME}`),
+      'process.env.BASENAME': JSON.stringify(`${basename}`),
       'process.env.LOCATION': JSON.stringify(`${argv.location || 'MY'}`)
     }),
     new CopyPlugin({

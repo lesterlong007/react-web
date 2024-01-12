@@ -10,6 +10,7 @@ const pageFileName = 'page.js';
 const viewsPath = 'src/views';
 const componentsPath = 'src/components';
 const LBU = argv.location || 'MY';
+const basename = '/react-web';
 
 /**
  * only collect dependency from source codes
@@ -100,6 +101,7 @@ module.exports = {
   ellipsisFolders,
   LBU,
   lbu: LBU.toLowerCase(),
+  basename,
   hasExtension,
   hasFeaturePagePermission,
   getVersionNo,

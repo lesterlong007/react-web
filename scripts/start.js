@@ -43,7 +43,7 @@ const devServerOptions = {
   client: {
     overlay: {
       errors: true,
-      warnings: true
+      warnings: false
     },
     progress: true
   },
@@ -70,6 +70,7 @@ const runServer = async () => {
 
 runServer();
 
+let isRebuild = false;
 const saveSourceFile = (filename) => {
   const completedPath = path.join(sourceRootPath, filename);
   const lbuReg = new RegExp(`\\.(${lbu})\\.(ts|tsx)`);
@@ -94,14 +95,19 @@ const chokidarWatcher = chokidar.watch(lbuRule, {
 
 chokidarWatcher
   .on('add', (path) => {
-    console.log(`File added: ${path}`);
-    saveSourceFile(path);
+    if (isRebuild) {
+      console.log(`File added: ${path}`);
+      saveSourceFile(path);
+    }
+    isRebuild = true;
   })
   .on('change', (path) => {
+    isRebuild = true;
     console.log(`File changed: ${path}`);
     saveSourceFile(path);
   })
   .on('unlink', (path) => {
+    isRebuild = true;
     console.log(`File removed: ${path}`);
     saveSourceFile(path);
   });

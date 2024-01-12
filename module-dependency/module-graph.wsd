@@ -1,0 +1,36 @@
+@startmindmap Module Graph
+* src/index.tsx
+** src/App.tsx
+*** src/layout/layout.tsx
+**** src/views/route.tsx
+***** src/views/feature-one/detail/index.tsx
+****** src/views/feature-one/detail/content.my.tsx
+******* src/components
+******** src/components/button/button
+***** src/views/feature-one/home/index.tsx
+***** src/views/feature-one-alpha-1/home/index.tsx
+***** src/views/feature-two-beta-1/list/index.tsx
+***** src/views/feature-two-beta-1/submission/index.tsx
+***** src/views/index/index.tsx
+****** src/components
+******* src/components/button/button
+****** src/util/network/request.ts
+******* src/util/network/http.ts
+******** src/util/base.ts
+***** src/views/mine/index.tsx
+****** src/util/base.ts
+****** src/views/mine/style.module.scss
+***** src/views/not-found/index.tsx
+****** src/views/not-found/one.tsx
+******* src/store/index.tsx
+****** src/views/not-found/two.tsx
+******* src/store/index.tsx
+******* src/views/not-found/four.tsx
+****** src/views/not-found/three.tsx
+****** src/views/not-found/style.module.scss
+***** src/util/base.ts
+*** src/i18n.ts
+**** src/i18n/en.json
+**** src/i18n/zh.json
+*** src/store/index.tsx
+@endmindmap

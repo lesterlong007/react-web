@@ -15,7 +15,7 @@ const {
   hasFeaturePagePermission,
   getVersionNo
 } = require('./common/base');
-const graphFilePath = path.resolve(__dirname, '../documents/module-graph.wsd');
+const graphFilePath = path.resolve(__dirname, `../module-dependency/module-graph.${lbu}.wsd`);
 
 /**
  * only collect dependency from source codes
