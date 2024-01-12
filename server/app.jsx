@@ -6,20 +6,15 @@ import Context from '../src/store';
 
 const { basename } = require('../scripts/common/base');
 
+const loadComponent = async () => {
+  const res = await import(`../src/views${location.replace(basename, '')}/index.tsx`);
+  console.log(res);
+  return res.default;
+};
+
 const App = ({ location }) => {
   console.log('location, ', location);
   const [component, setComponent] = useState(null);
-
-  useEffect(() => {
-    console.log('location change ....');
-    const loadComponent = async () => {
-      const res = await import(`../src/views${location.replace(basename, '')}/index.tsx`);
-      console.log(res);
-      setComponent(res.default);
-    };
-
-    loadComponent();
-  }, [location]);
 
   if (!component) {
     return <div>Loading...</div>;
