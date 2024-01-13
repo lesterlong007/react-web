@@ -4,6 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { Button } from 'src/components';
 import { post } from 'src/util/network/request';
 
+/**
+ * if need to SSR
+ */
+export const getServiceSideProps = async () => {
+  // fetch data
+};
+
 const Index: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();

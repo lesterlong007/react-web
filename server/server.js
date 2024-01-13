@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
 import App from './app.jsx';
+import { isEmpty } from '../src/util/base';
 
 const path = require('path');
 const ip = require('ip');
@@ -8,7 +9,7 @@ const fs = require('fs');
 const express = require('express');
 const { Writable } = require('stream');
 
-const { basename } = require('../scripts/common/base');
+const { basename, LBU } = require('../scripts/common/base');
 const IP = ip.address();
 const PORT = 6066;
 const URL = `http://${IP}:${PORT}`;
@@ -22,7 +23,18 @@ const URL = `http://${IP}:${PORT}`;
 
 const app = express();
 
-app.get(`${basename}/*`, (req, res) => {
+const getRouteComponent = async (location) => {
+  const fileUrl = `../src/views${location.replace(basename, '')}/`;
+  const pageConfig = await import(`${fileUrl}page.js`);
+  const pageLBU = pageConfig.default.lbu;
+  const pagePermission = isEmpty(pageLBU) || pageLBU.includes(LBU);
+  const finalRouteUrl = pagePermission ? `${fileUrl}index.tsx` : '../src/views/not-found/index.tsx';
+  const res = await import(finalRouteUrl);
+  // console.log(res);
+  return res.default;
+};
+
+app.get(`${basename}/*`, async (req, res) => {
   console.log(req.url);
   const url = req.url;
   const htmlPath = path.resolve(__dirname, '../dist/index.html');
@@ -44,7 +56,9 @@ app.get(`${basename}/*`, (req, res) => {
         res.end(tail);
       }
     });
-    const { pipe } = renderToPipeableStream(<App location={url} />, {
+
+    const route = await getRouteComponent(url);
+    const { pipe } = renderToPipeableStream(<App location={url} >{createElement(route, {})}</App>, {
       onShellReady () {
         res.statusCode = 200;
         res.setHeader('Content-type', 'text/html');
