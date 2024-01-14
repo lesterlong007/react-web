@@ -128,7 +128,7 @@ app.listen(PORT, () => {
 // About SSR, Server-Side Rendering
 // Advantages: improved initial loading speed, better SEO (Search Engine Optimization)
 // Disadvantages:
-// Increased server load: need to fetch data and build html content in service side
+// Increased server load: need to fetch data and build html content in service side, more deploy, login status
 // Increased development complexity: more logic between service and client, manage data synchronization,
 // state managemen, particularly multiple versions, lbu extension file handling, special code for server such as fetch data and css,
 // Limitations on certain client-specific features: lifecycle hooks, dom, device api
