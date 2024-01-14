@@ -8,8 +8,10 @@ const ip = require('ip');
 const fs = require('fs');
 const express = require('express');
 const { Writable } = require('stream');
+const sass = require('node-sass');
+const cssModulesRequireHook = require('css-modules-require-hook');
 
-const { basename, LBU } = require('../scripts/common/base');
+const { basename, LBU, sourceRootPath, featureFileName, viewsPath, hasFeaturePagePermission } = require('../scripts/common/base');
 const IP = ip.address();
 const PORT = 6066;
 const URL = `http://${IP}:${PORT}`;
@@ -23,12 +25,49 @@ const URL = `http://${IP}:${PORT}`;
 
 const app = express();
 
+cssModulesRequireHook({
+  extensions: ['.scss'],
+  generateScopedName: '[local]_[hash:base64:5]'
+  // preprocessCss: (css, filepath) => {
+  //   console.log('css ', css);
+  //   const result = sass.renderSync({ file: filepath });
+  //   console.log(result.css.toString());
+  //   return result.css.toString();
+  // },
+});
+
+const getCssRes = (location) => {
+  const filePath =  path.join(sourceRootPath, `src/views${location.replace(basename, '')}/style.module.scss`);
+  if (fs.existsSync(filePath)) {
+    const res = sass.renderSync({ file: filePath });
+    return res.css.toString();
+  } else {
+    return '';
+  }
+};
+
+const getFeaturePermission = (location) => {
+   const pathArr = location.split('/');
+   let filePath = viewsPath + '/';
+   for (let i = 2; i < pathArr.length - 1; i++) {
+      filePath += pathArr[i] + '/';
+      if (fs.existsSync(path.join(sourceRootPath, filePath, featureFileName))) {
+        console.log(filePath);
+        return hasFeaturePagePermission(path.join(sourceRootPath, filePath), featureFileName);
+      }
+   }
+   return true;
+};
+
 const getRouteComponent = async (location) => {
   const fileUrl = `../src/views${location.replace(basename, '')}/`;
+  // const css = getCssRes(location);
+  // console.log(css);
   const pageConfig = await import(`${fileUrl}page.js`);
   const pageLBU = pageConfig.default.lbu;
   const pagePermission = isEmpty(pageLBU) || pageLBU.includes(LBU);
-  const finalRouteUrl = pagePermission ? `${fileUrl}index.tsx` : '../src/views/not-found/index.tsx';
+  const featurePermission = getFeaturePermission(location);
+  const finalRouteUrl = featurePermission && pagePermission ? `${fileUrl}index.tsx` : '../src/views/not-found/index.tsx';
   const res = await import(finalRouteUrl);
   // console.log(res);
   return res.default;
@@ -85,3 +124,11 @@ app.get(`${basename}/*`, async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Listening on: ${URL}`);
 });
+
+// About SSR, Server-Side Rendering
+// Advantages: improved initial loading speed, better SEO (Search Engine Optimization)
+// Disadvantages:
+// Increased server load: need to fetch data and build html content in service side
+// Increased development complexity: more logic between service and client, manage data synchronization,
+// state managemen, particularly multiple versions, lbu extension file handling, special code for server such as fetch data and css,
+// Limitations on certain client-specific features: lifecycle hooks, dom, device api
