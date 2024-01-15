@@ -11,7 +11,7 @@ const { Writable } = require('stream');
 const sass = require('node-sass');
 const cssModulesRequireHook = require('css-modules-require-hook');
 
-const { basename, LBU, sourceRootPath, featureFileName, viewsPath, hasFeaturePagePermission } = require('../scripts/common/base');
+const { basename, LBU, sourceRootPath, featureFileName, viewsPath, hasFeaturePagePermission, getCssModuleIdentName } = require('../scripts/common/base');
 const IP = ip.address();
 const PORT = 6066;
 const URL = `http://${IP}:${PORT}`;
@@ -27,7 +27,8 @@ const app = express();
 
 cssModulesRequireHook({
   extensions: ['.scss'],
-  generateScopedName: '[local]_[hash:base64:5]'
+  // generateScopedName: '[local]_[hash:base64:5]'
+  generateScopedName: (local, filename) => getCssModuleIdentName(local, filename)
   // preprocessCss: (css, filepath) => {
   //   console.log('css ', css);
   //   const result = sass.renderSync({ file: filepath });
@@ -37,7 +38,7 @@ cssModulesRequireHook({
 });
 
 const getCssRes = (location) => {
-  const filePath =  path.join(sourceRootPath, `src/views${location.replace(basename, '')}/style.module.scss`);
+  const filePath = path.join(sourceRootPath, `src/views${location.replace(basename, '')}/style.module.scss`);
   if (fs.existsSync(filePath)) {
     const res = sass.renderSync({ file: filePath });
     return res.css.toString();
@@ -47,16 +48,16 @@ const getCssRes = (location) => {
 };
 
 const getFeaturePermission = (location) => {
-   const pathArr = location.split('/');
-   let filePath = viewsPath + '/';
-   for (let i = 2; i < pathArr.length - 1; i++) {
-      filePath += pathArr[i] + '/';
-      if (fs.existsSync(path.join(sourceRootPath, filePath, featureFileName))) {
-        console.log(filePath);
-        return hasFeaturePagePermission(path.join(sourceRootPath, filePath), featureFileName);
-      }
-   }
-   return true;
+  const pathArr = location.split('/');
+  let filePath = viewsPath + '/';
+  for (let i = 2; i < pathArr.length - 1; i++) {
+    filePath += pathArr[i] + '/';
+    if (fs.existsSync(path.join(sourceRootPath, filePath, featureFileName))) {
+      console.log(filePath);
+      return hasFeaturePagePermission(path.join(sourceRootPath, filePath), featureFileName);
+    }
+  }
+  return true;
 };
 
 const getRouteComponent = async (location) => {
@@ -97,7 +98,7 @@ app.get(`${basename}/*`, async (req, res) => {
     });
 
     const route = await getRouteComponent(url);
-    const { pipe } = renderToPipeableStream(<App location={url} >{createElement(route, {})}</App>, {
+    const { pipe } = renderToPipeableStream(<App location={url}>{createElement(route, {})}</App>, {
       onShellReady () {
         res.statusCode = 200;
         res.setHeader('Content-type', 'text/html');
@@ -109,10 +110,6 @@ app.get(`${basename}/*`, async (req, res) => {
         res.send('<!doctype html><p>Loading...</p>');
       }
     });
-    // const stream = renderToPipeableStream(<App />);
-    // res.setHeader('Content-Type', 'text/html');
-    // res.write(fs.readFileSync(path.resolve(__dirname, '../public/index.html')));
-    // stream.pipe(res);
     // res.sendFile(htmlPath, (err) => {
     //   if (err) {
     //     console.log(err);
@@ -130,5 +127,9 @@ app.listen(PORT, () => {
 // Disadvantages:
 // Increased server load: need to fetch data and build html content in service side, more deploy, login status
 // Increased development complexity: more logic between service and client, manage data synchronization,
-// state managemen, particularly multiple versions, lbu extension file handling, special code for server such as fetch data and css,
+// state management, particularly multiple versions, lbu extension file handling, special code for server such as fetch data and external css,
 // Limitations on certain client-specific features: lifecycle hooks, dom, device api
+
+// About SSG, Static Site Generation
+// not depend service side, will generate html content in advance in compilation process
+// boundedness: only suitable for static content more and without-login-status web sites

@@ -9,7 +9,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const MyCustomPlugin = require('./plugins/custom.plugin');
 const CheckModulePlugin = require('./plugins/check.module.js');
 
-const { basename } = require('./common/base.js');
+const { basename, getCssModuleIdentName } = require('./common/base.js');
 process.env.BASENAME = basename;
 
 const { argv } = require('yargs');
@@ -35,7 +35,8 @@ const getStyleLoader = (isModule = false, isSass = false) => {
     loader: 'css-loader',
     options: {
       modules: {
-        localIdentName: '[local]_[hash:base64:5]'
+        // localIdentName: '[local]_[hash:base64:5]'
+        getLocalIdent: (context, _, localName) => getCssModuleIdentName(localName, context.resourcePath)
       }
     }
   };

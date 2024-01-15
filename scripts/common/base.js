@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const { argv } = require('yargs');
 const sourceRootPath = path.resolve(__dirname, '../../');
@@ -91,6 +92,21 @@ const getVersionNo = (dir) => {
   }
 };
 
+/**
+ * generate css module hash name
+ * @param {*} localName
+ * @param {*} filename
+ * @returns string
+ */
+const getCssModuleIdentName = (localName, filename) => {
+  if (filename.includes('/node_modules/')) {
+    return localName;
+  }
+  const filePath = path.relative(process.cwd(), filename);
+  const hash = crypto.createHash('md5').update(filePath).digest('base64');
+  return `${localName}_${hash.slice(0, 6)}`;
+};
+
 module.exports = {
   sourceRootPath,
   viewsPath,
@@ -105,5 +121,6 @@ module.exports = {
   hasExtension,
   hasFeaturePagePermission,
   getVersionNo,
-  isOwnDependency
+  isOwnDependency,
+  getCssModuleIdentName
 };

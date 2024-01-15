@@ -140,14 +140,14 @@ class CheckModule {
 
     compiler.hooks.beforeCompile.tap(pluginName, (params) => {
       // this.backupList = [];
-      console.log('\n checking...');
+      // console.log('\n checking...');
       // console.log(params);
       // this.readDirRecursive('', '');
       // throw new Error('Checking failed');
     });
 
     compiler.hooks.done.tap(pluginName, () => {
-      console.log('\n done...');
+      // console.log('\n done...');
       // this.backupList.forEach((item) => {
       //   fs.moveSync(item.to, item.from, { overwrite: true });
       //   fs.moveSync(item.backup, item.to, { overwrite: true });
