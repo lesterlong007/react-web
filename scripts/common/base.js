@@ -16,7 +16,7 @@ const basename = '/react-web';
 /**
  * only collect dependency from source codes
  * @param {*} path
- * @returns boolean
+ * @returns { boolean }
  */
 const isOwnDependency = (path = '') => {
   return path.startsWith('../') || path.startsWith('./') || path.startsWith('src') || path.startsWith('@');
@@ -25,14 +25,14 @@ const isOwnDependency = (path = '') => {
 /**
  * judge a path whether contains extension name
  * @param {*} path
- * @returns boolean
+ * @returns { boolean }
  */
 const hasExtension = (path) => /\.[\w]+$/.test(path);
 
 /**
  * some index file path is omitted, just like '@/components'
  * @param {*} path
- * @returns boolean
+ * @returns { boolean }
  */
 const isOmitFolder = (path) => {
   for (let i = 0; i < ellipsisFolders.length; i++) {
@@ -46,7 +46,7 @@ const isOmitFolder = (path) => {
 /**
  * read file content to analyze
  * @param {*} finalPath
- * @returns string
+ * @returns { string }
  */
 const getFileContent = (finalPath) => {
   if (hasExtension(finalPath)) {
@@ -67,7 +67,7 @@ const getFileContent = (finalPath) => {
  * judge current lbu whether has feature permission
  * @param {*} dirPath
  *  @param {*} fileName
- * @returns boolean
+ * @returns { boolean }
  */
 const hasFeaturePagePermission = (dirPath, fileName) => {
   const content = getFileContent(path.join(dirPath, fileName));
@@ -80,7 +80,7 @@ const hasFeaturePagePermission = (dirPath, fileName) => {
 /**
  * get version number by directory name
  * @param {*} dir
- * @returns number
+ * @returns { number }
  */
 const getVersionNo = (dir) => {
   const res = dir.match(/beta-\d+$/);
@@ -96,7 +96,7 @@ const getVersionNo = (dir) => {
  * generate css module hash name
  * @param {*} localName
  * @param {*} filename
- * @returns string
+ * @returns { string }
  */
 const getCssModuleIdentName = (localName, filename) => {
   if (filename.includes('/node_modules/')) {

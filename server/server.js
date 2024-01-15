@@ -1,5 +1,5 @@
 import React, { createElement } from 'react';
-import { renderToPipeableStream } from 'react-dom/server';
+import { renderToPipeableStream, renderToString } from 'react-dom/server';
 import App from './app.jsx';
 import { isEmpty } from '../src/util/base';
 
@@ -17,11 +17,6 @@ const PORT = 6066;
 const URL = `http://${IP}:${PORT}`;
 
 // app.use(express.static('dist'));
-
-// const glob = require('glob');
-
-// const components = glob.sync(path.join(__dirname, '../src/**/page.js')).map(file => require(file));
-// console.log(components);
 
 const app = express();
 
@@ -53,7 +48,7 @@ const getFeaturePermission = (location) => {
   for (let i = 2; i < pathArr.length - 1; i++) {
     filePath += pathArr[i] + '/';
     if (fs.existsSync(path.join(sourceRootPath, filePath, featureFileName))) {
-      console.log(filePath);
+      // console.log(filePath);
       return hasFeaturePagePermission(path.join(sourceRootPath, filePath), featureFileName);
     }
   }
@@ -98,6 +93,8 @@ app.get(`${basename}/*`, async (req, res) => {
     });
 
     const route = await getRouteComponent(url);
+    // const html = renderToString(<App location={url}>{createElement(route, {})}</App>);
+    // console.log(html);
     const { pipe } = renderToPipeableStream(<App location={url}>{createElement(route, {})}</App>, {
       onShellReady () {
         res.statusCode = 200;
@@ -133,3 +130,9 @@ app.listen(PORT, () => {
 // About SSG, Static Site Generation
 // not depend service side, will generate html content in advance in compilation process
 // boundedness: only suitable for static content more and without-login-status web sites
+// just suitable for static web site, mean everyone would get same content, like official website (mul pages), e-commerce website
+// some third party libraries or plugins such as prerender-spa-plugin, it slows down compilation
+// and will throw error or can not handle these situation suspense require.context, fetch data
+// solution: generate page content for every route, and save them in a file, map route path to content (html string)
+// listen for route changes, popstate event, and rewrite pushState and replaceState
+// when route changes, render corresponding content firstly
