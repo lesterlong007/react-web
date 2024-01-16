@@ -30,35 +30,35 @@ app.get(`${basename}/*`, async (req, res) => {
       }
     });
   } else {
-    // const signal = '<!-- server render content -->';
-    // const [head, tail] = fs.readFileSync(htmlPath, { encoding: 'utf8' }).split(signal);
-    // const stream = new Writable({
-    //   write (chunk, _encoding, cb) {
-    //     res.write(chunk, cb);
-    //   },
-    //   final () {
-    //     res.end(tail);
-    //   }
-    // });
-
-    // const route = await getRouteComponent(getRealRoutePath(url));
-    // const { pipe } = renderToPipeableStream(<App location={url}>{createElement(route, {})}</App>, {
-    //   onShellReady () {
-    //     res.statusCode = 200;
-    //     res.setHeader('Content-type', 'text/html');
-    //     res.write(head);
-    //     pipe(stream);
-    //   },
-    //   onShellError () {
-    //     res.statusCode = 500;
-    //     res.send('<!doctype html><p>Loading...</p>');
-    //   }
-    // });
-    res.sendFile(htmlPath, (err) => {
-      if (err) {
-        console.log(err);
+    const signal = '<!-- server render content -->';
+    const [head, tail] = fs.readFileSync(htmlPath, { encoding: 'utf8' }).split(signal);
+    const stream = new Writable({
+      write (chunk, _encoding, cb) {
+        res.write(chunk, cb);
+      },
+      final () {
+        res.end(tail);
       }
     });
+
+    const route = await getRouteComponent(getRealRoutePath(url));
+    const { pipe } = renderToPipeableStream(<App location={url}>{createElement(route, {})}</App>, {
+      onShellReady () {
+        res.statusCode = 200;
+        res.setHeader('Content-type', 'text/html');
+        res.write(head);
+        pipe(stream);
+      },
+      onShellError () {
+        res.statusCode = 500;
+        res.send('<!doctype html><p>Loading...</p>');
+      }
+    });
+    // res.sendFile(htmlPath, (err) => {
+    //   if (err) {
+    //     console.log(err);
+    //   }
+    // });
   }
 });
 
