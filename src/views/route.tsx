@@ -32,7 +32,7 @@ const importAll = () => {
     const configObj = configModule(configPath).default;
     const featureObj = getFeatureConfiguration(filePath);
     const path = filePath.replace(/\.|(\/index.tsx)/g, '');
-    const version = path.match(/beta-\d/);
+    const version = path.match(/beta-\d+/);
     let finalPath = path;
     if (version) {
       finalPath = path.replace(`-${version}`, '');

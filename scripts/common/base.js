@@ -15,7 +15,7 @@ const basename = '/react-web';
 
 /**
  * only collect dependency from source codes
- * @param {*} path
+ * @param {*} path string
  * @returns { boolean }
  */
 const isOwnDependency = (path = '') => {
@@ -24,14 +24,14 @@ const isOwnDependency = (path = '') => {
 
 /**
  * judge a path whether contains extension name
- * @param {*} path
+ * @param {*} path string
  * @returns { boolean }
  */
 const hasExtension = (path) => /\.[\w]+$/.test(path);
 
 /**
  * some index file path is omitted, just like '@/components'
- * @param {*} path
+ * @param {*} path string
  * @returns { boolean }
  */
 const isOmitFolder = (path) => {
@@ -45,7 +45,7 @@ const isOmitFolder = (path) => {
 
 /**
  * read file content to analyze
- * @param {*} finalPath
+ * @param {*} finalPath string
  * @returns { string }
  */
 const getFileContent = (finalPath) => {
@@ -65,21 +65,26 @@ const getFileContent = (finalPath) => {
 
 /**
  * judge current lbu whether has feature permission
- * @param {*} dirPath
- *  @param {*} fileName
+ * @param {*} dirPath string
+ *  @param {*} fileName string
  * @returns { boolean }
  */
 const hasFeaturePagePermission = (dirPath, fileName) => {
-  const content = getFileContent(path.join(dirPath, fileName));
-  // console.log(content);
-  const res = content.match(/lbu:\s*(\[.*\])/);
-  // console.log(res);
-  return !res || res[1].includes(LBU);
+  const finalPath = path.join(dirPath, fileName);
+  if (fs.existsSync(finalPath)) {
+    const content = getFileContent(finalPath);
+    // console.log(content);
+    const res = content.match(/lbu:\s*(\[.*\])/);
+    // console.log(res);
+    return !res || res[1].includes(LBU);
+  } else {
+    return true;
+  }
 };
 
 /**
  * get version number by directory name
- * @param {*} dir
+ * @param {*} dir string
  * @returns { number }
  */
 const getVersionNo = (dir) => {
@@ -94,8 +99,8 @@ const getVersionNo = (dir) => {
 
 /**
  * generate css module hash name
- * @param {*} localName
- * @param {*} filename
+ * @param {*} localName string
+ * @param {*} filename string
  * @returns { string }
  */
 const getCssModuleIdentName = (localName, filename) => {

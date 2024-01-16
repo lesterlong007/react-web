@@ -20,4 +20,11 @@ require('@babel/register')({
   extensions: ['.tsx', '.ts', '.jsx', '.js', '.json']
 });
 
-require('./server.js');
+const { argv } = require('yargs');
+const renderType = argv.type || 'ssr';
+
+if (renderType === 'ssr') {
+  require('./server.js');
+} else {
+  require('./ssg.js');
+}
