@@ -32,6 +32,11 @@ const getCssRes = (location) => {
   }
 };
 
+/**
+ * get real dir path according with route path
+ * @param {*} location string
+ * @returns { string }
+ */
 const getRealRoutePath = (location) => {
   const pathArr = location.split('/');
   let filePath = viewsPath + '/';
@@ -67,6 +72,11 @@ const getRealRoutePath = (location) => {
   return location;
 };
 
+/**
+ * judge a route whether has feature permission
+ * @param {*} location string
+ * @returns boolean
+ */
 const getFeaturePermission = (location) => {
   const pathArr = location.split('/');
   let filePath = viewsPath + '/';
@@ -80,6 +90,11 @@ const getFeaturePermission = (location) => {
   return true;
 };
 
+/**
+ * get route component content according to route path
+ * @param {*} location string
+ * @returns Promise<string>
+ */
 const getRouteComponent = async (location) => {
   const fileUrl = `../src/views${location.replace(basename, '')}/`;
   // const css = getCssRes(location);
