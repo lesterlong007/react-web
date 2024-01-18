@@ -92,7 +92,7 @@ class CheckModule {
 
   backupList = [];
 
-  constructor(options = {}) {
+  constructor (options = {}) {
     this.options = { ...this.options, ...options };
   }
 

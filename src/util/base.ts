@@ -17,6 +17,7 @@ export const deepClone = (obj: any, hash = new WeakMap()) => {
   if (obj instanceof Date) return new Date(obj);
   if (obj instanceof RegExp) return new RegExp(obj);
   if (typeof obj === 'function') {
+    // eslint-disable-next-line no-new-func
     return new Function('return ' + obj.toString())();
   }
   if (typeof obj !== 'object') return obj;

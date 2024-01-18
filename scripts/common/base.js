@@ -8,6 +8,7 @@ const ellipsisFolders = ['/components', '/store'];
 const extensions = ['js', 'jsx', 'ts', 'tsx'];
 const featureFileName = 'feature.js';
 const pageFileName = 'page.js';
+const routeFileName = 'route.tsx';
 const viewsPath = 'src/views';
 const componentsPath = 'src/components';
 const LBU = argv.location || 'MY';
@@ -118,6 +119,7 @@ module.exports = {
   componentsPath,
   featureFileName,
   pageFileName,
+  routeFileName,
   extensions,
   ellipsisFolders,
   LBU,

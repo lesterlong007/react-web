@@ -58,7 +58,7 @@ module.exports = {
   },
   mode: NODE_ENV || 'production',
   resolveLoader: {
-    modules: ['node_modules', 'scripts/loaders']
+    modules: ['scripts/loaders', 'node_modules']
   },
   module: {
     rules: [
