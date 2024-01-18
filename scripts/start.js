@@ -15,12 +15,11 @@ const WebpackDevServer = require('webpack-dev-server');
 const { merge } = require('webpack-merge');
 const webpackConfig = require('./webpack.config');
 const { MOCK_PORT } = require('../mock/config');
-const { LBU, sourceRootPath } = require('./common/base');
+const { lbu, sourceRootPath, basename } = require('./common/base');
 
 const PORT = parseInt(process.env.PORT, 10) || 8000;
 const HOST = process.env.HOST || ip;
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-const lbu = LBU.toLowerCase();
 const lbuRule = `**/src/**/*.${lbu}.{ts,tsx}`;
 
 const startConfig = {
@@ -36,7 +35,7 @@ const compiler = webpack(merge(webpackConfig, startConfig));
 const devServerOptions = {
   host: HOST,
   port: PORT,
-  open: `${process.env.BASENAME}/index`,
+  open: `${basename}/index`,
   hot: true,
   https: process.env.HTTPS === 'true',
   historyApiFallback: true,
