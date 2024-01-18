@@ -9,7 +9,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const MyCustomPlugin = require('./plugins/custom.plugin');
 const CheckModulePlugin = require('./plugins/check.module.js');
 
-const { basename, getCssModuleIdentName } = require('./common/base.js');
+const { basename, LBU, getCssModuleIdentName } = require('./common/base.js');
 process.env.BASENAME = basename;
 
 const { argv } = require('yargs');
@@ -143,7 +143,7 @@ module.exports = {
     }),
     new DefinePlugin({
       'process.env.BASENAME': JSON.stringify(`${basename}`),
-      'process.env.LOCATION': JSON.stringify(`${argv.location || 'MY'}`)
+      'process.env.LOCATION': JSON.stringify(LBU)
     }),
     new CopyPlugin({
       patterns: [
