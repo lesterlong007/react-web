@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  Context as ContextProps,
-  PropsWithChildren,
-  Dispatch,
-  SetStateAction
-} from 'react';
+import React, { createContext, useState, Context as ContextProps, PropsWithChildren, Dispatch, SetStateAction } from 'react';
 
 interface UserInfo {
   name?: string;

@@ -11,7 +11,7 @@ const featureModule = require.context('../views/', true, /feature.js$/);
 const pageModule = require.context('../views/', true, /index.tsx$/, 'lazy');
 
 const getFeatureConfiguration = (path: string) => {
-  const targetPath = featureModule.keys().find(filePath => path.split('/')[1] === filePath.split('/')[1]);
+  const targetPath = featureModule.keys().find((filePath) => path.split('/')[1] === filePath.split('/')[1]);
   return targetPath ? featureModule(targetPath).default || {} : {};
 };
 
@@ -37,7 +37,7 @@ const importAll = () => {
     if (version) {
       finalPath = path.replace(`-${version}`, '');
     }
-    const i = routes.findIndex(it => it.path === finalPath);
+    const i = routes.findIndex((it) => it.path === finalPath);
     if (i > -1) {
       if (version) {
         routes[i].element = lazyLoad(() => pageModule(filePath));

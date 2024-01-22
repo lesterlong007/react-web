@@ -17,7 +17,7 @@ global.sessionStorage = {
 };
 
 class ResizeObserver {
-  observe () {}
+  observe() {}
 }
 
 global.ResizeObserver = ResizeObserver;
