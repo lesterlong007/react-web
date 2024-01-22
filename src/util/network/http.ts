@@ -40,32 +40,32 @@ class HttpRequest {
   private errorResInterceptors: CommonFC[] = [];
   public isRefreshingToken: boolean = false;
 
-  constructor (config?: RequestOption) {
+  constructor(config?: RequestOption) {
     this.commonConfig = {
       ...this.commonConfig,
       ...(config || {})
     };
   }
 
-  public addReqInterceptor (fn: CommonFC) {
+  public addReqInterceptor(fn: CommonFC) {
     if (typeof fn === 'function') {
       this.reqInterceptors.push(fn);
     }
   }
 
-  public addPreResInterceptor (fn: CommonFC) {
+  public addPreResInterceptor(fn: CommonFC) {
     if (typeof fn === 'function') {
       this.preResInterceptors.push(fn);
     }
   }
 
-  public addResInterceptor (fn: CommonFC) {
+  public addResInterceptor(fn: CommonFC) {
     if (typeof fn === 'function') {
       this.resInterceptors.push(fn);
     }
   }
 
-  public addResErrorInterceptor (fn: CommonFC) {
+  public addResErrorInterceptor(fn: CommonFC) {
     if (typeof fn === 'function') {
       this.errorResInterceptors.push(fn);
     }
@@ -79,7 +79,7 @@ class HttpRequest {
    * @param option
    * @returns
    */
-  public request (url: string, data?: any, method?: MethodType, option?: RequestOption): Promise<Response> {
+  public request(url: string, data?: any, method?: MethodType, option?: RequestOption): Promise<Response> {
     const controller = new AbortController();
 
     let newOption = {
@@ -186,15 +186,15 @@ class HttpRequest {
     });
   }
 
-  public get (url: string, data?: any, option?: RequestOption) {
+  public get(url: string, data?: any, option?: RequestOption) {
     return this.request(url, data, RequestMethod.GET, option);
   }
 
-  public post (url: string, data?: any, option?: RequestOption) {
+  public post(url: string, data?: any, option?: RequestOption) {
     return this.request(url, data, RequestMethod.POST, option);
   }
 
-  public put (url: string, data?: any, option?: RequestOption) {
+  public put(url: string, data?: any, option?: RequestOption) {
     return this.request(url, data, RequestMethod.PUT, option);
   }
 }

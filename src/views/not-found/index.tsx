@@ -8,7 +8,7 @@ import style from './style.module.scss';
 const NotFound: React.FC = () => {
   return (
     <div className={classNames('hide-scrollbar', style.wrapper)}>
-       <div className={style.content}>404 Not Found</div>
+      <div className={style.content}>404 Not Found</div>
       <One />
       <Two />
       <Three />

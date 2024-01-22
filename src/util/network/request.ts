@@ -30,7 +30,7 @@ httpInstance.addPreResInterceptor((res, ...rest: [any]) => {
     } else {
       httpInstance.isRefreshingToken = true;
       tokenPromise = httpInstance.request('/api/token', {}, 'POST');
-      return tokenPromise.then(tokenRes => {
+      return tokenPromise.then((tokenRes) => {
         httpInstance.isRefreshingToken = false;
         console.log(tokenRes, 'token--');
         return httpInstance.request(...rest);
@@ -48,46 +48,66 @@ httpInstance.addResInterceptor((res) => {
   }
 });
 
-httpInstance.addResErrorInterceptor(err => {
+httpInstance.addResErrorInterceptor((err) => {
   return err;
 });
 
 export const request: typeof httpInstance.request = (...args) => {
   return new Promise((resolve) => {
-    httpInstance.request.bind(httpInstance)(...args).then(res => {
-      resolve({ data: res });
-    }, (err) => {
-      resolve({ error: err });
-    });
+    httpInstance.request
+      .bind(httpInstance)(...args)
+      .then(
+        (res) => {
+          resolve({ data: res });
+        },
+        (err) => {
+          resolve({ error: err });
+        }
+      );
   });
 };
 
 export const get: ShortcutFC = (...args) => {
   return new Promise((resolve) => {
-    httpInstance.get.bind(httpInstance)(...args).then(res => {
-      resolve({ data: res });
-    }, (err) => {
-      resolve({ error: err });
-    });
+    httpInstance.get
+      .bind(httpInstance)(...args)
+      .then(
+        (res) => {
+          resolve({ data: res });
+        },
+        (err) => {
+          resolve({ error: err });
+        }
+      );
   });
 };
 
 export const post: ShortcutFC = (...args) => {
   return new Promise((resolve) => {
-    httpInstance.post.bind(httpInstance)(...args).then(res => {
-      resolve({ data: res });
-    }, (err) => {
-      resolve({ error: err });
-    });
+    httpInstance.post
+      .bind(httpInstance)(...args)
+      .then(
+        (res) => {
+          resolve({ data: res });
+        },
+        (err) => {
+          resolve({ error: err });
+        }
+      );
   });
 };
 
 export const put: ShortcutFC = (...args) => {
   return new Promise((resolve) => {
-    httpInstance.put.bind(httpInstance)(...args).then(res => {
-      resolve({ data: res });
-    }, (err) => {
-      resolve({ error: err });
-    });
+    httpInstance.put
+      .bind(httpInstance)(...args)
+      .then(
+        (res) => {
+          resolve({ data: res });
+        },
+        (err) => {
+          resolve({ error: err });
+        }
+      );
   });
 };

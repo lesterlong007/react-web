@@ -92,17 +92,20 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-typescript']
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-typescript']
+            }
+          },
+          {
+            loader: 'replace-loader',
+            options: {
+              name: 'test'
+            }
           }
-        }, {
-          loader: 'replace-loader',
-          options: {
-            name: 'test'
-          }
-        }]
+        ]
       },
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.ico$/],

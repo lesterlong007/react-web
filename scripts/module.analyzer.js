@@ -184,7 +184,7 @@ const readDependentComponents = (codeStr, res, level, paths) => {
  * @param {*} level
  * @param {*} paths
  */
-function readFileRecursive (name, parentDir, res, level, paths) {
+function readFileRecursive(name, parentDir, res, level, paths) {
   const finalPath = path.join(sourceRootPath, viewsPath, parentDir, name);
   const dirList = fs.readdirSync(finalPath);
   const dirVMap = new Map();

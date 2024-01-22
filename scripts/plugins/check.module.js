@@ -1,10 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const {
-  sourceRootPath, viewsPath, featureFileName, pageFileName,
-  hasExtension, hasFeaturePagePermission, getVersionNo
-} = require('../common/base');
+const { sourceRootPath, viewsPath, featureFileName, pageFileName, hasExtension, hasFeaturePagePermission, getVersionNo } = require('../common/base');
 
 const getUnwantedFileRecursive = (name, parentDir, res) => {
   if (!res) {
@@ -92,11 +89,11 @@ class CheckModule {
 
   backupList = [];
 
-  constructor (options = {}) {
+  constructor(options = {}) {
     this.options = { ...this.options, ...options };
   }
 
-  readDirRecursive (name, parentPath) {
+  readDirRecursive(name, parentPath) {
     const finalPath = path.join(sourceRootPath, this.options.dirPath, parentPath, name);
     console.log('finalPath ', finalPath);
     const dirList = fs.readdirSync(finalPath);
@@ -135,7 +132,7 @@ class CheckModule {
     });
   }
 
-  apply (compiler) {
+  apply(compiler) {
     const pluginName = CheckModule.name;
 
     compiler.hooks.beforeCompile.tap(pluginName, (params) => {
@@ -162,7 +159,7 @@ class CheckModule {
         const chunkList = Array.from(chunks).map((chunk) => {
           const sourceModules = [];
           const modules = compilation.chunkGraph.getChunkModulesIterable(chunk);
-          modules.forEach(module => {
+          modules.forEach((module) => {
             const res = (module.userRequest || module.resource || module._identifier || '').match(/src\/views.*$/);
             if (res) {
               sourceModules.push(res[0]);
@@ -179,11 +176,11 @@ class CheckModule {
         // console.log(features, pages);
         // console.log(chunkList);
         // console.log(Object.keys(compilation.assets));
-        chunkList.forEach(chunk => {
+        chunkList.forEach((chunk) => {
           const srcModules = chunk.sourceModules;
           if (!chunk.name && (isUnwantedChunk(srcModules, features) || isUnwantedChunkByPage(srcModules, pages))) {
             const reg = new RegExp(`/${chunk.id}.`);
-            const unWantedPath = assetList.find(asst => reg.test(asst));
+            const unWantedPath = assetList.find((asst) => reg.test(asst));
             if (unWantedPath) {
               delete compilation.assets[unWantedPath];
               // console.log('unWantedPath', unWantedPath);

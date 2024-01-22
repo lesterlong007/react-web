@@ -6,11 +6,11 @@ class MyCustomPlugin {
     outputFile: 'assets.md'
   };
 
-  constructor (options = {}) {
+  constructor(options = {}) {
     this.options = { ...this.options, ...options };
   }
 
-  apply (compiler) {
+  apply(compiler) {
     const pluginName = MyCustomPlugin.name;
     const {
       webpack: { Compilation, sources }

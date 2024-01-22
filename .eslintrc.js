@@ -5,7 +5,7 @@ module.exports = {
     es2021: true,
     node: true
   },
-  extends: ['standard', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
+  extends: ['standard', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -14,7 +14,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module'
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
   rules: {
     semi: [2, 'always'],
     'no-use-before-define': 'off',
