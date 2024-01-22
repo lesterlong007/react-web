@@ -14,7 +14,7 @@
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
     "analyze": "cross-env ANALYZE=1 npm run build:prod",
     "mock": "nodemon ./mock/server.js",
-    "prettier": "prettier --write ./src/**/**/*.{js,jsx,ts,tsx,json,html,scss,css,md}"
+    "prettier": "prettier --write ./src/**/**/*.{js,jsx,ts,tsx,json,scss}"
   },
   "husky": {
     "hooks": {

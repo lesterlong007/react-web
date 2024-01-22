@@ -238,7 +238,7 @@ function readFileRecursive(name, parentDir, res, level, paths) {
  * @param {*} paths
  * @returns dependencies tree
  */
-function traverseDependencies (filePath, parentDir, res, level, paths) {
+function traverseDependencies(filePath, parentDir, res, level, paths) {
   let curPath = filePath.replace(/\/[^/]+$/g, '/');
   if (!isAbsolutePath(filePath)) {
     curPath = path.join(parentDir, curPath);

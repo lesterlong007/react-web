@@ -27,8 +27,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-empty-function': 'warn',
     'import/no-cycle': 'error',
-    'no-new-func': 'warn',
-    'max-len': ['error', { code: 180 }]
+    'no-new-func': 'warn'
   },
   settings: {
     react: {
