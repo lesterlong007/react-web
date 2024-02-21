@@ -19,9 +19,7 @@ const basename = '/react-web';
  * @param {*} path string
  * @returns { boolean }
  */
-const isOwnDependency = (path = '') => {
-  return path.startsWith('../') || path.startsWith('./') || path.startsWith('src') || path.startsWith('@');
-};
+const isOwnDependency = (path = '') => /^(\.?\.\/|src|@)/.test(path);
 
 /**
  * judge a path whether contains extension name

@@ -50,6 +50,7 @@ const devServerOptions = {
     {
       context: ['/api', '/insurance-policy'],
       target: `http://${ip}:${MOCK_PORT}`,
+      // pathRewrite: { '^/api': '' },
       secure: false,
       changeOrigin: true
     }
