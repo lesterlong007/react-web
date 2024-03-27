@@ -1,12 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const util = require('util');
 
 const { sourceRootPath, viewsPath, featureFileName, pageFileName, routeFileName, hasExtension, hasFeaturePagePermission, getVersionNo } = require('./common/base');
 
-const backupRouteFilePath = path.join(sourceRootPath, viewsPath, '_route.tsx');
-// const routeFilePath = path.join(sourceRootPath, viewsPath, routeFileName);
+const routeFilePath = path.join(sourceRootPath, viewsPath, routeFileName);
 
 const generateRoute = (name, parentDir, res) => {
   const finalPath = path.join(sourceRootPath, viewsPath, parentDir, name);
@@ -46,7 +44,7 @@ const generateRoute = (name, parentDir, res) => {
           //   console.log(dir);
           res.push({
             path: '/' + path.join(curPath, dir).replace(/-beta-\d+/, ''),
-            element: `lazyLoad(() => import('${path.join(viewsPath, curPath, dir)}'))`
+            filePath: path.join(viewsPath, curPath, dir)
           });
         } else {
           dirVMap.set(realName, dir);
@@ -60,14 +58,24 @@ const generateRoute = (name, parentDir, res) => {
   return res;
 };
 
-const routes = generateRoute('', '', [{ path: '*', element: "lazyLoad(() => import('src/views/not-found'))" }]);
+const routes = generateRoute('', '', [{ path: '*', filePath: 'src/views/not-found' }]);
 // console.log(routes);
-const routeContent = util.inspect(routes);
-// console.log(routeContent);
-const originalContent = fs.readFileSync(backupRouteFilePath, { encoding: 'utf8' });
-const targetContent = originalContent.replace(/(export\s+const\s+routes:\s+\w+\[\]\s+=\s+)(\[[\s\S]*\])/, `$1${routeContent.replace(/"/g, '')}`);
 
-fs.writeFile(backupRouteFilePath, targetContent, (err) => {
+let routeContent =
+  '// @ut-ignore\n// will generate routes automatically, will cover old content by auto-generation, do not need to add any route manually in current file\n' +
+  "import React, { lazy, createElement } from 'react';\n" +
+  "import { RouteProps } from 'react-router-dom';\n\n" +
+  'const lazyLoad = (cm: () => Promise<any>) => createElement(lazy(cm));\n' +
+  'export const routes: RouteProps[] = [\n';
+
+for (let i = 0; i < routes.length; i++) {
+  routeContent += `  {\n    path: '${routes[i].path}',\n    element: lazyLoad(() => import('${routes[i].filePath}'))\n  }`;
+  if (i < routes.length - 1) {
+    routeContent += ',\n';
+  }
+}
+routeContent += '\n];\n';
+fs.writeFile(routeFilePath, routeContent, (err) => {
   if (err) {
     console.log(chalk.red('Generate routes error'), err);
   } else {

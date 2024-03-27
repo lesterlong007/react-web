@@ -9584,6 +9584,11 @@ wildcard@^2.0.0:
   resolved "https://registry.yarnpkg.com/wildcard/-/wildcard-2.0.1.tgz#5ab10d02487198954836b6349f74fff961e10f67"
   integrity sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==
 
+winger.js@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/winger.js/-/winger.js-1.0.2.tgz#d4436ea2783d8bafdc20295f7c7ebf9085c28fa2"
+  integrity sha512-DP9LZZWC9RKvZtkH2go4BXc1PHFJqZp1LtSCUNdTdDkWK30SpRJYcvDg99QEvmy8WzFVGaBzZcm6JpLBQqJKVQ==
+
 wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
