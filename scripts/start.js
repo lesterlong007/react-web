@@ -6,9 +6,11 @@ process.on('unhandledRejection', (err) => {
   throw err;
 });
 
+const { execSync, exec } = require('child_process');
 const chokidar = require('chokidar');
 const fs = require('fs');
 const path = require('path');
+const { argv } = require('yargs');
 const ip = require('ip').address();
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -21,6 +23,7 @@ const PORT = parseInt(process.env.PORT, 10) || 8000;
 const HOST = process.env.HOST || ip;
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const lbuRule = `**/src/**/*.${lbu}.{ts,tsx}`;
+const envPath = path.resolve(__dirname, './env.js');
 
 const startConfig = {
   devtool: 'inline-source-map',
@@ -29,8 +32,6 @@ const startConfig = {
     ignored: [lbuRule, '**/node_modules', '**/scripts']
   }
 };
-
-const compiler = webpack(merge(webpackConfig, startConfig));
 
 const devServerOptions = {
   host: HOST,
@@ -57,6 +58,26 @@ const devServerOptions = {
   ]
 };
 
+if (!fs.existsSync(envPath)) {
+  const envContent =
+    '// only for local code debug, not pipeline\n' +
+    'module.exports = {\n' +
+    "  BUILD_ENV: 'local', // local dev sit uat prod\n" +
+    "  LOCATION: 'my',\n" +
+    '  HTTPS: false,\n' +
+    '};\n';
+  fs.writeFileSync(envPath, envContent);
+}
+
+const envVariables = require('./env.js');
+
+Object.entries(envVariables).forEach(([key, val]) => {
+  process.env[key] = val;
+});
+
+execSync('yarn generate-routes', { stdio: 'inherit' });
+
+const compiler = webpack(merge(webpackConfig, startConfig));
 const server = new WebpackDevServer(devServerOptions, compiler);
 
 const runServer = async () => {

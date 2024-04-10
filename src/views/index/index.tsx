@@ -36,8 +36,10 @@ const Index: React.FC = () => {
   };
 
   return (
-    <div className="test-word" style={{ margin: 10 }}>
-      <div onClick={() => navigate('/mine')}>Welcome to my home page</div>
+    <div className="test-word mt-12">
+      <div className="my-2 pre-20bold font-bold" onClick={() => navigate('/mine')}>
+        Welcome to my home page
+      </div>
       <div>{t('title')}</div>
       <Button />
       <img

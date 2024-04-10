@@ -6,6 +6,8 @@ module.exports = {
       unitPrecision: 5,
       minPixelValue: 12,
       exclude: ['node_modules']
-    }
+    },
+    tailwindcss: {},
+    autoprefixer: {}
   }
 };

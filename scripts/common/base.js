@@ -11,8 +11,13 @@ const pageFileName = 'page.js';
 const routeFileName = 'route.tsx';
 const viewsPath = 'src/views';
 const componentsPath = 'src/components';
-const LBU = argv.location || 'MY';
+const lbu = argv.LOCATION || process.env.LOCATION || 'my';
+const LBU = lbu.toUpperCase();
 const basename = '/react-web';
+
+// const _ = require('winger.js');
+
+// console.log(_);
 
 /**
  * only collect dependency from source codes
@@ -121,7 +126,7 @@ module.exports = {
   extensions,
   ellipsisFolders,
   LBU,
-  lbu: LBU.toLowerCase(),
+  lbu,
   basename,
   hasExtension,
   hasFeaturePagePermission,

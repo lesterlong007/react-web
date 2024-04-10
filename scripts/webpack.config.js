@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const WindiCSSWebpackPlugin = require('windicss-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const MyCustomPlugin = require('./plugins/custom.plugin');
 const CheckModulePlugin = require('./plugins/check.module.js');
@@ -16,6 +17,7 @@ const { argv } = require('yargs');
 const { NODE_ENV } = process.env;
 const isDev = NODE_ENV === 'development';
 const ROOT_PATH = path.resolve(__dirname, '../');
+const env = argv.env || process.env.BUILD_ENV || 'local';
 
 const cssReg = /\.css$/;
 const cssModuleReg = /\.module\.css$/;
@@ -142,7 +144,7 @@ module.exports = {
       extensions: ['js', 'jsx', 'ts', 'tsx']
     }),
     new DotEnvWebpack({
-      path: envConfig[argv.env || 'local']
+      path: envConfig[env]
     }),
     new DefinePlugin({
       'process.env.BASENAME': JSON.stringify(`${basename}`),
@@ -155,6 +157,9 @@ module.exports = {
           to: path.resolve(ROOT_PATH, './dist/static')
         }
       ]
+    }),
+    new WindiCSSWebpackPlugin({
+      virtualModulePath: 'src'
     }),
     new HtmlPlugin({
       template: path.resolve(ROOT_PATH, './public/index.html'),
