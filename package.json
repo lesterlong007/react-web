@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "node scripts/start.js",
-    "build:dev": "webpack --config ./scripts/build.js",
+    "build": "webpack --config ./scripts/build.js",
     "server": "node server/index.js",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
     "analyze": "cross-env ANALYZE=1 npm run build:prod",

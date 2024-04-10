@@ -1,20 +1,14 @@
-module.exports = function (api) {
-  api.cache(true);
-  const presets = [
+module.exports = {
+  presets: [
     [
       '@babel/preset-env',
       {
-        modules: false,
-        forceAllTransforms: true
+        forceAllTransforms: true,
+        targets: { node: 'current' }
       }
     ],
-    '@babel/preset-react'
-  ];
-
-  const plugins = ['@babel/plugin-transform-arrow-functions'];
-
-  return {
-    presets,
-    plugins
-  };
+    '@babel/preset-react',
+    '@babel/preset-typescript'
+  ],
+  plugins: ['@babel/plugin-transform-arrow-functions']
 };

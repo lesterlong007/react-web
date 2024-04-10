@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
-const WindiCSSWebpackPlugin = require('windicss-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const MyCustomPlugin = require('./plugins/custom.plugin');
 const CheckModulePlugin = require('./plugins/check.module.js');
@@ -157,9 +156,6 @@ module.exports = {
           to: path.resolve(ROOT_PATH, './dist/static')
         }
       ]
-    }),
-    new WindiCSSWebpackPlugin({
-      virtualModulePath: 'src'
     }),
     new HtmlPlugin({
       template: path.resolve(ROOT_PATH, './public/index.html'),
