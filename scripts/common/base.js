@@ -80,7 +80,7 @@ const hasFeaturePagePermission = (dirPath, fileName) => {
     // console.log(content);
     const res = content.match(/lbu:\s*(\[.*\])/);
     // console.log(res);
-    return !res || res[1].includes(LBU);
+    return !!res && res[1].includes(LBU);
   } else {
     return true;
   }

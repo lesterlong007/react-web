@@ -4,6 +4,7 @@ import React, { lazy, createElement } from 'react';
 import { RouteProps } from 'react-router-dom';
 
 const lazyLoad = (cm: () => Promise<any>) => createElement(lazy(cm));
+
 export const routes: RouteProps[] = [
   {
     path: '*',
@@ -20,14 +21,6 @@ export const routes: RouteProps[] = [
   {
     path: '/not-found',
     element: lazyLoad(() => import('src/views/not-found'))
-  },
-  {
-    path: '/feature-one/detail',
-    element: lazyLoad(() => import('src/views/feature-one/detail'))
-  },
-  {
-    path: '/feature-one/home',
-    element: lazyLoad(() => import('src/views/feature-one/home'))
   },
   {
     path: '/feature-one-alpha-1/home',

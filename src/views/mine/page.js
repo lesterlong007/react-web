@@ -1,3 +1,4 @@
 export default {
-  title: 'Mine info'
+  title: 'Mine info',
+  lbu: ['SG', 'MY']
 };

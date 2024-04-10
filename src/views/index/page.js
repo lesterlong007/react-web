@@ -1,3 +1,4 @@
 export default {
-  title: 'Home page'
+  title: 'Home page',
+  lbu: ['SG', 'MY']
 };

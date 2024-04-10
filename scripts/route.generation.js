@@ -65,7 +65,7 @@ let routeContent =
   '// @ut-ignore\n// will generate routes automatically, will cover old content by auto-generation, do not need to add any route manually in current file\n' +
   "import React, { lazy, createElement } from 'react';\n" +
   "import { RouteProps } from 'react-router-dom';\n\n" +
-  'const lazyLoad = (cm: () => Promise<any>) => createElement(lazy(cm));\n' +
+  'const lazyLoad = (cm: () => Promise<any>) => createElement(lazy(cm));\n\n' +
   'export const routes: RouteProps[] = [\n';
 
 for (let i = 0; i < routes.length; i++) {
