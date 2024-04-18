@@ -58,7 +58,7 @@ const generateRoute = (name, parentDir, res) => {
   return res;
 };
 
-const routes = generateRoute('', '', [{ path: '*', filePath: 'src/views/not-found' }]);
+const routes = generateRoute('', '', [{ path: '*', filePath: 'src/views/not-found' }, { path: '/', filePath: 'src/views/index' }]);
 // console.log(routes);
 
 let routeContent =

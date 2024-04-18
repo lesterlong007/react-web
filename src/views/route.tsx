@@ -11,6 +11,10 @@ export const routes: RouteProps[] = [
     element: lazyLoad(() => import('src/views/not-found'))
   },
   {
+    path: '/',
+    element: lazyLoad(() => import('src/views/index'))
+  },
+  {
     path: '/index',
     element: lazyLoad(() => import('src/views/index'))
   },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'src/components';
@@ -12,6 +12,7 @@ export const getServiceSideProps = async () => {
 };
 
 const Index: React.FC = () => {
+  const [count, setCount] = useState<number>(0);
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -35,13 +36,23 @@ const Index: React.FC = () => {
     console.log(data, error);
   };
 
+  const showCount = () => {
+    console.log(count, 111);
+    setCount(count + 1);
+    setTimeout(() => {
+      console.log(count, 222);
+    }, 1000);
+  };
+
+  console.log('render', count);
+
   return (
     <div className="test-word mt-12">
       <div className="my-2 pre-20bold font-bold" onClick={() => navigate('/mine')}>
         Welcome to my home page
       </div>
-      <div>{t('title')}</div>
-      <Button />
+      <div onClick={showCount}>{t('title')}</div>
+      <Button onClick={() => setCount(count + 1)} />
       <img
         src="/static/google_logo.jpeg"
         alt=""
