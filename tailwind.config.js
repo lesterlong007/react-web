@@ -1,4 +1,5 @@
 const plugin = require('tailwindcss/plugin');
+import('tailwindcss')
 
 // tShirtScale describes the sizes xs - 7xl
 const tShirtScale = {
@@ -19,10 +20,8 @@ module.exports = {
   content: ['./src/**/*.{html,jsx,tsx}'],
   theme: {
     screens: {
-      mobile: { max: '0700PX' },
-      tablet: '0700PX',
-      laptop: '1024PX',
-      desktop: '1024PX'
+      tablet: '700px',
+      desktop: '1024px'
     },
     colors: {
       transparent: 'transparent',

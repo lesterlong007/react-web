@@ -48,7 +48,7 @@ const Index: React.FC = () => {
 
   return (
     <div className="test-word mt-12">
-      <div className="my-2 pre-20bold font-bold" onClick={() => navigate('/mine')}>
+      <div className="my-2 pre-20bold font-bold w-full pre-28bold tablet:w-[300px]" onClick={() => navigate('/mine')}>
         Welcome to my home page
       </div>
       <div onClick={showCount}>{t('title')}</div>
