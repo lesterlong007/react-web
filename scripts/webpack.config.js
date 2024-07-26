@@ -99,7 +99,13 @@ module.exports = {
             options: {
               presets: ['@babel/preset-typescript']
             }
-          },
+          }
+        ]
+      },
+      {
+        test: /\.(ts|tsx|json)$/,
+        exclude: /node_modules/,
+        use: [
           {
             loader: 'replace-loader',
             options: {
