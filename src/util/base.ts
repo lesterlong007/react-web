@@ -291,3 +291,51 @@ export const getUUID = () => {
     return v.toString(16);
   });
 };
+
+export const pxTransformToRem = (px: number) => `${px / 100}rem`;
+
+const loadImg = (content: string): Promise<HTMLImageElement | null> => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = content;
+    img.onload = () => {
+      resolve(img);
+    };
+    img.onerror = () => {
+      resolve(null);
+    };
+  });
+};
+
+const combineImages = async (front: string, back: string, index: number) => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const frontImg = await loadImg(front);
+  const backImg = await loadImg(back);
+  let width = 50;
+  let height = 80;
+  if (frontImg) {
+    width = frontImg.width;
+    height += frontImg.height;
+  }
+  if (backImg) {
+    width = Math.max(width, backImg.width + 50);
+    height += backImg.height + 30;
+  }
+  canvas.width = width;
+  canvas.height = height;
+  if (ctx) {
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, width, height);
+    if (frontImg) {
+      ctx.drawImage(frontImg, 25, 40, frontImg.width, frontImg.height);
+    }
+    if (backImg) {
+      const y = 70 + (frontImg?.height || 0);
+      ctx.drawImage(backImg, 25, y, backImg.width, backImg.height);
+    }
+
+    const imgURL = canvas.toDataURL('image/jpeg', 0.5);
+    // saveImage
+  }
+};

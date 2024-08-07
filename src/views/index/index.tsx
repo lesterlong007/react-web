@@ -51,7 +51,7 @@ const Index: React.FC = () => {
       <div className="my-2 pre-20bold font-bold w-full pre-28bold tablet:w-[300px]" onClick={() => navigate('/mine')}>
         Welcome to my home page
       </div>
-      <div onClick={showCount}>{t('title')}</div>
+      <div onClick={showCount}>{t('title')}</div>x
       <Button onClick={() => setCount(count + 1)} />
       <img
         src="/static/google_logo.jpeg"

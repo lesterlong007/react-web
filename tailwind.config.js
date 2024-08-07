@@ -1,5 +1,4 @@
 const plugin = require('tailwindcss/plugin');
-import('tailwindcss')
 
 // tShirtScale describes the sizes xs - 7xl
 const tShirtScale = {
@@ -335,3 +334,7 @@ module.exports = {
     })
   ]
 };
+
+// tailwind 包含于windi
+// react route 6.0 路由跳转仅支持hooks的方式，在非hooks中使用history库跳转，url虽然改变了，但是页面不render
+// dot env只支持键值对方式，若值要设为对象，用webpack原生的DefinePlugin即可
