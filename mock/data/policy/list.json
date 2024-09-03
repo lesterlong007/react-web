@@ -1,0 +1,700 @@
+{
+  "msgId": "ca973a6a-b3ab-469c-8c9b-6f24267dfc6c",
+  "timestamp": "2022-11-15T14:34:14.945+08:00",
+  "status": {
+    "code": "POLICY_200_0000",
+    "message": "Success"
+  },
+  "body": [
+    {
+      "id": "4520c616-71b9-490d-b451-06eeeb4b1829",
+      "sourceOfBusiness": "DIGITAL",
+      "policyNo": "P300001285",
+      "clients": [
+        {
+          "id": "MY~~PAMB~~Customer~~830803110803",
+          "name": "ABCDEFO HWA",
+          "clientId": "830803110803",
+          "externalIds": {
+            "NATIONAL_ID": "800114-02-1214"
+          },
+          "contactDetails": {
+            "phone": {
+              "channel": "MOBILE",
+              "value": "124799994",
+              "countryCode": "60"
+            },
+            "home": {
+              "channel": "PHONE",
+              "value": "196888981",
+              "countryCode": "60"
+            },
+            "office": {
+              "channel": "PHONE",
+              "value": "196888981",
+              "countryCode": "60"
+            },
+            "email": {
+              "channel": "EMAIL"
+            }
+          },
+          "employments": {
+            "current": {
+              "designation": "ACCM",
+              "natureOfBusiness": "AGRICULTURE-PLANTATION/POULTRY",
+              "employer": {
+                "name": "ABC Company"
+              }
+            }
+          },
+          "addressDetails": {
+            "HOME": {
+              "line1": "asklals",
+              "line2": "dssdfdsf",
+              "line3": "sdkjdskf",
+              "city": "Kuala",
+              "state": "WP",
+              "zipcode": "12312312",
+              "country": "MY"
+            },
+            "OFFICE": {
+              "line1": "asklals",
+              "line2": "dssdfdsf",
+              "line3": "sdkjdskf",
+              "city": "Kuala",
+              "state": "Johor",
+              "zipcode": "12312",
+              "country": "MY"
+            },
+            "CORRESPONDENCE": {
+              "line1": "test1",
+              "line2": "test2",
+              "line3": "test3",
+              "city": "Kuala",
+              "state": "WP",
+              "zipcode": "12312312",
+              "country": "MY",
+              "status": "INACTIVE_ADDRESS"
+            }
+          },
+          "preferences": {},
+          "bankAccounts": {},
+          "relatesTo": {},
+          "attributes": {},
+          "surName": "",
+          "dob": "1989-09-24",
+          "sex": "",
+          "maritalStatus": "",
+          "nationality": "",
+          "salutation": ""
+        }
+      ],
+      "product": {
+        "id": "MY~~PAMB~~Product~~MLS",
+        "code": "MLS",
+        "category": "PAMB",
+        "fullName": "PRUWith You"
+      },
+      "productOptions": [
+        {
+          "id": "MY~~PAMB~~ProductOption~~00746843_ILS2",
+          "product": {
+            "id": "MY~~PAMB~~Product~~ILS2",
+            "code": "ILS2",
+            "fullName": "PRUwith you",
+            "category": "PAMB",
+            "productType": [
+              {
+                "code": "WEALTH",
+                "name": "Wealth Insurance"
+              }
+            ]
+          },
+          "totalSumAssured": 6000,
+          "lifeAssured": {
+            "id": "MY~~PAMB~~LifeAssured~~00746843_830803110801",
+            "customer": {
+              "id": "MY~~PAMB~~Customer~~830803110803",
+              "name": "CHIA YOU CHAU @ CHIA YON CHAU",
+              "clientId": "830803110803",
+              "firstName": "CHIA YOU CHAU @ CHIA YON CHAU"
+            },
+            "isPrimary": true
+          }
+        }
+      ],
+      "paymentOption": {
+        "currency": "MYR",
+        "mode": "Cash / Cheque",
+        "frequency": "MONTHLY",
+        "amount": 30000
+      },
+      "inceptionDate": "2022-02-10",
+      "endDate": "2063-01-01",
+      "status": "INFORCE",
+      "servingAgents": {
+        "agent": {
+          "id": "MY~~PAMB~~Agent~~1001621",
+          "name": "DCMS M TIA",
+          "clientId": "1001621",
+          "status": "ACTIVE",
+          "contactDetails": {
+            "phone": {
+              "channel": "MOBILE",
+              "value": "193524270",
+              "countryCode": "60"
+            },
+            "office": {
+              "channel": "PHONE",
+              "value": "1110000000",
+              "countryCode": ""
+            },
+            "home": {
+              "channel": "PHONE",
+              "value": "1110000000",
+              "countryCode": ""
+            },
+            "email": {
+              "channel": "EMAIL",
+              "value": "test_run@dcms.com.my"
+            }
+          },
+          "code": "TMK00002",
+          "channel": "AGENCY",
+          "appointmentDate": "1997-01-14",
+          "terminationDate": "2012-08-24",
+          "branch": "9TH FLR, PHILEO DAMANSARA",
+          "office": "9TH FLR, PHILEO DAMANSARA",
+          "zone": "C"
+        }
+      },
+      "nextPremiumDue": "",
+      "customerRoles": [
+        {
+          "id": "MY~~PAMB~~CustomerRole~~00746843_830803110803_OW",
+          "customer": {
+            "id": "MY~~PAMB~~Customer~~830803110803",
+            "name": "SOPHIE PULSETEST",
+            "clientId": "830803110803",
+            "firstName": "SOPHIE PULSETEST",
+            "surName": "LAST NAME"
+          },
+          "role": "OWNER"
+        },
+        {
+          "id": "MY~~PAMB~~CustomerRole~~00746843_830803110803_LF",
+          "customer": {
+            "id": "MY~~PAMB~~Customer~~830803110802",
+            "name": "CHIA YOU CHAU @ CHIA YON CHAU",
+            "clientId": "830803110803",
+            "firstName": "CHIA YOU CHAU @ CHIA YON CHAU"
+          },
+          "role": "LIFEASSURED"
+        }
+      ]
+    },
+    {
+      "id": "MY~~PAMB~~Policy~~00766950~~830803110803",
+      "policyNo": "00766950",
+      "sourceOfBusiness": "DIGITAL",
+      "clients": [
+        {
+          "id": "MY~~PAMB~~Customer~~830803110803",
+          "name": "ABCDEFO HWA",
+          "clientId": "830803110803",
+          "externalIds": {
+            "NATIONAL_ID": "800114-02-1214"
+          },
+          "contactDetails": {
+            "phone": {
+              "channel": "MOBILE",
+              "value": "124799994",
+              "countryCode": "60"
+            },
+            "email": {
+              "channel": "EMAIL"
+            }
+          },
+          "addressDetails": {
+            "HOME": {
+              "line1": "test",
+              "line2": "dssdfdsf",
+              "line3": "sdkjdskf",
+              "city": "Kuala",
+              "state": "WP",
+              "zipcode": "12312312",
+              "country": "MY"
+            },
+            "CORRESPONDENCE": {
+              "line1": "test3",
+              "line2": "test2",
+              "line3": "test3",
+              "city": "Kuala",
+              "state": "WP",
+              "zipcode": "12312312",
+              "country": "MY",
+              "status": "INACTIVE_ADDRESS"
+            }
+          },
+          "preferences": {},
+          "bankAccounts": {},
+          "relatesTo": {},
+          "employments": {},
+          "attributes": {},
+          "surName": "",
+          "dob": "1989-09-24",
+          "sex": "",
+          "maritalStatus": "",
+          "nationality": "",
+          "salutation": ""
+        }
+      ],
+      "product": {
+        "id": "MY~~PAMB~~Product~~SPL",
+        "code": "SPL",
+        "fullName": "PRUSignature Ace"
+      },
+      "productOptions": [
+        {
+          "id": "MY~~PAMB~~ProductOption~~00766950_SP11",
+          "product": {
+            "id": "MY~~PAMB~~Product~~SP11",
+            "code": "SP11",
+            "fullName": "PRUSignature Ace",
+            "category": "PAMB",
+            "productType": [
+              {
+                "code": "HEALTH",
+                "name": "Health Insurance"
+              }
+            ]
+          },
+          "totalSumAssured": 10000,
+          "lifeAssured": {
+            "id": "MY~~PAMB~~LifeAssured~~00766950_830803110803",
+            "customer": {
+              "id": "MY~~PAMB~~Customer~~830803110803",
+              "name": "PULSETEST2",
+              "clientId": "830803110803",
+              "firstName": "PULSETEST2",
+              "surName": "LAST NAME"
+            },
+            "isPrimary": true
+          }
+        }
+      ],
+      "paymentOption": {
+        "currency": "MYR",
+        "mode": "Bank Transfer",
+        "frequency": "YEARLY",
+        "amount": "10000"
+      },
+      "inceptionDate": "2022-09-27",
+      "firstIssueDate": "2022-09-27",
+      "endDate": "2082-09-27",
+      "status": "TPDCLAIMAPPROVED",
+      "servingAgents": {
+        "agent": {
+          "id": "MY~~PAMB~~Agent~~1008536",
+          "name": "NA",
+          "clientId": "1008536",
+          "status": "ACTIVE",
+          "contactDetails": {
+            "phone": {
+              "channel": "MOBILE",
+              "value": "NA",
+              "countryCode": ""
+            },
+            "office": {
+              "channel": "PHONE",
+              "value": "NA",
+              "countryCode": ""
+            },
+            "home": {
+              "channel": "PHONE",
+              "value": "NA",
+              "countryCode": ""
+            },
+            "email": {
+              "channel": "EMAIL",
+              "value": "NA"
+            }
+          },
+          "code": "90100137",
+          "channel": "SCB",
+          "appointmentDate": "2002-02-21",
+          "terminationDate": "",
+          "branch": "SCB - KUANTAN",
+          "office": "Standard Chartered Bank Malaysia Berhad",
+          "zone": "N"
+        }
+      },
+      "nextPremiumDue": "2022-02-01",
+      "customerRoles": [
+        {
+          "id": "MY~~PAMB~~CustomerRole~~00766950_830803110803_OW",
+          "customer": {
+            "id": "MY~~PAMB~~Customer~~830803110803",
+            "name": "SOPHIE PULSETEST",
+            "clientId": "830803110803",
+            "firstName": "SOPHIE PULSETEST",
+            "surName": "LAST NAME"
+          },
+          "role": "OWNER"
+        },
+        {
+          "id": "MY~~PAMB~~CustomerRole~~00766950_830803110803_LF",
+          "customer": {
+            "id": "MY~~PAMB~~Customer~~830803110804",
+            "name": "SOPHIE PULSETEST",
+            "clientId": "830803110803",
+            "firstName": "SOPHIE PULSETEST",
+            "surName": "LAST NAME"
+          },
+          "role": "LIFEASSURED"
+        }
+      ]
+    },
+    {
+      "id": "MY~~PAMB~~Policy~~00767527~~830803110803",
+      "policyNo": "00767527",
+      "sourceOfBusiness": "CMM",
+      "clients": [
+        {
+          "id": "MY~~PAMB~~Customer~~830803110803",
+          "name": "ABCDEFO HWA",
+          "clientId": "830803110803",
+          "externalIds": {
+            "NATIONAL_ID": "800114-02-1214"
+          },
+          "contactDetails": {
+            "phone": {
+              "channel": "MOBILE",
+              "value": "124799994",
+              "countryCode": "60"
+            },
+            "email": {
+              "channel": "EMAIL",
+              "value": "testing@prudential.com"
+            }
+          },
+          "addressDetails": {
+            "HOME": {
+              "line1": "asklals",
+              "line2": "dssdfdsf",
+              "line3": "sdkjdskf",
+              "city": "Kuala",
+              "state": "WP",
+              "zipcode": "12312312",
+              "country": "MY"
+            },
+            "CORRESPONDENCE": {
+              "line1": "test1",
+              "line2": "test2",
+              "line3": "test3",
+              "city": "Kuala",
+              "state": "WP",
+              "zipcode": "12312312",
+              "country": "MY",
+              "status": "BAD_ADDRESS"
+            }
+          },
+          "preferences": {},
+          "bankAccounts": {},
+          "relatesTo": {},
+          "employments": {},
+          "attributes": {},
+          "surName": "",
+          "dob": "1989-09-24",
+          "sex": "",
+          "maritalStatus": "",
+          "nationality": "",
+          "salutation": ""
+        }
+      ],
+      "product": {
+        "id": "MY~~PAMB~~Product~~SPL",
+        "code": "SPL",
+        "fullName": "PRUSignature Ace"
+      },
+      "productOptions": [
+        {
+          "id": "MY~~PAMB~~ProductOption~~00767527_SP11",
+          "product": {
+            "id": "MY~~PAMB~~Product~~SP11",
+            "code": "SP11",
+            "fullName": "PRUSignature Ace",
+            "productType": [
+              {
+                "code": "LIFE",
+                "name": "Life Insurance"
+              }
+            ]
+          },
+          "totalSumAssured": 500,
+          "lifeAssured": {
+            "id": "MY~~PAMB~~LifeAssured~~00767527_830803110803",
+            "customer": {
+              "id": "MY~~PAMB~~Customer~~830803110803",
+              "name": "SOPHIE PULSETEST",
+              "clientId": "830803110803",
+              "firstName": "SOPHIE PULSETEST",
+              "surName": "LAST NAME"
+            },
+            "isPrimary": true
+          }
+        }
+      ],
+      "paymentOption": {
+        "currency": "MYR",
+        "mode": "Bank Transfer",
+        "frequency": "SEMIANNUAL",
+        "amount": 20000
+      },
+      "inceptionDate": "2022-10-07",
+      "endDate": "2082-10-07",
+      "status": "INFORCE",
+      "servingAgents": {
+        "agent": {
+          "id": "MY~~PAMB~~Agent~~1008536",
+          "name": "NA",
+          "clientId": "1008536",
+          "status": "ACTIVE",
+          "contactDetails": {
+            "phone": {
+              "channel": "MOBILE",
+              "value": "NA",
+              "countryCode": ""
+            },
+            "office": {
+              "channel": "PHONE",
+              "value": "NA",
+              "countryCode": ""
+            },
+            "home": {
+              "channel": "PHONE",
+              "value": "NA",
+              "countryCode": ""
+            },
+            "email": {
+              "channel": "EMAIL",
+              "value": "NA"
+            }
+          },
+          "code": "90100137",
+          "channel": "SCB",
+          "appointmentDate": "2002-02-21",
+          "terminationDate": "",
+          "branch": "SCB - KUANTAN",
+          "office": "Standard Chartered Bank Malaysia Berhad",
+          "zone": "N"
+        }
+      },
+      "nextPremiumDue": "",
+      "customerRoles": [
+        {
+          "id": "MY~~PAMB~~CustomerRole~~00767527_830803110803_OW",
+          "customer": {
+            "id": "MY~~PAMB~~Customer~~830803110805",
+            "name": "SOPHIE PULSETEST2",
+            "clientId": "830803110803",
+            "firstName": "SOPHIE PULSETEST2",
+            "surName": "LAST NAME"
+          },
+          "role": "OWNER"
+        },
+        {
+          "id": "MY~~PAMB~~CustomerRole~~00767527_830803110803_LF",
+          "customer": {
+            "id": "MY~~PAMB~~Customer~~830803110803",
+            "name": "SOPHIE PULSETEST2",
+            "clientId": "830803110803",
+            "firstName": "SOPHIE PULSETEST",
+            "surName": "LAST NAME"
+          },
+          "role": "LIFEASSURED"
+        }
+      ]
+    },
+    {
+      "id": "4520c616-71b9-490d-b451-06eeeb4b1829abc",
+      "policyNo": "P300001286",
+      "sourceOfBusiness": "DIGITAL",
+      "clients": [
+        {
+          "id": "MY~~PAMB~~Customer~~830803110803",
+          "name": "ABCDEFO HWA",
+          "clientId": "830803110803",
+          "externalIds": {
+            "NATIONAL_ID": "800114-02-1214"
+          },
+          "contactDetails": {
+            "phone": {
+              "channel": "MOBILE",
+              "value": "124799994",
+              "countryCode": "60"
+            },
+            "home": {
+              "channel": "PHONE",
+              "value": "196888981",
+              "countryCode": "60"
+            },
+            "office": {
+              "channel": "PHONE",
+              "value": "196888981",
+              "countryCode": "60"
+            },
+            "email": {
+              "channel": "EMAIL",
+              "value": "testing@prudential.com"
+            }
+          },
+          "addressDetails": {
+            "RESIDENTIAL": {
+              "line1": "asklals",
+              "line2": "dssdfdsf",
+              "line3": "sdkjdskf",
+              "city": "Kuala",
+              "state": "WP",
+              "zipcode": "12312312",
+              "country": "MY"
+            },
+            "OFFICE": {
+              "line1": "asklals",
+              "line2": "dssdfdsf",
+              "line3": "sdkjdskf",
+              "city": "Kuala",
+              "state": "WP",
+              "zipcode": "12312312",
+              "country": "MY"
+            },
+            "CORRESPONDENCE": {
+              "line1": "test1111",
+              "line2": "test2222",
+              "line3": "test3",
+              "city": "Kuala",
+              "state": "WP",
+              "zipcode": "12312312",
+              "country": "MY",
+              "status": "INACTIVE_ADDRESS"
+            }
+          },
+          "preferences": {},
+          "bankAccounts": {},
+          "relatesTo": {},
+          "employments": {},
+          "attributes": {},
+          "surName": "",
+          "dob": "1989-09-24",
+          "sex": "",
+          "maritalStatus": "",
+          "nationality": "",
+          "salutation": ""
+        }
+      ],
+      "product": {
+        "id": "MY~~PAMB~~Product~~MLS",
+        "code": "MLS",
+        "category": "PAMB",
+        "fullName": "PRUWith You"
+      },
+      "productOptions": [
+        {
+          "id": "MY~~PAMB~~ProductOption~~00746843_ILS2",
+          "product": {
+            "id": "MY~~PAMB~~Product~~ILS2",
+            "code": "ILS2",
+            "fullName": "PRUwith you",
+            "category": "PAMB",
+            "productType": [
+              {
+                "code": "WEALTH",
+                "name": "Wealth Insurance"
+              }
+            ]
+          },
+          "totalSumAssured": 6000,
+          "lifeAssured": {
+            "id": "MY~~PAMB~~LifeAssured~~00746843_830803110801",
+            "customer": {
+              "id": "MY~~PAMB~~Customer~~830803110803",
+              "name": "CHIA YOU CHAU @ CHIA YON CHAU",
+              "clientId": "830803110803",
+              "firstName": "CHIA YOU CHAU @ CHIA YON CHAU"
+            },
+            "isPrimary": true
+          }
+        }
+      ],
+      "paymentOption": {
+        "currency": "MYR",
+        "mode": "Cash / Cheque",
+        "frequency": "MONTHLY",
+        "amount": 30000
+      },
+      "inceptionDate": "2022-02-10",
+      "endDate": "2063-01-01",
+      "status": "INFORCE",
+      "servingAgents": {
+        "agent": {
+          "id": "MY~~PAMB~~Agent~~1001621",
+          "name": "DCMS M TIA",
+          "clientId": "1001621",
+          "status": "ACTIVE",
+          "contactDetails": {
+            "phone": {
+              "channel": "MOBILE",
+              "value": "193524270",
+              "countryCode": "60"
+            },
+            "office": {
+              "channel": "PHONE",
+              "value": "1110000000",
+              "countryCode": ""
+            },
+            "home": {
+              "channel": "PHONE",
+              "value": "1110000000",
+              "countryCode": ""
+            },
+            "email": {
+              "channel": "EMAIL",
+              "value": "test_run@dcms.com.my"
+            }
+          },
+          "code": "TMK00002",
+          "channel": "AGENCY",
+          "appointmentDate": "1997-01-14",
+          "terminationDate": "2012-08-24",
+          "branch": "9TH FLR, PHILEO DAMANSARA",
+          "office": "9TH FLR, PHILEO DAMANSARA",
+          "zone": "C"
+        }
+      },
+      "nextPremiumDue": "",
+      "customerRoles": [
+        {
+          "id": "MY~~PAMB~~CustomerRole~~00746843_830803110803_OW",
+          "customer": {
+            "id": "MY~~PAMB~~Customer~~830803110803",
+            "name": "SOPHIE PULSETEST",
+            "clientId": "830803110803",
+            "firstName": "SOPHIE PULSETEST",
+            "surName": "LAST NAME"
+          },
+          "role": "OWNER"
+        },
+        {
+          "id": "MY~~PAMB~~CustomerRole~~00746843_830803110803_LF",
+          "customer": {
+            "id": "MY~~PAMB~~Customer~~830803110802",
+            "name": "CHIA YOU CHAU @ CHIA YON CHAU",
+            "clientId": "830803110803",
+            "firstName": "CHIA YOU CHAU @ CHIA YON CHAU"
+          },
+          "role": "LIFEASSURED"
+        }
+      ]
+    }
+  ]
+}

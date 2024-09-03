@@ -1,0 +1,29 @@
+{
+  "code": "PRU_200",
+  "message": "SUCCESS",
+  "data": {
+    "sub": "9c02bc25-3f1c-4a00-a320-301e3a4b3987",
+    "aud": "web",
+    "jti": "d1783de3-374b-407a-928b-78544d20df38",
+    "iss": "prudential",
+    "iat": "1724816561",
+    "exp": "1724816861",
+    "nbf": "0",
+    "region": "MY",
+    "auth_level": 1,
+    "onepulse_sub": "gAsHVmVwHRiVpP2fA1f2m4",
+    "registration_time": "1970-01-01T00:00Z",
+    "service_account": "pulse",
+    "iss_type": "OnePulse",
+    "is_partner": false,
+    "customer_name": "",
+    "pruservice_verified": false,
+    "extra_info": "",
+    "masked_psweb_mo_email": null,
+    "masked_psweb_mo_phone": null,
+    "masked_psweb_legacy_email": null,
+    "masked_psweb_legacy_phone": null,
+    "preferred_username": ""
+  },
+  "pruTraceId": "97bd31e78c1b1b90adb8c78f4b1a00a7"
+}

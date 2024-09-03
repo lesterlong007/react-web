@@ -1,4 +1,5 @@
 const plugin = require('tailwindcss/plugin');
+const { getSubModuleList } = require('./scripts/common/base');
 
 // tShirtScale describes the sizes xs - 7xl
 const tShirtScale = {
@@ -15,10 +16,14 @@ const tShirtScale = {
   '7xl': '320px'
 };
 
+const wildcard = '/src/**/*.{html,jsx,tsx}';
+const contentList = getSubModuleList().map((sub) => `./${sub}${wildcard}`);
+
 module.exports = {
-  content: ['./src/**/*.{html,jsx,tsx}'],
+  content: [`.${wildcard}`, ...contentList],
   theme: {
     screens: {
+      mobile: { max: '700px' },
       tablet: '700px',
       desktop: '1024px'
     },
@@ -26,6 +31,7 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       white: '#FFFFFF',
+      red: '#ED1B2D',
       /* text */
       't-1': 'var(--t-1)',
       't-2': 'var(--t-2)',
@@ -123,102 +129,18 @@ module.exports = {
     spacing: {
       px: '1px',
       0: '0px',
-      0.5: '5px',
-      1: '4px',
-      1.5: '1.5px',
       2: '2px',
-      2.5: '2.5px',
-      3: '3px',
-      3.5: '3.5px',
       4: '4px',
-      5: '5px',
       6: '6px',
-      7: '7px',
       8: '8px',
-      9: '9px',
       10: '10px',
-      11: '11px',
       12: '12px',
       14: '14px',
       16: '16px',
       20: '20px',
       24: '24px',
       28: '28px',
-      32: '32px',
-      36: '36px',
-      40: '40px',
-      44: '44px',
-      48: '48px',
-      52: '52px',
-      56: '56px',
-      60: '60px',
-      64: '64px',
-      72: '72px',
-      80: '80px',
-      96: '96px'
-    },
-    borderRadius: {
-      DEFAULT: '1px',
-      none: '0px',
-      sm: '0.5px',
-      md: '1.5px',
-      lg: '2px',
-      xl: '3px',
-      '2xl': '4px',
-      '3xl': '6px',
-      large: '12px',
-      full: '9999px',
-      half: '50%',
-      1: '100%'
-    },
-    fontSize: {
-      xs: ['3px', { lineHeight: '4px' }],
-      sm: ['3.5px', { lineHeight: '5px' }],
-      base: ['4px', { lineHeight: '6px' }],
-      lg: ['4.5px', { lineHeight: '7px' }],
-      xl: ['5px', { lineHeight: '7px' }],
-      '2xl': ['6px', { lineHeight: '8px' }],
-      '3xl': ['7.5px', { lineHeight: '9px' }],
-      '4xl': ['9px', { lineHeight: '9px' }],
-      '5xl': ['12px', { lineHeight: '18px' }],
-      '6xl': ['14px', { lineHeight: '20px' }],
-      '7xl': ['15px', { lineHeight: '24px' }],
-      '8xl': ['16px', { lineHeight: '24px' }],
-      '9xl': ['17px', { lineHeight: '28px' }],
-      '10xl': ['10px', { lineHeight: '15px' }],
-      '12xl': ['12px', { lineHeight: '18px' }],
-      '14xl': ['14px', { lineHeight: '21px' }],
-      '15xl': ['15px', { lineHeight: '23px' }],
-      '18xl': ['18px', { lineHeight: '27px' }],
-      '20xl': ['20px', { lineHeight: '30px' }],
-      '24xl': ['24px', { lineHeight: '36px' }],
-      '28xl': ['28px', { lineHeight: '42px' }]
-    },
-    lineHeight: {
-      none: '1',
-      tight: '1.25',
-      snug: '1.375',
-      normal: '1.5',
-      relaxed: '1.625',
-      loose: '2',
-      3: '3px',
-      4: '4px',
-      5: '5px',
-      6: '6px',
-      7: '7px',
-      8: '8px',
-      9: '9px',
-      10: '10px'
-    },
-    textIndent: {
-      DEFAULT: '6px',
-      xs: '2px',
-      sm: '4px',
-      md: '6px',
-      lg: '8px',
-      xl: '10px',
-      '2xl': '12px',
-      '3xl': '16px'
+      32: '32px'
     },
     boxShadow: {
       DEFAULT: '0px 8px 24px 0px rgba(0, 0, 0, 0.08)',
@@ -238,103 +160,10 @@ module.exports = {
       second: 9999,
       third: 999,
       forth: 100
-    },
-    extend: {
-      screens: {
-        md: '768PX'
-      },
-      columns: {
-        ...tShirtScale,
-        '3xs': '64px',
-        '2xs': '72px'
-      },
-      height: {
-        ...tShirtScale,
-        fiftyFive: '55%'
-      },
-      maxHeight: {
-        ...tShirtScale
-      },
-      width: {
-        ...tShirtScale,
-        fourtyEight: '48%',
-        thirtyTwo: '32%',
-        half: '50%',
-        third: '33.33%'
-      },
-      maxWidth: {
-        ...tShirtScale
-      },
-      perspective: {
-        ...tShirtScale
-      },
-      spacing: {
-        thirtyFive: '35%',
-        fourtyEight: '48%',
-        half: '50%',
-        sixty: '60%',
-        oneand2: '102%',
-        '16PX': '16PX',
-        '32PX': '32PX'
-      },
-      top: {
-        fiftyFive: '55%'
-      },
-      borderRadius: {
-        '8PX': '8PX',
-        '10PX': '10PX',
-        '12PX': '12PX',
-        '16PX': '16PX',
-        '20PX': '20PX',
-        '60PX': '60PX'
-      },
-      transitionProperty: {
-        height: 'height',
-        'max-height': 'max-height'
-      },
-      fontWeight: {
-        semi: 600
-      },
-      fontSize: {
-        '11xl': ['11px', { lineHeight: '17px' }],
-        '44xl': ['44px', { lineHeight: '66px' }],
-        '36xl': ['36px', { lineHeight: '54px' }]
-      }
     }
   },
-  shortcuts: {
-    'pre-28bold': 'text-28px leading-42px font-bold',
-    'pre-24bold': 'text-24px leading-36px font-bold',
-    'pre-20bold': 'text-20px leading-30px font-bold',
-    'pre-18bold': 'text-18px leading-27px font-bold',
-    'pre-15bold': 'text-15px leading-23px font-bold',
-    'pre-15semi': 'text-15px leading-23px font-semibold',
-    'pre-15med': 'text-15px leading-23px font-medium',
-    'pre-15reg': 'text-15px leading-23px font-normal',
-    'pre-14bold': 'text-14px leading-21px font-bold',
-    'pre-14semi': 'text-14px leading-21px font-semibold',
-    'pre-14med': 'text-14px leading-21px font-medium',
-    'pre-14reg': 'text-14px leading-21px font-normal',
-    'pre-12reg': 'text-12px leading-18px font-normal',
-    'pre-12bold': 'text-12px leading-18px font-bold',
-    'pre-12semi': 'text-12px leading-18px font-semibold',
-    'pre-12med': 'text-12px leading-18px font-medium',
-    'pre-11semi': 'text-11px leading-17px font-semibold',
-    'pre-10bold': 'text-10px leading-15px font-bold',
-    'pre-10semi': 'text-10px leading-15px font-semibold',
-    'pre-10med': 'text-10px leading-15px font-medium',
-    'pre-10reg': 'text-10px leading-15px font-normal'
-  },
-  plugins: [
-    plugin(function ({ addUtilities }) {
-      addUtilities({
-        '.pre-28bold': 'text-28px leading-42px font-bold',
-        '.pre-20bold': 'text-20px leading-30px font-bold'
-      });
-    })
-  ]
+  plugins: [],
+  corePlugins: {
+    preflight: false
+  }
 };
-
-// tailwind 包含于windi
-// react route 6.0 路由跳转仅支持hooks的方式，在非hooks中使用history库跳转，url虽然改变了，但是页面不render
-// dot env只支持键值对方式，若值要设为对象，用webpack原生的DefinePlugin即可

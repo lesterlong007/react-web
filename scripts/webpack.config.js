@@ -9,12 +9,12 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const MyCustomPlugin = require('./plugins/custom.plugin');
 const CheckModulePlugin = require('./plugins/check.module.js');
 
-const { basename, LBU, getCssModuleIdentName } = require('./common/base.js');
+const { basename, LOCATION, LBU, getCssModuleIdentName } = require('./common/base.js');
 process.env.BASENAME = basename;
 
 const { argv } = require('yargs');
 const { NODE_ENV } = process.env;
-const isDev = NODE_ENV === 'development';
+const isDevMode = NODE_ENV === 'development';
 const ROOT_PATH = path.resolve(__dirname, '../');
 const env = argv.env || process.env.BUILD_ENV || 'local';
 
@@ -41,7 +41,7 @@ const getStyleLoader = (isModule = false, isSass = false) => {
       }
     }
   };
-  const loaders = [isDev ? 'style-loader' : MiniCssExtractPlugin.loader, isModule ? cssModuleLoader : 'css-loader', 'postcss-loader'];
+  const loaders = [isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader, isModule ? cssModuleLoader : 'css-loader', 'postcss-loader'];
   if (isSass) {
     loaders.push('sass-loader');
   }
@@ -55,7 +55,7 @@ module.exports = {
   output: {
     path: path.resolve(ROOT_PATH, './dist'),
     filename: 'js/[name].[chunkhash:8].bundle.js',
-    publicPath: isDev ? '/' : `${basename}/`
+    publicPath: isDevMode ? '/' : `${basename}/`
   },
   mode: NODE_ENV || 'production',
   resolveLoader: {
@@ -125,19 +125,26 @@ module.exports = {
         }
       },
       {
-        test: /\.(woff|svg|eot|ttf)\??.*$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'font/[name].[contenthash:8].[ext]'
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        type: 'asset',
+        generator: {
+          filename: '[name].[contenthash:8][ext]',
+          outputPath: isDevMode ? '' : 'fonts/',
+          publicPath: isDevMode ? '/' : 'fonts/'
         }
+      },
+      {
+        test: /\.icon\.svg$/,
+        exclude: /node_modules/,
+        use: ['babel-loader', 'icon-loader']
       }
     ]
   },
   resolve: {
     alias: {
       src: path.resolve(ROOT_PATH, './src'),
-      '@': path.resolve(ROOT_PATH, './src')
+      '@': path.resolve(ROOT_PATH, './src'),
+      '@common': path.resolve(ROOT_PATH, './new-pruservice-common/src')
     },
     extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.scss', '.css']
   },
@@ -153,7 +160,9 @@ module.exports = {
     }),
     new DefinePlugin({
       'process.env.BASENAME': JSON.stringify(`${basename}`),
-      'process.env.LOCATION': JSON.stringify(LBU)
+      'process.env.LOCATION': JSON.stringify(LOCATION),
+      'process.env.LBU': JSON.stringify(LBU),
+      'process.env.LOCAL_BUILD': JSON.stringify(isDevMode)
     }),
     new CopyPlugin({
       patterns: [
@@ -173,8 +182,8 @@ module.exports = {
       inject: 'head'
     }),
     new MiniCssExtractPlugin({
-      filename: isDev ? 'css/[name][hash:8].css' : 'css/[name].[chunkhash:8].css',
-      chunkFilename: isDev ? 'css/[id][hash:8].css' : 'css/[id].[chunkhash:8].css',
+      filename: isDevMode ? 'css/[name][hash:8].css' : 'css/[name].[chunkhash:8].css',
+      chunkFilename: isDevMode ? 'css/[id][hash:8].css' : 'css/[id].[chunkhash:8].css',
       ignoreOrder: true
     })
   ]

@@ -5,14 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "start": "node scripts/start.js",
-    "build": "webpack --config ./scripts/build.js",
-    "server": "node server/index.js",
+    "test:squad3": "cd new-pruservice-web && yarn test",
+    "start": "npm-run-all --parallel mock dev",
+    "dev": "node scripts/start.js",
+    "build": "yarn generate-routes && yarn combine-translation && webpack --config ./scripts/build.js",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src/",
     "analyze": "cross-env ANALYZE=1 npm run build:prod",
     "mock": "nodemon ./mock/server.js",
-    "prettier": "prettier --write ./src/**/**/*.{js,jsx,ts,tsx,json,scss}",
-    "generate-routes": "node scripts/route.generation.js"
+    "prettier": "prettier --write ./src/**/**/*.{js,jsx,ts,tsx,json,css,scss}",
+    "generate-routes": "node scripts/route.generation.js",
+    "combine-translation": "node scripts/i18n.generation.js",
+    "sync-config-files": "node ./scripts/sync.config.js",
+    "sync-up-dep": "node ./scripts/sync.dep.js",
+    "pull-submodules": "node scripts/fetch.sub.modules.js",
+    "postinstall": "yarn pull-submodules && yarn sync-up-dep && yarn sync-config-files"
   },
   "husky": {
     "hooks": {
@@ -27,7 +33,7 @@
     "**/*.{js.jsx,ts,tsx}": "npm run lint"
   },
   "keywords": [],
-  "author": "",
+  "author": "Pru services team",
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -97,7 +103,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^13.3.0",
     "mini-css-extract-plugin": "^2.7.6",
-    "node-sass": "^9.0.0",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.0.2",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.38",
@@ -128,7 +134,12 @@
     "last 2 versions"
   ],
   "sideEffects": [
-    "src/*.css",
+    "src/**/*.css",
     "src/**/*.scss"
+  ],
+  "private": true,
+  "workspaces": [
+    "new-pruservice-common",
+    "new-pruservice-alteration"
   ]
 }

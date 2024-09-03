@@ -11,13 +11,22 @@ const pageFileName = 'page.js';
 const routeFileName = 'route.tsx';
 const viewsPath = 'src/views';
 const componentsPath = 'src/components';
-const lbu = argv.LOCATION || process.env.LOCATION || 'my';
+const lbu = argv.LBU || process.env.LBU || '';
 const LBU = lbu.toUpperCase();
-const basename = '/react-web';
+const location = argv.LOCATION || process.env.LOCATION || 'my';
+const LOCATION = location.toUpperCase();
 
-// const _ = require('winger.js');
-
-// console.log(_);
+const getPublicPath = () => {
+  const publicPath = '/pruservice-pages';
+  const env = process.env.BUILD_ENV || 'dev';
+  if (location === 'mo') {
+    return publicPath;
+  } else if (env === 'prod') {
+    return `/${location}${publicPath}`;
+  } else {
+    return `/${env}/${location}${publicPath}`;
+  }
+};
 
 /**
  * only collect dependency from source codes
@@ -68,7 +77,7 @@ const getFileContent = (finalPath) => {
 };
 
 /**
- * judge current lbu whether has feature permission
+ * judge current location whether has feature permission
  * @param {*} dirPath string
  *  @param {*} fileName string
  * @returns { boolean }
@@ -78,9 +87,9 @@ const hasFeaturePagePermission = (dirPath, fileName) => {
   if (fs.existsSync(finalPath)) {
     const content = getFileContent(finalPath);
     // console.log(content);
-    const res = content.match(/lbu:\s*(\[.*\])/);
+    const res = content.match(/location:\s*(\[.*\])/);
     // console.log(res);
-    return !!res && res[1].includes(LBU);
+    return !!res && (res[1].includes(LOCATION) || res[1].includes('ALL'));
   } else {
     return true;
   }
@@ -116,6 +125,16 @@ const getCssModuleIdentName = (localName, filename) => {
   return `${localName}_${hash.slice(0, 6)}`;
 };
 
+/**
+ * Get submodule name list
+ * @returns { string []  }
+ */
+const getSubModuleList = (needLokalise = false) => {
+  const gitModulesPath = path.resolve(sourceRootPath, '.gitmodules');
+  const modulesStr = fs.readFileSync(gitModulesPath, { encoding: 'utf8' });
+  return modulesStr.match(/(?<=path\s*=\s*)\S+/g).filter((val) => needLokalise || val !== 'new-pruservice-lokalise');
+};
+
 module.exports = {
   sourceRootPath,
   viewsPath,
@@ -125,12 +144,16 @@ module.exports = {
   routeFileName,
   extensions,
   ellipsisFolders,
-  LBU,
+  LOCATION,
+  location,
   lbu,
-  basename,
+  LBU,
+  basename: getPublicPath(),
   hasExtension,
   hasFeaturePagePermission,
   getVersionNo,
   isOwnDependency,
-  getCssModuleIdentName
+  getCssModuleIdentName,
+  getSubModuleList,
+  getPublicPath
 };

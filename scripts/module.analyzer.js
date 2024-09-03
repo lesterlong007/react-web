@@ -10,12 +10,12 @@ const {
   pageFileName,
   featureFileName,
   componentsPath,
-  lbu,
+  location,
   hasExtension,
   hasFeaturePagePermission,
   getVersionNo
 } = require('./common/base');
-const graphFilePath = path.resolve(__dirname, `../module-dependency/module-graph.${lbu}.wsd`);
+const graphFilePath = path.resolve(__dirname, `../module-dependency/module-graph.${location}.wsd`);
 
 /**
  * only collect dependency from source codes
@@ -79,12 +79,12 @@ const getCompletedPath = (filePath, parentDir) => {
 };
 
 /**
- * get same file path which has lbu extension if exist
+ * get same file path which has location extension if exist
  * @param {*} filePath
  * @returns string
  */
 const getLBUFilePath = (filePath) => {
-  const lbuFilePath = filePath.replace(/([\w-]+)(.ts|.tsx)$/, `$1.${lbu}$2`);
+  const lbuFilePath = filePath.replace(/([\w-]+)(.ts|.tsx)$/, `$1.${location}$2`);
   if (/\.(tsx|ts)$/.test(lbuFilePath) && fs.existsSync(lbuFilePath)) {
     return lbuFilePath;
   } else {
@@ -113,7 +113,7 @@ const supplementFileExtension = (filePath) => {
 };
 
 /**
- * get actual file path if exist lbu extension file
+ * get actual file path if exist location extension file
  * @param {*} filePath
  * @returns string
  */

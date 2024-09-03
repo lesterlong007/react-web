@@ -14,10 +14,11 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "src": ["src"],
-      "@": ["src"]
+      "src/*": ["src/*"],
+      "@/*": ["src/*"],
+      "@common/*": ["new-pruservice-common/src/*"],
     }
   },
-  "include": ["src", "types"],
+  "include": ["src", "**/types", "**/src"],
   "exclude": ["node_modules", "scripts"]
 }
