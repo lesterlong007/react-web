@@ -18,34 +18,12 @@ const isDevMode = NODE_ENV === 'development';
 const ROOT_PATH = path.resolve(__dirname, '../');
 const env = argv.env || process.env.BUILD_ENV || 'local';
 
-const cssReg = /\.css$/;
-const cssModuleReg = /\.module\.css$/;
-const sassReg = /\.scss$/;
-const sassModuleReg = /\.module\.scss$/;
-
 const envConfig = {
   dev: path.resolve(__dirname, '../env/.env.dev'),
   sit: path.resolve(__dirname, '../env/.env.sit'),
   uat: path.resolve(__dirname, '../env/.env.uat'),
   prod: path.resolve(__dirname, '../env/.env.prod'),
   local: path.resolve(__dirname, '../env/.env.local')
-};
-
-const getStyleLoader = (isModule = false, isSass = false) => {
-  const cssModuleLoader = {
-    loader: 'css-loader',
-    options: {
-      modules: {
-        // localIdentName: '[local]_[hash:base64:5]'
-        getLocalIdent: (context, _, localName) => getCssModuleIdentName(localName, context.resourcePath)
-      }
-    }
-  };
-  const loaders = [isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader, isModule ? cssModuleLoader : 'css-loader', 'postcss-loader'];
-  if (isSass) {
-    loaders.push('sass-loader');
-  }
-  return loaders;
 };
 
 module.exports = {
@@ -64,24 +42,60 @@ module.exports = {
   module: {
     rules: [
       {
-        test: cssReg,
-        exclude: cssModuleReg,
-        use: getStyleLoader(false, false)
-      },
-      {
-        test: cssModuleReg,
+        test: /(?<!\.module)\.css$/,
         exclude: /node_modules/,
-        use: getStyleLoader(true, false)
+        use: [
+          isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader'
+        ]
       },
       {
-        test: sassReg,
-        exclude: sassModuleReg,
-        use: getStyleLoader(false, true)
-      },
-      {
-        test: sassModuleReg,
+        test: /\.module\.css$/,
         exclude: /node_modules/,
-        use: getStyleLoader(true, true)
+        use: [
+          isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                // localIdentName: '[local]_[hash:base64:5]'
+                getLocalIdent: (context, _, localName) =>
+                  getCssModuleIdentName(localName, context.resourcePath)
+              }
+            }
+          },
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /(?<!\.module)\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.module\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          isDevMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                // localIdentName: '[local]_[hash:base64:5]'
+                getLocalIdent: (context, _, localName) =>
+                  getCssModuleIdentName(localName, context.resourcePath)
+              }
+            }
+          },
+          'postcss-loader',
+          'sass-loader'
+        ]
       },
       {
         test: /\.(js|jsx)$/,
@@ -115,13 +129,13 @@ module.exports = {
         ]
       },
       {
-        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/, /\.ico$/],
-        loader: 'url-loader',
-        exclude: /node_modules/,
-        options: {
-          esModule: false,
-          limit: 1000,
-          name: 'images/[name].[contenthash:8].[ext]'
+        test: /\.(bmp|gif|jpe?g|png|ico|svg)$/,
+        type: 'asset',
+        exclude: [/node_modules/, /\.icon\.svg$/],
+        generator: {
+          filename: '[name].[contenthash:8].[ext]',
+          outputPath: isDevMode ? '' : 'images/',
+          publicPath: isDevMode ? '/' : 'images/'
         }
       },
       {
@@ -153,6 +167,7 @@ module.exports = {
     new MyCustomPlugin(),
     new ProgressBarPlugin(),
     new ESLintPlugin({
+      overrideConfigFile: path.resolve(__dirname, '../.eslintrc.js'),
       extensions: ['js', 'jsx', 'ts', 'tsx']
     }),
     new DotEnvWebpack({
@@ -174,7 +189,7 @@ module.exports = {
     }),
     new HtmlPlugin({
       template: path.resolve(ROOT_PATH, './public/index.html'),
-      favicon: path.resolve(ROOT_PATH, './public/favicon.ico'),
+      favicon: path.resolve(ROOT_PATH, './public/logo.png'),
       minify: {
         collapseWhitespace: true,
         preserveLineBreaks: true

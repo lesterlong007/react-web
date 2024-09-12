@@ -69,6 +69,7 @@ const run = () => {
   moduleList.unshift('');
   const routes = moduleList.reduce((res, cur) => res.concat(generateRoute('', '', [], cur)), defaultRoutes);
   let routeContent =
+    '/* eslint-disable prettier/prettier */\n' +
     '// @ut-ignore\n// will generate routes automatically, will cover old content by auto-generation, do not need to add any route manually in current file\n' +
     "import React, { lazy, createElement } from 'react';\n" +
     "import { RouteProps } from 'react-router-dom';\n\n" +

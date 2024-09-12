@@ -6,7 +6,9 @@ const isSingleColor = (content) => {
 const replaceColor = (content) => {
   // to avoid react warning about use camelCase instead of - to join
   const camel = content.replace(/(?<=[a-zA-Z0-9])-(\w)/g, (_, letter) => letter.toUpperCase());
-  const sizeContent = camel.replace(/(?<=\s+width=)"\d+"/g, '{size}').replace(/(?<=\s+height=)"\d+"/g, '{size}');
+  const sizeContent = camel
+    .replace(/(?<=\s+width=)"\d+"/, '{size}')
+    .replace(/(?<=\s+height=)"\d+"/, '{size}');
   if (isSingleColor(sizeContent)) {
     return sizeContent.replace(/"#[A-Fa-f0-9]+"/g, '{color}');
   }

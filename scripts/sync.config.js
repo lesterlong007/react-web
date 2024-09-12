@@ -3,7 +3,7 @@ const path = require('path');
 
 (function () {
   const { sourceRootPath, getSubModuleList } = require('./common/base');
-  const configFileList = ['.eslintrc.js', 'babel.config.js', 'jest.config.js', 'prettier.config.js'];
+  const configFileList = ['.eslintrc.js', 'babel.config.js', 'prettier.config.js'];
   const moduleList = getSubModuleList();
 
   configFileList.forEach((file) => {

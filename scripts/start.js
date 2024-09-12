@@ -8,7 +8,7 @@ process.on('unhandledRejection', (err) => {
 
 const fs = require('fs');
 const path = require('path');
-const envPath = path.resolve(__dirname, './env.js');
+const envPath = path.resolve(__dirname, '../start.config.js');
 
 if (!fs.existsSync(envPath)) {
   const envContent =
@@ -23,7 +23,7 @@ if (!fs.existsSync(envPath)) {
   fs.writeFileSync(envPath, envContent);
 }
 
-const envVariables = require('./env.js');
+const envVariables = require('../start.config.js');
 
 Object.entries(envVariables).forEach(([key, val]) => {
   process.env[key] = val;
@@ -32,14 +32,14 @@ Object.entries(envVariables).forEach(([key, val]) => {
 const { execSync } = require('child_process');
 const chokidar = require('chokidar');
 
-const { argv } = require('yargs');
+// const { argv } = require('yargs');
 const ip = require('ip').address();
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const { merge } = require('webpack-merge');
 const webpackConfig = require('./webpack.config');
 const { MOCK_PORT } = require('../mock/config');
-const { location, lbu, sourceRootPath, basename } = require('./common/base');
+const { location, LOCATION, lbu, sourceRootPath, basename, lokaliseRepo } = require('./common/base');
 
 const PORT = parseInt(process.env.PORT, 10) || 8000;
 const HOST = process.env.HOST || ip;
@@ -113,7 +113,11 @@ const saveSourceFile = (targetFilePath) => {
   });
 };
 
-const triggerFile = (filename) => {
+const triggerFile = (filename, mode) => {
+  const lolaliseReg = new RegExp(`${lokaliseRepo}/${LOCATION}`);
+  if (mode !== 'add' && lolaliseReg.test(filename)) {
+    return execSync('yarn combine-translation', { stdio: 'inherit' });
+  }
   const completedPath = path.join(sourceRootPath, filename);
   if (lbu) {
     const lbuReg = new RegExp(`\\.(${location}\\.${lbu})\\.(ts|tsx)`);
@@ -130,7 +134,7 @@ const triggerFile = (filename) => {
   }
 };
 
-const chokidarWatcher = chokidar.watch(lbuWildcards, {
+const chokidarWatcher = chokidar.watch([`${lokaliseRepo}/**/*.json`, ...lbuWildcards], {
   cmd: path.join(sourceRootPath, 'src'),
   ignored: /node_modules/,
   persistent: true
@@ -140,19 +144,19 @@ chokidarWatcher
   .on('add', (path) => {
     if (isRebuild) {
       console.log(`File added: ${path}`);
-      triggerFile(path);
+      triggerFile(path, 'add');
     }
     isRebuild = true;
   })
   .on('change', (path) => {
     isRebuild = true;
     console.log(`File changed: ${path}`);
-    triggerFile(path);
+    triggerFile(path, 'change');
   })
   .on('unlink', (path) => {
     isRebuild = true;
     console.log(`File removed: ${path}`);
-    triggerFile(path);
+    triggerFile(path, 'remove');
   });
 
 process.on('SIGINT', () => {

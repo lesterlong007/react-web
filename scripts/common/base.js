@@ -11,10 +11,35 @@ const pageFileName = 'page.js';
 const routeFileName = 'route.tsx';
 const viewsPath = 'src/views';
 const componentsPath = 'src/components';
-const lbu = argv.LBU || process.env.LBU || '';
-const LBU = lbu.toUpperCase();
-const location = argv.LOCATION || process.env.LOCATION || 'my';
+const lokaliseRepo = 'new-pruservice-lokalise';
+const commonRepo = 'new-pruservice-common';
+
+const getLocation = () => {
+  const initial = argv.LOCATION || process.env.LOCATION || 'my';
+  switch (initial) {
+    case 'prubsn':
+      return 'my';
+    default:
+      return initial;
+  }
+};
+
+const getLbu = () => {
+  const initialLocation = argv.LOCATION || process.env.LOCATION || 'my';
+  const initialLbu = argv.LBU || process.env.LBU || '';
+  switch (initialLocation) {
+    case 'prubsn':
+      return 'pbtb';
+    default:
+      return initialLbu;
+  }
+};
+
+const location = getLocation();
 const LOCATION = location.toUpperCase();
+
+const lbu = getLbu();
+const LBU = lbu.toUpperCase();
 
 const getPublicPath = () => {
   const publicPath = '/pruservice-pages';
@@ -132,7 +157,7 @@ const getCssModuleIdentName = (localName, filename) => {
 const getSubModuleList = (needLokalise = false) => {
   const gitModulesPath = path.resolve(sourceRootPath, '.gitmodules');
   const modulesStr = fs.readFileSync(gitModulesPath, { encoding: 'utf8' });
-  return modulesStr.match(/(?<=path\s*=\s*)\S+/g).filter((val) => needLokalise || val !== 'new-pruservice-lokalise');
+  return modulesStr.match(/(?<=path\s*=\s*)\S+/g).filter((val) => needLokalise || val !== lokaliseRepo);
 };
 
 module.exports = {
@@ -148,6 +173,8 @@ module.exports = {
   location,
   lbu,
   LBU,
+  lokaliseRepo,
+  commonRepo,
   basename: getPublicPath(),
   hasExtension,
   hasFeaturePagePermission,
