@@ -29,7 +29,7 @@ const config = {
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|webp|svg|ttf|woff|woff2)$': '<rootDir>/__mocks__/image.js',
     '\\.(css|scss)$': 'identity-obj-proxy',
-    '^@src/(.*)$': '<rootDir>/src/$1'
+    '@mock/(.+)': '<rootDir>/mock/$1'
   },
   // modulePathIgnorePatterns: [],
   // notify: false,
@@ -41,7 +41,7 @@ const config = {
   // resetModules: false,
   // resolver: undefined,
   // restoreMocks: false,
-  roots: ['<rootDir>'],
+  roots: ['<rootDir>/src'],
   setupFiles: ['./src/setup-test.js'],
   // setupFilesAfterEnv: [],
   // slowTestThreshold: 5,
@@ -57,9 +57,17 @@ const config = {
   },
   transformIgnorePatterns: ['/node_modules/'],
   // unmockedModulePathPatterns: undefined,
-  verbose: true
+  verbose: true,
   // watchPathIgnorePatterns: [],
   // watchman: true,
+  coverageThreshold: {
+    global: {
+      statements: 90,
+      branches: 80,
+      functions: 80,
+      lines: 80
+    }
+  }
 };
 
 module.exports = config;

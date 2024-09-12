@@ -1,21 +1,6 @@
 const plugin = require('tailwindcss/plugin');
 const { getSubModuleList } = require('./scripts/common/base');
 
-// tShirtScale describes the sizes xs - 7xl
-const tShirtScale = {
-  xs: '80px',
-  sm: '96px',
-  md: '112px',
-  lg: '128px',
-  xl: '144px',
-  '2xl': '168px',
-  '3xl': '192px',
-  '4xl': '224px',
-  '5xl': '156px',
-  '6xl': '288px',
-  '7xl': '320px'
-};
-
 const wildcard = '/src/**/*.{html,jsx,tsx}';
 const contentList = getSubModuleList().map((sub) => `./${sub}${wildcard}`);
 
