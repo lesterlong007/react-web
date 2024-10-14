@@ -339,3 +339,47 @@ const combineImages = async (front: string, back: string, index: number) => {
     // saveImage
   }
 };
+
+**
+ * Copy text to clipboard
+ * @param text
+ * @param showTip
+ */
+export const copyText = async (text: string, showTip = true) => {
+  if (navigator.clipboard) {
+    await navigator.clipboard.writeText(text);
+  } else {
+    const ele = document.createElement('textarea');
+    ele.value = text;
+    document.body.appendChild(ele);
+    ele.select();
+    document.execCommand('copy');
+    document.body.removeChild(ele);
+  }
+  if (showTip) {
+    console.log('Copy successfully');
+  }
+};
+
+/**
+ * generate a single-instance constructor via proxy
+ * @param className Constructor<T>
+ * @returns T extends object
+ */
+export const singleton = <T extends object>(className: Constructor<T>) => {
+  if (typeof className !== 'function') {
+    throw new TypeError('The provided className must be a constructor function.');
+  }
+  let instance: null | T = null;
+  const proxy = new Proxy(className, {
+    construct(target, args) {
+      if (!instance) {
+        instance = Reflect.construct(target, args);
+      }
+      return instance;
+    }
+  });
+  proxy.prototype.constructor = proxy;
+  return proxy;
+};
+
