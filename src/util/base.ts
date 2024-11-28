@@ -67,7 +67,8 @@ export const getRandomStr = (prefix = ''): string => {
  * @param data
  * @returns string
  */
-export const getDataType = (data: any): string => Object.prototype.toString.call(data).slice(8, -1).toLowerCase();
+export const getDataType = (data: any): string =>
+  Object.prototype.toString.call(data).slice(8, -1).toLowerCase();
 
 /**
  * Judge data whether is empty, will include [], {}
@@ -84,6 +85,14 @@ export const isEmpty = (data: any): boolean => {
     return !data;
   }
 };
+
+/**
+ * Judge data whether is an object
+ * @param target
+ * @returns boolean
+ */
+export const isObject = (target: any): boolean =>
+  Object.prototype.toString.call(target) === '[object Object]';
 
 /**
  * Deep clone a variable, only traverse it recursively for array or object
@@ -109,6 +118,28 @@ export const deepClone = (obj: any, hash = new WeakMap()) => {
     }
   }
   return cloneObj;
+};
+
+/**
+ * Deep merge two objects.
+ * @param target
+ * @param ...sources
+ */
+export const deepMerge = (target: any, ...sources: any): any => {
+  if (!sources.length) return target;
+  const source = sources.shift();
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (isObject(source[key])) {
+        if (!target[key]) Object.assign(target, { [key]: {} });
+        deepMerge(target[key], source[key]);
+      } else {
+        Object.assign(target, { [key]: source[key] });
+      }
+    }
+  }
+
+  return deepMerge(target, ...sources);
 };
 
 /**
@@ -182,7 +213,8 @@ export const isObjEqual = (obj1: any, obj2: any, map = new Map()): boolean => {
 
     const valType1 = getDataType(val1);
     const valType2 = getDataType(val2);
-    const needRecursive = valType1 === valType2 && ['object', 'array', 'map', 'set'].includes(valType1);
+    const needRecursive =
+      valType1 === valType2 && ['object', 'array', 'map', 'set'].includes(valType1);
     if (needRecursive) {
       flag = isObjEqual(val1, val2, map);
     }
@@ -293,93 +325,3 @@ export const getUUID = () => {
 };
 
 export const pxTransformToRem = (px: number) => `${px / 100}rem`;
-
-const loadImg = (content: string): Promise<HTMLImageElement | null> => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.src = content;
-    img.onload = () => {
-      resolve(img);
-    };
-    img.onerror = () => {
-      resolve(null);
-    };
-  });
-};
-
-const combineImages = async (front: string, back: string, index: number) => {
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  const frontImg = await loadImg(front);
-  const backImg = await loadImg(back);
-  let width = 50;
-  let height = 80;
-  if (frontImg) {
-    width = frontImg.width;
-    height += frontImg.height;
-  }
-  if (backImg) {
-    width = Math.max(width, backImg.width + 50);
-    height += backImg.height + 30;
-  }
-  canvas.width = width;
-  canvas.height = height;
-  if (ctx) {
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(0, 0, width, height);
-    if (frontImg) {
-      ctx.drawImage(frontImg, 25, 40, frontImg.width, frontImg.height);
-    }
-    if (backImg) {
-      const y = 70 + (frontImg?.height || 0);
-      ctx.drawImage(backImg, 25, y, backImg.width, backImg.height);
-    }
-
-    const imgURL = canvas.toDataURL('image/jpeg', 0.5);
-    // saveImage
-  }
-};
-
-**
- * Copy text to clipboard
- * @param text
- * @param showTip
- */
-export const copyText = async (text: string, showTip = true) => {
-  if (navigator.clipboard) {
-    await navigator.clipboard.writeText(text);
-  } else {
-    const ele = document.createElement('textarea');
-    ele.value = text;
-    document.body.appendChild(ele);
-    ele.select();
-    document.execCommand('copy');
-    document.body.removeChild(ele);
-  }
-  if (showTip) {
-    console.log('Copy successfully');
-  }
-};
-
-/**
- * generate a single-instance constructor via proxy
- * @param className Constructor<T>
- * @returns T extends object
- */
-export const singleton = <T extends object>(className: Constructor<T>) => {
-  if (typeof className !== 'function') {
-    throw new TypeError('The provided className must be a constructor function.');
-  }
-  let instance: null | T = null;
-  const proxy = new Proxy(className, {
-    construct(target, args) {
-      if (!instance) {
-        instance = Reflect.construct(target, args);
-      }
-      return instance;
-    }
-  });
-  proxy.prototype.constructor = proxy;
-  return proxy;
-};
-

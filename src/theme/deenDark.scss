@@ -1,0 +1,147 @@
+.deenDark {
+  /* text */
+  --t-1: #fafafa;
+  --t-2: #d2d3d6;
+  --t-3: #9fa4ad;
+  --t-disable: #676a70;
+  --t-highlight: #009f8d;
+  --t-reverse-1: #ffffff;
+  --t-reverse-88: #ffffffe0;
+  /* backgroud */
+  --b-1: #0e0e0f;
+  --b-2: #0e0e0f;
+  --b-3: #0e0e0f;
+  --b-4: #02aa96;
+  /* s */
+  --s-1: #242629;
+  --s-2: #1b1c1f;
+  --s-3: #383a3d;
+  /* d */
+  --d-1: #242629;
+  --d-2: #383a3d;
+  /* ov */
+  --ov-dark-1: #ffffff;
+  --ov-dark-88: #ffffffe0;
+  --ov-dark-04: #ffffff0a;
+  --ov-black-44: #00000070;
+  --f-5-50: #383a3d80;
+  /* brand colors */
+  --primary-1: #009f8d;
+  --primary-2: #008476;
+  --primary-3: #005c52;
+  --primary-4: #00413b;
+  --primary-5: #002823;
+  --primary-6: #00aa96;
+  --primary-gradient-1-from: rgb(32, 183, 165);
+  --primary-gradient-1-to: rgb(74, 196, 123);
+  --primary-gradient-2-from: rgb(7, 46, 39);
+  --primary-gradient-2-to: rgb(10, 41, 28);
+  --primary-gradient-3-from: rgb(40, 94, 45);
+  --primary-gradient-3-to: rgb(117, 202, 181);
+  /* positive */
+  --positive-1: #009f8d;
+  --positive-5: #002823;
+  /* negative */
+  --negative-1: #db192a;
+  --negative-5: #36060b;
+  /* warning */
+  --warning-1: #e09e15;
+  --warning-5: #372805;
+  /* de-orange */
+  --de-orange-1: #e09e15;
+  --de-orange-1-03: #e09e154d;
+  --de-orange-5: #4e3607;
+  /* de-yellow */
+  --de-yellow-1: #d0c103;
+  --de-yellow-5: #333101;
+  /* de-green */
+  --de-green-1: #1bb368;
+  --de-green-1-03: #1bb3684d;
+  --de-green-5: #072d1a;
+  /* de-teal */
+  --de-teal-1: #009f8d;
+  --de-teal-5: #002823;
+  /* de-sky */
+  --de-sky-1: #0899cb;
+  --de-sky-5: #022733;
+  /* de-blue */
+  --de-blue-1: #5253f0;
+  --de-blue-5: #14153c;
+  /* de-purple */
+  --de-purple-1: #a63ccd;
+  --de-purple-5: #14153c;
+  /* chart */
+  --ch-1: #009f8d;
+  --ch-2: #0899cb;
+  --ch-3: #e09e15;
+  --ch-4: #a63ccd;
+  --ch-5: #db192a;
+  --ch-6: #5253f0;
+  --ch-7: #1bb368;
+  --ch-8: #d0c103;
+  /* f */
+  --f-1: #fafafa;
+  --f-1-03: #fafafa4d;
+  --f-2: #d2d3d6;
+  --f-3: #9fa4ad;
+  --f-4: #676a70;
+  --f-5: #383a3d;
+  --f-6: #242629;
+  --f-7: #1b1c1f;
+  --f-8: #0e0e0f;
+  /* gradient */
+  --b-gradient-1-from: rgb(14, 14, 15);
+  --b-gradient-1-to: rgb(14, 14, 15);
+  --b-gradient-2-from: rgb(14, 14, 15);
+  --b-gradient-2-to: rgb(14, 14, 15);
+
+  --ov-black-64: #000000a3;
+  --de-red-1: #db192a;
+  --de-red-5: #4c1419;
+  --f-reverse-1: #ffffff;
+  --f-reverse-88: #ffffffe0;
+  --f-reverse-24: #ffffff3d;
+  --bu-primary-1: #009f8d;
+  --bu-primary-2: #383a3d;
+  --to-1: #383a3d;
+  --tag-t-orange-1: #f2a916;
+  --tag-bg-orange-1: #3d3016;
+  --de-gradient-red-1-from: rgb(242, 85, 70);
+  --de-gradient-red-1-to: rgb(236, 105, 127);
+  --de-gradient-red-2-from: rgb(51, 17, 13);
+  --de-gradient-red-2-to: rgb(61, 21, 28);
+  --de-gradient-orange-1-from: rgb(247, 133, 76);
+  --de-gradient-orange-1-to: rgb(238, 185, 79);
+  --de-gradient-orange-2-from: rgb(51, 24, 10);
+  --de-gradient-orange-2-to: rgb(61, 21, 28);
+  --de-gradient-yellow-2-from: rgb(51, 50, 28);
+  --de-gradient-yellow-2-to: rgb(51, 45, 23);
+  --de-gradient-green-1-from: rgb(32, 183, 165);
+  --de-gradient-green-1-to: rgb(74, 196, 123);
+  --de-gradient-green-2-from: rgb(7, 46, 39);
+  --de-gradient-green-2-to: rgb(10, 41, 28);
+  --de-gradient-sky-1-from: rgb(41, 148, 224);
+  --de-gradient-sky-1-to: rgb(85, 204, 215);
+  --de-gradient-sky-2-from: rgb(19, 38, 51);
+  --de-gradient-sky-2-to: rgb(24, 49, 51);
+  --de-gradient-blue-1-from: rgb(127, 116, 247);
+  --de-gradient-blue-1-to: rgb(84, 186, 220);
+  --de-gradient-blue-2-from: rgb(20, 20, 51);
+  --de-gradient-blue-2-to: rgb(17, 43, 56);
+  --de-gradient-purple-1-from: rgb(175, 91, 203);
+  --de-gradient-purple-1-to: rgb(231, 133, 214);
+  --de-gradient-purple-2-from: rgb(43, 18, 51);
+  --de-gradient-purple-2-to: rgb(51, 21, 46);
+  --ch-gradient-1-from: rgb(32, 183, 165);
+  --ch-gradient-1-to: rgb(74, 196, 123);
+  --ch-gradient-2-from: rgb(41, 148, 224);
+  --ch-gradient-2-to: rgb(85, 204, 215);
+  --ch-gradient-3-from: rgb(247, 133, 76);
+  --ch-gradient-3-to: rgb(238, 185, 79);
+  --ch-gradient-4-from: rgb(175, 91, 203);
+  --ch-gradient-4-to: rgb(231, 133, 214);
+  --ch-gradient-5-from: rgb(127, 116, 247);
+  --ch-gradient-5-to: rgb(84, 186, 220);
+  --ch-gradient-6-from: rgb(242, 85, 70);
+  --ch-gradient-6-to: rgb(236, 105, 127);
+}

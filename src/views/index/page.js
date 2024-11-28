@@ -1,4 +1,5 @@
 export default {
   title: 'Home page',
-  lbu: ['SG', 'MY']
+  location: ['ALL'],
+  env: ['local', 'dev', 'sit']
 };

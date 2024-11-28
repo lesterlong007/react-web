@@ -180,13 +180,13 @@ describe('Your Module', () => {
       const clonedDate = deepClone(date);
       const clonedRegex = deepClone(regex);
       const clonedFunc = deepClone(func);
-  
+
       expect(clonedDate).toEqual(date);
       expect(clonedDate).not.toBe(date);
-  
+
       expect(clonedRegex).toEqual(regex);
       expect(clonedRegex).not.toBe(regex);
-  
+
       expect(typeof clonedFunc).toBe('function');
       expect(clonedFunc).not.toBe(func);
     });
@@ -337,7 +337,9 @@ describe('Your Module', () => {
   describe('getUUID', () => {
     it('should generate a valid UUID', () => {
       const uuid = getUUID();
-      expect(uuid).toMatch(/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i);
+      expect(uuid).toMatch(
+        /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i
+      );
     });
   });
 });

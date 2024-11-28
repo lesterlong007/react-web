@@ -1,4 +1,4 @@
 export default {
-  title: 'Not found',
+  title: 'PDF view page',
   location: ['ALL']
 };

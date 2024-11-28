@@ -1,0 +1,146 @@
+.deenLight {
+  /* text */
+  --t-1: #1c1d1f;
+  --t-2: #58647a;
+  --t-3: #8390a8;
+  --t-disable: #bcc5d6;
+  --t-highlight: #00aa96;
+  --t-reverse-1: #ffffff;
+  --t-reverse-88: #ffffffe0;
+  /* backgroud */
+  --b-1: #ffffff;
+  --b-2: #f6f7fa;
+  --b-3: #f2f5f7;
+  --b-4: #02aa96;
+  /* s */
+  --s-1: #ffffff;
+  --s-2: #f6f7fa;
+  --s-3: #f6f7fa;
+  /* d */
+  --d-1: #f6f7fa;
+  --d-2: #e6e9f0;
+  /* ov */
+  --ov-dark-1: #000000;
+  --ov-dark-88: #000000e0;
+  --ov-dark-04: #0000000a;
+  --ov-black-44: #00000070;
+  --f-5-50: #d1d7e380;
+  /* brand colors */
+  --primary-1: #00aa96;
+  --primary-2: #33bbab;
+  --primary-3: #85d6cd;
+  --primary-4: #c1eae5;
+  --primary-5: #ebf8f7;
+  --primary-gradient-1-from: rgb(1, 192, 170);
+  --primary-gradient-1-to: rgb(86, 226, 143);
+  --primary-gradient-2-from: rgb(221, 250, 245);
+  --primary-gradient-2-to: rgb(222, 251, 239);
+  --primary-gradient-3-from: rgb(205, 255, 210);
+  --primary-gradient-3-to: rgb(148, 255, 229);
+  /* positive */
+  --positive-1: #00aa96;
+  --positive-5: #ebf8f7;
+  /* negative */
+  --negative-1: #ed1b2d;
+  --negative-5: #feedee;
+  /* warning */
+  --warning-1: #f2a916;
+  --warning-5: #fef8ed;
+  /* de-orange */
+  --de-orange-1: #f2a916;
+  --de-orange-1-03: #f2a9164d;
+  --de-orange-5: #fef8ed;
+  /* de-yellow */
+  --de-yellow-1: #e1cf03;
+  --de-yellow-5: #fdfbeb;
+  /* de-green */
+  --de-green-1: #1dc06f;
+  --de-green-1-03: #1dc06f4d;
+  --de-green-5: #edfaf4;
+  /* de-teal */
+  --de-teal-1: #00aa96;
+  --de-teal-5: #ebf8f7;
+  /* de-sky */
+  --de-sky-1: #09a4d8;
+  --de-sky-5: #ecf8fc;
+  /* de-blue */
+  --de-blue-1: #5959ff;
+  --de-blue-5: #f2f2ff;
+  /* de-purple */
+  --de-purple-1: #b340da;
+  --de-purple-5: #f9f0fc;
+  /* chart */
+  --ch-1: #33bbab;
+  --ch-2: #3ab6e0;
+  --ch-3: #f5ba45;
+  --ch-4: #bc57de;
+  --ch-5: #f14957;
+  --ch-6: #6d6dff;
+  --ch-7: #4acd8c;
+  --ch-8: #e7d935;
+  /* f */
+  --f-1: #1c1d1f;
+  --f-1-03: #1c1d1f4d;
+  --f-2: #58647a;
+  --f-3: #8390a8;
+  --f-4: #bcc5d6;
+  --f-5: #d1d7e3;
+  --f-6: #e6e9f0;
+  --f-7: #f6f7fa;
+  --f-8: #ffffff;
+  /* gradient */
+  --b-gradient-1-from: rgb(255, 255, 255);
+  --b-gradient-1-to: rgb(246, 247, 250);
+  --b-gradient-2-from: rgb(246, 247, 250);
+  --b-gradient-2-to: rgb(255, 255, 255);
+
+  --ov-black-64: #000000a3;
+  --de-red-1: #ed1b2d;
+  --de-red-5: #feedee;
+  --f-reverse-1: #ffffff;
+  --f-reverse-88: #ffffffe0;
+  --f-reverse-24: #ffffff3d;
+  --bu-primary-1: #00aa96;
+  --bu-primary-2: #ebf8f7;
+  --to-1: #1c1d1f;
+  --tag-t-orange-1: #e09e15;
+  --tag-bg-orange-1: #fef8ed;
+  --de-gradient-red-1-from: rgb(255, 56, 38);
+  --de-gradient-red-1-to: rgb(255, 102, 128);
+  --de-gradient-red-2-from: rgb(255, 232, 229);
+  --de-gradient-red-2-to: rgb(255, 235, 238);
+  --de-gradient-orange-1-from: rgb(254, 127, 64);
+  --de-gradient-orange-1-to: rgb(255, 196, 77);
+  --de-gradient-orange-2-from: rgb(255, 238, 229);
+  --de-gradient-orange-2-to: rgb(255, 246, 229);
+  --de-gradient-yellow-2-from: rgb(252, 251, 215);
+  --de-gradient-yellow-2-to: rgb(252, 245, 215);
+  --de-gradient-green-1-from: rgb(1, 192, 170);
+  --de-gradient-green-1-to: rgb(86, 226, 143);
+  --de-gradient-green-2-from: rgb(223, 247, 243);
+  --de-gradient-green-2-to: rgb(218, 242, 232);
+  --de-gradient-sky-1-from: rgb(19, 146, 237);
+  --de-gradient-sky-1-to: rgb(89, 226, 23);
+  --de-gradient-sky-2-from: rgb(223, 247, 243);
+  --de-gradient-sky-2-to: rgb(218, 242, 232);
+  --de-gradient-blue-1-from: rgb(115, 103, 255);
+  --de-gradient-blue-1-to: rgb(100, 207, 243);
+  --de-gradient-blue-2-from: rgb(229, 229, 255);
+  --de-gradient-blue-2-to: rgb(229, 246, 255);
+  --de-gradient-purple-1-from: rgb(189, 94, 221);
+  --de-gradient-purple-1-to: rgb(255, 141, 236);
+  --de-gradient-purple-2-from: rgb(249, 229, 255);
+  --de-gradient-purple-2-to: rgb(255, 232, 251);
+  --ch-gradient-1-from: rgb(1, 192, 170);
+  --ch-gradient-1-to: rgb(86, 226, 143);
+  --ch-gradient-2-from: rgb(19, 146, 237);
+  --ch-gradient-2-to: rgb(89, 226, 23);
+  --ch-gradient-3-from: rgb(254, 127, 64);
+  --ch-gradient-3-to: rgb(255, 196, 77);
+  --ch-gradient-4-from: rgb(189, 94, 221);
+  --ch-gradient-4-to: rgb(255, 141, 236);
+  --ch-gradient-5-from: rgb(115, 103, 255);
+  --ch-gradient-5-to: rgb(100, 207, 243);
+  --ch-gradient-6-from: rgb(255, 56, 38);
+  --ch-gradient-6-to: rgb(255, 102, 128);
+}
