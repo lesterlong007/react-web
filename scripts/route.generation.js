@@ -2,7 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 
-const { sourceRootPath, viewsPath, featureFileName, pageFileName, routeFileName, hasExtension, hasFeaturePagePermission, getSubModuleList } = require('./common/base');
+const {
+  sourceRootPath,
+  viewsPath,
+  featureFileName,
+  pageFileName,
+  routeFileName,
+  hasExtension,
+  hasFeaturePagePermission,
+  getSubModuleList
+} = require('./common/base');
 
 const routeFilePath = path.join(sourceRootPath, 'src', routeFileName);
 
@@ -29,7 +38,9 @@ const generateRoute = (name, parentDir, res, submodule) => {
               const subRes = submodule.match(/(?<=-)[a-zA-z0-9]+$/);
               const routePath = `${subRes ? '/' + subRes[0] : ''}/${path.join(curPath, dir)}`;
               if (routeList.includes(routePath)) {
-                console.warn('Please check your feature name, can not exist duplicate feature during all sub modules');
+                console.warn(
+                  'Please check your feature name, can not exist duplicate feature during all sub modules'
+                );
               } else {
                 routeList.push(routePath);
                 res.push({
@@ -67,7 +78,10 @@ const run = () => {
     }
   });
   moduleList.unshift('');
-  const routes = moduleList.reduce((res, cur) => res.concat(generateRoute('', '', [], cur)), defaultRoutes);
+  const routes = moduleList.reduce(
+    (res, cur) => res.concat(generateRoute('', '', [], cur)),
+    defaultRoutes
+  );
   let routeContent =
     '/* eslint-disable prettier/prettier */\n' +
     '// @ut-ignore\n// will generate routes automatically, will cover old content by auto-generation, do not need to add any route manually in current file\n' +

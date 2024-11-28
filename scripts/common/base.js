@@ -46,12 +46,16 @@ const getPublicPath = () => {
   const env = process.env.BUILD_ENV || 'dev';
   if (location === 'mo') {
     return publicPath;
+  } else if (location === 'kh' || location === 'th') {
+    return env === 'prod' ? publicPath : `/${env}${publicPath}`;
   } else if (env === 'prod') {
     return `/${location}${publicPath}`;
   } else {
     return `/${env}/${location}${publicPath}`;
   }
 };
+
+const basename = getPublicPath();
 
 /**
  * only collect dependency from source codes
@@ -110,11 +114,16 @@ const getFileContent = (finalPath) => {
 const hasFeaturePagePermission = (dirPath, fileName) => {
   const finalPath = path.join(dirPath, fileName);
   if (fs.existsSync(finalPath)) {
+    const env = process.env.BUILD_ENV || 'local';
     const content = getFileContent(finalPath);
     // console.log(content);
-    const res = content.match(/location:\s*(\[.*\])/);
+    const locationRes = content.match(/location:\s*(\[.*\])/);
+    const envRes = content.match(/env:\s*(\[.*\])/);
     // console.log(res);
-    return !!res && (res[1].includes(LOCATION) || res[1].includes('ALL'));
+    const locationFlag =
+      !!locationRes && (locationRes[1].includes(LOCATION) || locationRes[1].includes('ALL'));
+    const envFlag = !envRes || envRes[1].includes(env);
+    return locationFlag && envFlag;
   } else {
     return true;
   }
@@ -157,7 +166,33 @@ const getCssModuleIdentName = (localName, filename) => {
 const getSubModuleList = (needLokalise = false) => {
   const gitModulesPath = path.resolve(sourceRootPath, '.gitmodules');
   const modulesStr = fs.readFileSync(gitModulesPath, { encoding: 'utf8' });
-  return modulesStr.match(/(?<=path\s*=\s*)\S+/g).filter((val) => needLokalise || val !== lokaliseRepo);
+  return modulesStr
+    .match(/(?<=path\s*=\s*)\S+/g)
+    .filter((val) => needLokalise || val !== lokaliseRepo);
+};
+
+/**
+ * get environment variables, combine customization to public
+ * @param {*} env string
+ * @param {*} finalLocation string | undefined
+ * @param {*} finalLbu string | undefined
+ * @returns {}
+ */
+const getEnvVariables = (env, finalLocation = location, finalLbu = lbu) => {
+  const finalEnv = env || argv.env || process.env.BUILD_ENV || 'local';
+  const lbuPath = finalLbu ? `${finalLocation}_${finalLbu}` : finalLocation;
+  const envPtah = path.join(sourceRootPath, `env/${finalEnv}.js`);
+  const locationEnvPath = path.join(sourceRootPath, `env/${finalLocation}/${finalEnv}.js`);
+  const lbuEnvPath = path.join(sourceRootPath, `env/${lbuPath}/${finalEnv}.js`);
+
+  const envVariables = require(envPtah);
+  if (fs.existsSync(lbuEnvPath)) {
+    return { ...envVariables, ...require(lbuEnvPath) };
+  } else if (fs.existsSync(locationEnvPath)) {
+    return { ...envVariables, ...require(locationEnvPath) };
+  } else {
+    return envVariables;
+  }
 };
 
 module.exports = {
@@ -175,12 +210,12 @@ module.exports = {
   LBU,
   lokaliseRepo,
   commonRepo,
-  basename: getPublicPath(),
+  basename,
   hasExtension,
   hasFeaturePagePermission,
   getVersionNo,
   isOwnDependency,
   getCssModuleIdentName,
   getSubModuleList,
-  getPublicPath
+  getEnvVariables
 };

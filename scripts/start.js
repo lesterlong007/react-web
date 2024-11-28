@@ -39,15 +39,22 @@ const WebpackDevServer = require('webpack-dev-server');
 const { merge } = require('webpack-merge');
 const webpackConfig = require('./webpack.config');
 const { MOCK_PORT } = require('../mock/config');
-const { location, LOCATION, lbu, sourceRootPath, basename, lokaliseRepo } = require('./common/base');
+const {
+  location,
+  LOCATION,
+  lbu,
+  sourceRootPath,
+  basename,
+  lokaliseRepo
+} = require('./common/base');
 
 const PORT = parseInt(process.env.PORT, 10) || 8000;
 const HOST = process.env.HOST || ip;
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 
-const lbuWildcards = [`**/src/**/*.${location}.{ts,tsx}`];
+const lbuWildcards = [`**/src/**/*.${location}.{ts,tsx,json}`];
 if (lbu) {
-  lbuWildcards.push(`**/src/**/*.${location}.${lbu}.{ts,tsx}`);
+  lbuWildcards.push(`**/src/**/*.${location}.${lbu}.{ts,tsx,json}`);
 }
 
 const startConfig = {
@@ -77,6 +84,12 @@ const devServerOptions = {
       context: ['/api', '/insurance-policy', '/mock'],
       target: `http://${ip}:${MOCK_PORT}`,
       pathRewrite: { '^/mock': '' },
+      secure: false,
+      changeOrigin: true
+    },
+    {
+      context: '/pruservice-static',
+      target: `http://${ip}:${MOCK_PORT}`,
       secure: false,
       changeOrigin: true
     }

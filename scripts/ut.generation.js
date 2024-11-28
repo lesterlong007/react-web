@@ -1,7 +1,17 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 
-const ignoreMockPath = ['react', 'qs', 'react-i18next', 'i18next', 'classnames', 'dayjs', '@common/constants', '@common/components', '@/common/network/request'];
+const ignoreMockPath = [
+  'react',
+  'qs',
+  'react-i18next',
+  'i18next',
+  'classnames',
+  'dayjs',
+  '@common/constants',
+  '@common/components',
+  '@/common/network/request'
+];
 
 const mockUtilDevice = (mod) => {
   const mockBody = [];

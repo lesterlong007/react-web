@@ -2,6 +2,7 @@
 
 process.env.NODE_ENV = 'production';
 
+const { argv } = require('yargs');
 const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin'); // css compress
@@ -11,9 +12,19 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer'); // bundle a
 
 const webpackConfig = require('./webpack.config');
 
+const isAnalyze = argv.ANALYZE || process.env.ANALYZE;
+const needAnalyzer =
+  (process.env.NODE_ENV === 'production' &&
+    (process.env.BUILD_ENV === 'dev' || process.env.BUILD_ENV === 'sit')) ||
+  isAnalyze;
+
 const buildConfig = {
   devtool: 'eval',
-  plugins: [new CleanWebpackPlugin(), new CompressionPlugin(), process.env.ANALYZE && new BundleAnalyzerPlugin()].filter(Boolean),
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CompressionPlugin(),
+    needAnalyzer && new BundleAnalyzerPlugin({ analyzerMode: 'static' })
+  ].filter(Boolean),
   performance: {
     hints: false
   },

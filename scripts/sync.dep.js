@@ -17,25 +17,27 @@ const chalk = require('chalk');
   moduleList.forEach((val) => {
     // console.log(val);
     const packagePath = path.resolve(sourceRootPath, val, 'package.json');
-    const packageContent = fs.readFileSync(packagePath, 'utf8');
-    const contentObj = JSON.parse(packageContent);
-    //   console.log(packageContent);
-    newDepObj.dependencies = {
-      ...newDepObj.dependencies,
-      ...contentObj.dependencies
-    };
-    Object.entries(mainPackageObj).forEach(([key, val]) => {
-      if (!ignoreAttrs.includes(key)) {
-        contentObj[key] = val;
-      }
-    });
+    if (fs.existsSync(packagePath)) {
+      const packageContent = fs.readFileSync(packagePath, 'utf8');
+      const contentObj = JSON.parse(packageContent);
+      //   console.log(packageContent);
+      newDepObj.dependencies = {
+        ...newDepObj.dependencies,
+        ...contentObj.dependencies
+      };
+      Object.entries(mainPackageObj).forEach(([key, val]) => {
+        if (!ignoreAttrs.includes(key)) {
+          contentObj[key] = val;
+        }
+      });
 
-    fs.writeFile(packagePath, JSON.stringify(contentObj, null, 2), (err) => {
-      if (err) {
-        console.log(chalk.red(`Sync up ${packagePath} error`), err);
-      } else {
-        console.log(`Sync up ${packagePath} successfully`);
-      }
-    });
+      fs.writeFile(packagePath, JSON.stringify(contentObj, null, 2), (err) => {
+        if (err) {
+          console.log(chalk.red(`Sync up ${packagePath} error`), err);
+        } else {
+          console.log(`Sync up ${packagePath} successfully`);
+        }
+      });
+    }
   });
 })();
